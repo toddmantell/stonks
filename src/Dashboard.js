@@ -7,14 +7,17 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (localStorage.stonks)
+        return setStonks(JSON.parse(localStorage.stonks));
+
       const result = await getStonks();
       setStonks(result);
+      // stringify is necessary because items in local storage are stored as strings
+      localStorage.stonks = JSON.stringify(result);
     };
 
     fetchData();
   }, []);
-
-  console.log("stonks in comp", stonks);
 
   return (
     <main>
