@@ -10,7 +10,7 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,4 +30,30 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.stonks-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.stonk-card {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  height: auto;
+  width: 300px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 10px;
+  overflow: hidden; /*needed, otherwise the image doesn't get cropped by the border radius*/
+}
+
+.stonk-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.stonk-attribute {
+  text-align: left;
+  margin-left: 1em;
 }

@@ -11,18 +11,21 @@ export default function Stonk({
   localTicker
 }) {
   return (
-    <figure>
-      <div>
+    <figure className="stonk-card">
+      <div className="stonk-attribute">
         Company Name:{" "}
         <span style={{ textDecoration: "underline" }}>{companyName}</span>
       </div>
-      <div>
+      <hr />
+      <div className="stonk-attribute">
         Ticker Symbol: <span>{localTicker}</span>
       </div>
-      <div>
+      <hr />
+      <div className="stonk-attribute">
         Latest Price: <span>{latestPrice}</span>
       </div>
-      <div>
+      <hr />
+      <div className="stonk-attribute">
         Graham Number:{" "}
         <span
           style={
@@ -32,7 +35,8 @@ export default function Stonk({
           {grahamNumber}
         </span>
       </div>
-      <div>
+      <hr />
+      <div className="stonk-attribute">
         Forward Number:{" "}
         <span
           style={
@@ -44,7 +48,8 @@ export default function Stonk({
           {forwardGrahamFormulaNumber}
         </span>
       </div>
-      <div>
+      <hr />
+      <div className="stonk-attribute">
         Forward Number (Conservative):{" "}
         <span
           style={
@@ -56,7 +61,8 @@ export default function Stonk({
           {forwardConservativeGrahamFormulaNumber}
         </span>
       </div>
-      <div>
+      <hr />
+      <div className="stonk-attribute">
         Past Number:{" "}
         <span
           style={
@@ -68,7 +74,8 @@ export default function Stonk({
           {pastGrahamFormulaNumber}
         </span>
       </div>
-      <div>
+      <hr />
+      <div className="stonk-attribute">
         Past Number (Conservative):{" "}
         <span
           style={
@@ -80,6 +87,7 @@ export default function Stonk({
           {pastConservativeGrahamFormulaNumber}
         </span>
       </div>
+      <hr />
     </figure>
   );
 }

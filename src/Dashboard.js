@@ -20,7 +20,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <main>
+    <main className="stonks-container">
       {stonks.length &&
         stonks.map((stonk, index) => {
           return <Stonk key={`stonk-${index}`} {...stonk} />;
