@@ -7,7 +7,7 @@ export default function(callback) {
     event.persist();
     setTimeout(() => {
       setStonkInfo(event.target.value || "not found");
-    }, 2000);
+    }, 1500);
   }
 
   function handleSubmit(event) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import getStonks from "./data/getStonks";
-import Stonk from "./components/stonk";
-import AddStonk from "./components/AddStonk";
+import getStonks from "../data/getStonks";
+import Stonk from "../components/stonk";
+import AddStonk from "../components/AddStonk";
 
 //TODO:
 //Should there be a refresh button? Or auto-refresh?
