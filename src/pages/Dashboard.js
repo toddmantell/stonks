@@ -11,10 +11,27 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (localStorage.stonks)
-        return setStonks(JSON.parse(localStorage.stonks));
-
       const result = await getStonks();
+      let updated = false;
+
+      for (let i = 0; i < result.length; i += 1) {
+        const stonksInLocalStorage =
+          localStorage.stonks && JSON.parse(localStorage.stonks);
+        const currentStonkInStorage = stonksInLocalStorage.find(
+          stonk => stonk.localTicker === result[i].localTicker
+        );
+        console.log(
+          "currentStonkInStorage: ",
+          currentStonkInStorage.localTicker
+        );
+
+        if (currentStonkInStorage.latestPrice !== result[i].latestPrice) {
+          updated = true;
+        }
+      }
+
+      if (!updated) return setStonks(JSON.parse(localStorage.stonks));
+
       setStonks(result);
       // stringify is necessary because items in local storage are stored as strings
       localStorage.stonks = JSON.stringify(result);
@@ -29,8 +46,6 @@ export default function Dashboard() {
         stonks.map((stonk, index) => {
           return <Stonk key={`stonk-${index}`} {...stonk} />;
         })}
-      <hr />
-      <AddStonk />
     </main>
   );
 }

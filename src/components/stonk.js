@@ -24,10 +24,10 @@ export default function Stonk({
         companyName={companyName}
         latestPrice={latestPrice}
         localTicker={localTicker}
+        grahamNumber={grahamNumber}
       />
       <BackSide
         localTicker={localTicker}
-        grahamNumber={grahamNumber}
         latestPrice={latestPrice}
         forwardConservativeGrahamFormulaNumber={
           forwardConservativeGrahamFormulaNumber

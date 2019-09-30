@@ -3,25 +3,14 @@ import { BackSide } from "react-flippy";
 
 export default ({
   localTicker,
-  grahamNumber,
   latestPrice,
   forwardConservativeGrahamFormulaNumber,
   forwardGrahamFormulaNumber,
   pastConservativeGrahamFormulaNumber,
   pastGrahamFormulaNumber
 }) => (
-  <BackSide>
+  <BackSide className="stonk-card stonk-card--backside">
     <div className="stonk-attribute">({localTicker})</div>
-    <div className="stonk-attribute">
-      Graham Number:{" "}
-      <span
-        style={
-          grahamNumber > latestPrice ? { color: "green" } : { color: "red" }
-        }
-      >
-        {grahamNumber}
-      </span>
-    </div>
     <hr />
     <div className="stonk-attribute">
       Forward Number:{" "}

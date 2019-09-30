@@ -1,14 +1,18 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
+import AddStonk from "./pages/AddStonk";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">STONKS!</header>
-      <Dashboard />
-    </div>
+    <Router>
+      <div className="App">
+        <header className="App-header">STONKS!</header>
+        <Route exact path="/" component={Dashboard} />
+        <Route path="/addstonk" component={AddStonk} />
+      </div>
+    </Router>
   );
 }
 

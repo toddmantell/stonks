@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 export default AddStonkForm;
 
+//This was previously part of the PoC, what can we re-use here?
 function AddStonkForm(props) {
   const [stonkInfo, setStonkInfo] = useState("defaultstonk");
 
