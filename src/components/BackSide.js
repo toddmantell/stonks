@@ -9,7 +9,7 @@ export default ({
   pastConservativeGrahamFormulaNumber,
   pastGrahamFormulaNumber
 }) => (
-  <BackSide className="stonk-card stonk-card--backside">
+  <BackSide style={{ height: "108%", borderRadius: "10px" }}>
     <div className="stonk-attribute">({localTicker})</div>
     <hr />
     <div className="stonk-attribute">

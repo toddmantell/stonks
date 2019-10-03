@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
 import getStonks from "../data/getStonks";
 import Stonk from "../components/stonk";
-import AddStonk from "../components/AddStonk";
 
 //TODO:
 //Should there be a refresh button? Or auto-refresh?
 
 export default function Dashboard() {
   const [stonks, setStonks] = useState([]);
+  const [staleData, setStaleDataStatus] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       const result = await getStonks();
       let updated = false;
+
+      if (!result.length) {
+        console.log("result: ", result);
+        setStaleDataStatus(true);
+        return setStonks(JSON.parse(localStorage.stonks));
+      }
 
       for (let i = 0; i < result.length; i += 1) {
         const stonksInLocalStorage =
@@ -46,6 +52,11 @@ export default function Dashboard() {
         stonks.map((stonk, index) => {
           return <Stonk key={`stonk-${index}`} {...stonk} />;
         })}
+      {staleData && (
+        <div style={{ color: "red" }}>
+          Failed to retrieve stonks. You are viewing old data.
+        </div>
+      )}
     </main>
   );
 }

@@ -15,8 +15,15 @@ export default async function getStonks() {
     process.env.NODE_ENV === "production"
       ? settings.PROD_API_URL
       : settings.DEV_API_URL;
-  const stonks = await fetch(`${apiUrl}/api/dashboard`, fetchOptions);
-  const resolvedStonks = await stonks.json();
 
-  return resolvedStonks.length ? resolvedStonks : [];
+  try {
+    const stonks = await fetch(`${apiUrl}/api/dashboard`, fetchOptions);
+    const resolvedStonks = await stonks.json();
+    return resolvedStonks.length ? resolvedStonks : [];
+  } catch (error) {
+    console.log(
+      `An error occurred while trying to fetch stonks: ${error.toString()}`
+    );
+    return [];
+  }
 }
