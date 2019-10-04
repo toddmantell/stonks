@@ -7,7 +7,6 @@ import Stonk from "../components/stonk";
 
 export default function Dashboard() {
   const [stonks, setStonks] = useState([]);
-  const [staleData, setStaleDataStatus] = useState(false);
   const [updated, setUpdated] = useState(false);
 
   useEffect(() => {
@@ -16,8 +15,10 @@ export default function Dashboard() {
         const result = await getStonks();
 
         if (!result.length) {
-          console.log("result: ", result);
-          setStaleDataStatus(true);
+          // we probably would rather have a better UX for this, but for a ProofOfC this suffices
+          window.alert(
+            "Failed to retrieve stonks. You are viewing stale data."
+          );
           return setStonks(JSON.parse(localStorage.stonks));
         }
 
@@ -62,11 +63,6 @@ export default function Dashboard() {
         stonks.map((stonk, index) => {
           return <Stonk key={`stonk-${index}`} {...stonk} />;
         })}
-      {staleData && (
-        <div style={{ color: "red" }}>
-          Failed to retrieve stonks. You are viewing stale data.
-        </div>
-      )}
     </main>
   );
 }
