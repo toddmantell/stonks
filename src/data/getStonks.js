@@ -4,10 +4,7 @@ import { get } from "../fetchWrapper";
 export default async function getStonks() {
   console.log("node env:", process.env.NODE_ENV);
 
-  const apiUrl =
-    process.env.NODE_ENV === "production"
-      ? settings.PROD_API_URL
-      : settings.DEV_API_URL;
+  const apiUrl = getDevOrProdAPIURL();
 
   try {
     const stonks = await get(`${apiUrl}/api/dashboard`);
@@ -18,4 +15,9 @@ export default async function getStonks() {
     );
     return [];
   }
+}
+
+export function getDevOrProdAPIURL() {
+  if (process.env.NODE_ENV === "production") return settings.PROD_API_URL;
+  return settings.DEV_API_URL;
 }

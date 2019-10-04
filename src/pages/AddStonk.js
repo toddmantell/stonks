@@ -1,28 +1,39 @@
-import React, { useState } from "react";
-import settings from "../settings";
+import React, { useState, useEffect } from "react";
+import { useDebounce } from "use-debounce";
+import { getDevOrProdAPIURL } from "../data/getStonks";
 
 export default function CheckStonk() {
+  const [stonkTicker, setStonkTicker] = useState("");
   const [stonk, setStonk] = useState(false);
   const [growthRate, setGrowthRate] = useState(0);
+  const debounceTime = 1000;
 
-  const apiUrl =
-    process.env.NODE_ENV === "production"
-      ? settings.PROD_API_URL
-      : settings.DEV_API_URL;
+  const apiUrl = getDevOrProdAPIURL();
 
-  async function getStonk(event) {
-    const { value } = event.target;
+  const [debouncedTicker] = useDebounce(stonkTicker, debounceTime);
 
-    if (value.length >= 3) {
+  useEffect(() => {
+    if (debouncedTicker) getStonk(debouncedTicker);
+
+    async function getStonk(ticker) {
+      console.log(`getting ${ticker}...`);
+
       try {
-        const response = await fetch(`${apiUrl}/quote/${value}`);
+        const response = await fetch(`${apiUrl}/quote/${ticker}`);
         const fetchedStonk = response ? await response.json() : false;
         return setStonk(fetchedStonk);
       } catch (error) {
-        console.log(`failed to fetch ${value}: ${error.toString()}`);
+        console.log(`failed to fetch ${ticker}: ${error.toString()}`);
         return setStonk(false);
       }
     }
+  }, [debouncedTicker]);
+
+  function setTicker(event) {
+    const { value: ticker } = event.target;
+    console.log("ticker: ", ticker);
+    event.persist();
+    setStonkTicker(ticker);
   }
 
   return (
@@ -34,7 +45,7 @@ export default function CheckStonk() {
           id="stonk-symbol"
           placeholder="Stonk Symbol"
           data-testid="stonk-symbol"
-          onChange={getStonk}
+          onChange={setTicker}
         />
         <div>Stonk found: {stonk ? stonk.symbol : "Stonk not found."}</div>
         <div>Current Price: {stonk && stonk.latestPrice}</div>
