@@ -8,8 +8,6 @@ export default function CheckStonk() {
   const [growthRate, setGrowthRate] = useState(0);
   const debounceTime = 1000;
 
-  const apiUrl = getDevOrProdAPIURL();
-
   const [debouncedTicker] = useDebounce(stonkTicker, debounceTime);
 
   useEffect(() => {
@@ -17,6 +15,7 @@ export default function CheckStonk() {
 
     async function getStonk(ticker) {
       console.log(`getting ${ticker}...`);
+      const apiUrl = getDevOrProdAPIURL();
 
       try {
         const response = await fetch(`${apiUrl}/quote/${ticker}`);
@@ -31,7 +30,6 @@ export default function CheckStonk() {
 
   function setTicker(event) {
     const { value: ticker } = event.target;
-    console.log("ticker: ", ticker);
     event.persist();
     setStonkTicker(ticker);
   }
@@ -58,6 +56,7 @@ export default function CheckStonk() {
           placeholder="5 year growth rate"
           data-testid="five-year-rate"
           onChange={setGrowthRate}
+          value={growthRate}
         />
       </label>
     </form>

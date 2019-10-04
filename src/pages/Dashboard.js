@@ -37,11 +37,6 @@ export default function Dashboard() {
           stonk => stonk.localTicker === fetchResult[i].localTicker
         );
 
-        console.log(
-          "currentStonkInStorage: ",
-          currentStonkInStorage.localTicker
-        );
-
         if (currentStonkInStorage.latestPrice !== fetchResult[i].latestPrice) {
           setUpdated(true);
         }
