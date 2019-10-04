@@ -8,40 +8,50 @@ import Stonk from "../components/stonk";
 export default function Dashboard() {
   const [stonks, setStonks] = useState([]);
   const [staleData, setStaleDataStatus] = useState(false);
+  const [updated, setUpdated] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getStonks();
-      let updated = false;
+      try {
+        const result = await getStonks();
 
-      if (!result.length) {
-        console.log("result: ", result);
-        setStaleDataStatus(true);
-        return setStonks(JSON.parse(localStorage.stonks));
+        if (!result.length) {
+          console.log("result: ", result);
+          setStaleDataStatus(true);
+          return setStonks(JSON.parse(localStorage.stonks));
+        }
+
+        return checkForUpdatedStonks(result);
+      } catch (error) {
+        console.log(error);
       }
+    };
 
-      for (let i = 0; i < result.length; i += 1) {
+    function checkForUpdatedStonks(fetchResult) {
+      for (let i = 0; i < fetchResult.length; i += 1) {
         const stonksInLocalStorage =
           localStorage.stonks && JSON.parse(localStorage.stonks);
+
         const currentStonkInStorage = stonksInLocalStorage.find(
-          stonk => stonk.localTicker === result[i].localTicker
+          stonk => stonk.localTicker === fetchResult[i].localTicker
         );
+
         console.log(
           "currentStonkInStorage: ",
           currentStonkInStorage.localTicker
         );
 
-        if (currentStonkInStorage.latestPrice !== result[i].latestPrice) {
-          updated = true;
+        if (currentStonkInStorage.latestPrice !== fetchResult[i].latestPrice) {
+          setUpdated(true);
         }
       }
 
       if (!updated) return setStonks(JSON.parse(localStorage.stonks));
 
-      setStonks(result);
+      setStonks(fetchResult);
       // stringify is necessary because items in local storage are stored as strings
-      localStorage.stonks = JSON.stringify(result);
-    };
+      localStorage.stonks = JSON.stringify(fetchResult);
+    }
 
     fetchData();
   }, []);
@@ -54,7 +64,7 @@ export default function Dashboard() {
         })}
       {staleData && (
         <div style={{ color: "red" }}>
-          Failed to retrieve stonks. You are viewing old data.
+          Failed to retrieve stonks. You are viewing stale data.
         </div>
       )}
     </main>

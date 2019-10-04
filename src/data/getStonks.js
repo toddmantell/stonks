@@ -1,15 +1,8 @@
 import settings from "../settings.js";
+import { get } from "../fetchWrapper";
 
 export default async function getStonks() {
   console.log("node env:", process.env.NODE_ENV);
-
-  const fetchOptions = {
-    method: "GET",
-    mode: "cors",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  };
 
   const apiUrl =
     process.env.NODE_ENV === "production"
@@ -17,9 +10,8 @@ export default async function getStonks() {
       : settings.DEV_API_URL;
 
   try {
-    const stonks = await fetch(`${apiUrl}/api/dashboard`, fetchOptions);
-    const resolvedStonks = await stonks.json();
-    return resolvedStonks.length ? resolvedStonks : [];
+    const stonks = await get(`${apiUrl}/api/dashboard`);
+    return stonks.length ? stonks : [];
   } catch (error) {
     console.log(
       `An error occurred while trying to fetch stonks: ${error.toString()}`
