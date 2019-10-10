@@ -2,8 +2,6 @@ import settings from "../settings.js";
 import { get } from "../fetchWrapper";
 
 export default async function getStonks() {
-  console.log("node env:", process.env.NODE_ENV);
-
   const apiUrl = getDevOrProdAPIURL();
 
   try {

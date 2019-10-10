@@ -20,7 +20,7 @@ export const get = async (url, customOptions) => {
 export const post = async (url, payload, customOptions) => {
   if (!payload) {
     return new Error(
-      "You must include the data to post when making a POST request"
+      "You must include the data to post when making a POST request."
     );
   }
 
