@@ -1,1 +1,3 @@
+# STONKS!
+
 This app (named after the [stonks](https://knowyourmeme.com/memes/stonks) meme) was originally designed to be a dashboard for displaying stocks with metrics based on the growth formulas made famous in Benjamin Graham's famous investing tome, "The Intelligent Investor".  The project was a way for me to get familiar/comfortable with React Hooks and is still in a "Proof of Concept" stage.  This project (while evolving) uses an AWS Lambda as a private backend which is the single point for processing the data used for valuations, as well as the single point of api calls; the reason for this was to reduce a situation where the entire app is littered with calls to different endpoints.
