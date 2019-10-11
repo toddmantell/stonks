@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import getStonks from "../data/getStonks";
-import Stonk from "../components/stonk/stonk";
+import Stonk from "../components/stonk/Stonk";
+import StonkCardContainer from "../components/stonk/StonkCardContainer";
 
 //TODO:
 //Should there be a refresh button? Or auto-refresh?
@@ -54,10 +55,15 @@ export default function Dashboard() {
 
   return (
     <main className="stonks-container">
-      {stonks.length &&
-        stonks.map((stonk, index) => {
-          return <Stonk key={`stonk-${index}`} {...stonk} />;
-        })}
+      {stonks.length
+        ? stonks.map((stonk, index) => {
+            return (
+              <StonkCardContainer key={`stonk-${index}`}>
+                <Stonk {...stonk} />
+              </StonkCardContainer>
+            );
+          })
+        : null}
     </main>
   );
 }

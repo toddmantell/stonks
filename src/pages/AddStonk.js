@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDebounce } from "use-debounce";
 import { getDevOrProdAPIURL } from "../data/getStonks";
+import { get, post } from "../fetchWrapper";
 
 export default function CheckStonk() {
   const apiUrl = getDevOrProdAPIURL();
   const [stonkTicker, setStonkTicker] = useState("");
   const [stonk, setStonk] = useState(false);
-  const [growthRate, setGrowthRate] = useState(0);
+  const [futureGrowthRate, setFutureGrowthRate] = useState(0);
+  const [previousGrowthRate, setPreviousGrowthRate] = useState(0);
   const debounceTime = 1000;
 
   //ignore error for now, we'll do an array.find for symbols in a typeahead
@@ -16,7 +18,7 @@ export default function CheckStonk() {
 
   useEffect(() => {
     getSymbols();
-    if (debouncedTicker) getStonk(debouncedTicker);
+    if (debouncedTicker) getStonkQuote(debouncedTicker);
 
     // get the symbols (lazily) for a smooth typeahead experience (typeahead not yet implemented)
     async function getSymbols() {
@@ -34,7 +36,7 @@ export default function CheckStonk() {
       }
 
       try {
-        const symbolsResponse = await fetch(`${apiUrl}/symbols`);
+        const symbolsResponse = await get(`${apiUrl}/symbols`);
         const symbols = await symbolsResponse.json();
         localStorage.symbols = JSON.stringify({
           ...symbols,
@@ -47,13 +49,13 @@ export default function CheckStonk() {
     }
 
     // since we are going to use a typeahead, this will be used when the actual stock is chosen
-    async function getStonk(ticker) {
+    async function getStonkQuote(ticker) {
       console.log(`getting ${ticker}...`);
 
       try {
-        const response = await fetch(`${apiUrl}/quote/${ticker}`);
-        const fetchedStonk = response ? await response.json() : false;
-        return setStonk(fetchedStonk);
+        const fetchedStonkQuote =
+          (await get(`${apiUrl}/quote/${ticker}`)) || false;
+        return setStonk(fetchedStonkQuote);
       } catch (error) {
         console.log(`failed to fetch ${ticker}: ${error.toString()}`);
         return setStonk(false);
@@ -61,10 +63,35 @@ export default function CheckStonk() {
     }
   }, [debouncedTicker]);
 
-  function setTicker(event) {
-    const { value: ticker } = event.target;
+  // Why is this necessary? You can't directly use the useState update function as an event handler
+  // So instead of creating a handler for every input, this generic one reads the input id and updates state accordingly
+  function setInputValue(event) {
+    const { id, value } = event.target;
     event.persist();
-    setStonkTicker(ticker);
+    switch (id) {
+      case "stonk-symbol":
+        setStonkTicker(value);
+        break;
+      case "previous-growth-rate":
+        setPreviousGrowthRate(value);
+        break;
+      case "future-growth-rate":
+        setFutureGrowthRate(value);
+        break;
+    }
+  }
+
+  async function getStonkCalculation() {
+    if (debouncedTicker && previousGrowthRate && futureGrowthRate) {
+      try {
+        const stonk =
+          (await post(`${apiUrl}/dashboard/${debouncedTicker}`)) || false;
+      } catch (error) {
+        console.log(
+          `An error occurred while attempting to get the stonk calulation for ${debouncedTicker}: ${error.toString()}`
+        );
+      }
+    }
   }
 
   return (
@@ -76,22 +103,35 @@ export default function CheckStonk() {
           id="stonk-symbol"
           placeholder="Stonk Symbol"
           data-testid="stonk-symbol"
-          onChange={setTicker}
+          onChange={setInputValue}
         />
         <div>Stonk found: {stonk ? stonk.symbol : "Stonk not found."}</div>
         <div>Current Price: {stonk && stonk.latestPrice}</div>
       </label>
-      <label htmlFor="five-year-rate" data-testid="five-year-label">
-        Expected Growth Rate:
+      <label htmlFor="previous-growth-rate" data-testid="previous-growth-label">
+        Previous 5 Year Growth Rate:
         <input
           type="text"
-          id="five-year-rate"
-          placeholder="5 year growth rate"
-          data-testid="five-year-rate"
-          onChange={setGrowthRate}
-          value={growthRate}
+          id="previous-growth-rate"
+          placeholder="previous growth rate"
+          data-testid="previous-growth-rate"
+          onChange={setInputValue}
+          value={previousGrowthRate}
         />
       </label>
+      <label htmlFor="future-growth-rate" data-testid="future-growth-label">
+        Expected Future Growth Rate:
+        <input
+          type="text"
+          id="future-growth-rate"
+          placeholder="future growth rate"
+          data-testid="future-growth-rate"
+          onChange={setInputValue}
+          value={futureGrowthRate}
+        />
+      </label>
+
+      <button type="submit">Get Calculation</button>
     </form>
   );
 }
