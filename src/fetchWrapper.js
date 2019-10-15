@@ -25,8 +25,13 @@ export const post = async (url, payload, customOptions) => {
   }
 
   const fetchOptions = customOptions
-    ? { ...baseFetchOptions, method: "POST", body: payload, ...customOptions }
-    : { ...baseFetchOptions, method: "POST" };
+    ? {
+        ...baseFetchOptions,
+        method: "POST",
+        body: JSON.stringify(payload),
+        ...customOptions
+      }
+    : { ...baseFetchOptions, method: "POST", body: JSON.stringify(payload) };
 
   try {
     return await fetchWrapper(url, fetchOptions);

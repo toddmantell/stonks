@@ -6,7 +6,8 @@ import { get, post } from "../fetchWrapper";
 export default function CheckStonk() {
   const apiUrl = getDevOrProdAPIURL();
   const [stonkTicker, setStonkTicker] = useState("");
-  const [stonk, setStonk] = useState(false);
+  const [stonkQuote, setStonkQuote] = useState(undefined);
+  const [stonk, setStonk] = useState(undefined);
   const [futureGrowthRate, setFutureGrowthRate] = useState(0);
   const [previousGrowthRate, setPreviousGrowthRate] = useState(0);
   const debounceTime = 1000;
@@ -55,10 +56,12 @@ export default function CheckStonk() {
       try {
         const fetchedStonkQuote =
           (await get(`${apiUrl}/quote/${ticker}`)) || false;
-        return setStonk(fetchedStonkQuote);
+        console.log("quote: ", fetchedStonkQuote);
+
+        return setStonkQuote(fetchedStonkQuote);
       } catch (error) {
         console.log(`failed to fetch ${ticker}: ${error.toString()}`);
-        return setStonk(false);
+        return setStonkQuote(false);
       }
     }
   }, [debouncedTicker]);
@@ -81,11 +84,21 @@ export default function CheckStonk() {
     }
   }
 
-  async function getStonkCalculation() {
+  async function getStonkCalculation(event) {
+    event.preventDefault();
     if (debouncedTicker && previousGrowthRate && futureGrowthRate) {
       try {
+        const stonkForCalc = {
+          ticker: debouncedTicker,
+          futureGrowthRate,
+          previousGrowthRate
+        };
         const stonk =
-          (await post(`${apiUrl}/dashboard/${debouncedTicker}`)) || false;
+          (await post(`${apiUrl}/calculateMetrics`, stonkForCalc)) || false;
+
+        setStonk(stonk || false);
+
+        // also have to send the payload to an addStonk endpoint
       } catch (error) {
         console.log(
           `An error occurred while attempting to get the stonk calulation for ${debouncedTicker}: ${error.toString()}`
@@ -95,43 +108,55 @@ export default function CheckStonk() {
   }
 
   return (
-    <form data-testid="check-stonk-form">
-      <h2 data-testid="form-heading">Placeholder</h2>
-      <label htmlFor="" data-testid="stonk-name-label">
-        Enter Stonk Symboldata-testid="stonk-name-label"
-        <input
-          id="stonk-symbol"
-          placeholder="Stonk Symbol"
-          data-testid="stonk-symbol"
-          onChange={setInputValue}
-        />
-        <div>Stonk found: {stonk ? stonk.symbol : "Stonk not found."}</div>
-        <div>Current Price: {stonk && stonk.latestPrice}</div>
-      </label>
-      <label htmlFor="previous-growth-rate" data-testid="previous-growth-label">
-        Previous 5 Year Growth Rate:
-        <input
-          type="text"
-          id="previous-growth-rate"
-          placeholder="previous growth rate"
-          data-testid="previous-growth-rate"
-          onChange={setInputValue}
-          value={previousGrowthRate}
-        />
-      </label>
-      <label htmlFor="future-growth-rate" data-testid="future-growth-label">
-        Expected Future Growth Rate:
-        <input
-          type="text"
-          id="future-growth-rate"
-          placeholder="future growth rate"
-          data-testid="future-growth-rate"
-          onChange={setInputValue}
-          value={futureGrowthRate}
-        />
-      </label>
+    <article>
+      <form data-testid="check-stonk-form" onSubmit={getStonkCalculation}>
+        <h2 data-testid="form-heading">Placeholder</h2>
+        <label htmlFor="" data-testid="stonk-name-label">
+          Enter Stonk Symbol
+          <input
+            id="stonk-symbol"
+            placeholder="Stonk Symbol"
+            data-testid="stonk-symbol"
+            onChange={setInputValue}
+          />
+          <div>
+            Stonk found: {stonkQuote ? stonkQuote.symbol : "Stonk not found."}
+          </div>
+          <div>Current Price: {stonkQuote && stonkQuote.latestPrice}</div>
+        </label>
+        <div>
+          <label
+            htmlFor="previous-growth-rate"
+            data-testid="previous-growth-label"
+          >
+            Previous 5 Year Growth Rate:
+            <input
+              type="text"
+              id="previous-growth-rate"
+              placeholder="previous growth rate"
+              data-testid="previous-growth-rate"
+              onChange={setInputValue}
+              value={previousGrowthRate}
+            />
+          </label>
+        </div>
+        <div>
+          <label htmlFor="future-growth-rate" data-testid="future-growth-label">
+            Expected Future Growth Rate:
+            <input
+              type="text"
+              id="future-growth-rate"
+              placeholder="future growth rate"
+              data-testid="future-growth-rate"
+              onChange={setInputValue}
+              value={futureGrowthRate}
+            />
+          </label>
+        </div>
+        <button type="submit">Get Calculation</button>
+      </form>
 
-      <button type="submit">Get Calculation</button>
-    </form>
+      {stonk && <div>Forward: {stonk.forwardGrahamFormulaNumber}</div>}
+    </article>
   );
 }
