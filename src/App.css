@@ -1,46 +1,66 @@
-.App {
+.app {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
+.app-header {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  top: 0;
+  left: 0;
   background-color: #282c34;
-  min-height: 120px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-header .heading {
-  margin: 10px 0 0 0;
+.app-header .container {
+  padding: 0 20px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  align-items: center;
 }
 
-.App-header .explanation-text {
+.app-header .banner {
+  display: flex;
+  height: 60px;
+}
+
+.app-header .logo {
+  width: 60px;
+}
+
+.logo-name {
+  font-size: 40px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.app-header .explanation-text {
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-weight: 200;
   font-size: 16px;
   color: #ffffff;
 }
 
-.App-header a {
+.app-header a {
   color: #ffffff;
 }
 
-.App-link {
+.app-header .nav {
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.app-link {
   color: #61dafb;
 }
 
 @media (max-width: 700px) {
   .stonks-container {
-    margin-top: 10px;
+    margin-top: 130px;
     display: grid;
     grid-template-areas: 
       'stonk';
@@ -49,7 +69,7 @@
 
 @media (min-width: 701px) {
   .stonks-container {
-    margin-top: 10px;
+    margin-top: 130px;
     display: grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
     grid-column-gap: 10px;

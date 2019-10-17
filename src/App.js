@@ -8,7 +8,7 @@ import Header from "./components/Header";
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div className="app">
         <Header />
         <Route exact path="/" component={Dashboard} />
         <Route path="/addstonk" component={AddStonk} />
