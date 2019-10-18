@@ -26,8 +26,12 @@ export default function Header() {
 					</div> */}
           <nav className="header nav">
             {" "}
-            <Link to="/">Home/Dashboard</Link>
-            <Link to="/addStonk">Add Stonks</Link>
+            <Link to="/" className="nav-item">
+              Home/Dashboard
+            </Link>
+            <Link to="/addStonk" className="nav-item">
+              Add Stonks
+            </Link>
           </nav>
         </div>
       </div>

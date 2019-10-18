@@ -1,5 +1,5 @@
 .app {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .app-header {
@@ -54,13 +54,19 @@
   overflow-y: auto;
 }
 
+.nav-item {
+  margin: 0 20px;
+  font-size: 30px;
+  font-weight: 300;
+}
+
 .app-link {
   color: #61dafb;
 }
 
 @media (max-width: 700px) {
   .stonks-container {
-    margin-top: 130px;
+    margin-top: 100px;
     display: grid;
     grid-template-areas: 
       'stonk';
@@ -69,7 +75,7 @@
 
 @media (min-width: 701px) {
   .stonks-container {
-    margin-top: 130px;
+    margin-top: 100px;
     display: grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
     grid-column-gap: 10px;
@@ -80,6 +86,7 @@
   transition: 0.3s;
   border-radius: 10px;
   grid-area: stonk;
+  background-color: #ffffff;
 }
 
 .stonk-card:hover {
@@ -104,4 +111,42 @@
 .stonk-attribute__bottom {
   margin-bottom: 1em;
   text-decoration: none;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.gain {
+  color: green;
+}
+
+.loss {
+  color: red;
+}
+
+.add-stonks {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.add-stonk-form {
+  border: grey solid 1px;
+}
+
+.input-label {
+  display: inline-block;
+  margin-bottom: 5rem;
+}
+
+.textbox {
+  width: 200px;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  border: grey solid 1px;
+  border-radius: 4px;
+}
+
+.metrics {
+  margin: 60px 20px;
 }

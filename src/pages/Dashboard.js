@@ -30,20 +30,24 @@ export default function Dashboard() {
     };
 
     function checkForUpdatedStonks(fetchResult) {
-      for (let i = 0; i < fetchResult.length; i += 1) {
-        const stonksInLocalStorage =
-          localStorage.stonks && JSON.parse(localStorage.stonks);
+      if (localStorage.stonks) {
+        for (let i = 0; i < fetchResult.length; i += 1) {
+          const stonksInLocalStorage =
+            localStorage.stonks && JSON.parse(localStorage.stonks);
 
-        const currentStonkInStorage = stonksInLocalStorage.find(
-          stonk => stonk.localTicker === fetchResult[i].localTicker
-        );
+          const currentStonkInStorage = stonksInLocalStorage.find(
+            stonk => stonk.localTicker === fetchResult[i].localTicker
+          );
 
-        if (currentStonkInStorage.latestPrice !== fetchResult[i].latestPrice) {
-          setUpdated(true);
+          if (
+            currentStonkInStorage.latestPrice !== fetchResult[i].latestPrice
+          ) {
+            setUpdated(true);
+          }
+
+          if (!updated) return setStonks(JSON.parse(localStorage.stonks));
         }
       }
-
-      if (!updated) return setStonks(JSON.parse(localStorage.stonks));
 
       setStonks(fetchResult);
       // stringify is necessary because items in local storage are stored as strings
