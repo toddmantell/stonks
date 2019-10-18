@@ -8,10 +8,10 @@ const promiseOptions = async inputValue => {
   return await get(`${apiURL}/symbolsQuery/${inputValue}`);
 };
 
-const TypeAhead = ({ handleInputChange }) => (
+const TypeAhead = ({ handleInputChange, defaults }) => (
   <AsyncSelect
     cacheOptions
-    defaultOptions={[{ value: "default", label: "default" }]}
+    defaultOptions={defaults}
     loadOptions={promiseOptions}
     onChange={handleInputChange}
   />

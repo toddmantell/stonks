@@ -131,17 +131,25 @@
 }
 
 .add-stonk-form {
+  margin-top: 61px;
+  padding: 20px;
   border: grey solid 1px;
 }
 
+.add-stonk-heading {
+  text-decoration: underline;
+}
+
 .input-label {
-  display: inline-block;
-  margin-bottom: 5rem;
+  display: block;
+  margin-bottom: 1rem;
 }
 
 .textbox {
+  display: block;
   width: 200px;
   padding: .375rem .75rem;
+  margin-bottom: 1rem;
   font-size: 1rem;
   border: grey solid 1px;
   border-radius: 4px;
@@ -149,4 +157,15 @@
 
 .metrics {
   margin: 60px 20px;
+}
+
+.form-button {
+  width: 150px;
+  height: 40px;
+  background-color: #015e11;
+  color: white;
+  font-weight: 400;
+  border-color: #015e11;
+  border-radius: 4px;
+
 }

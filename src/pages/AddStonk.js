@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getDevOrProdAPIURL } from "../data/getStonks";
-import TypeAhead from "../components/TypeAhead";
 import { get, post } from "../fetchWrapper";
+import AddStonkForm from "../components/AddStonkForm";
 
 export default function AddStonk() {
   const apiUrl = getDevOrProdAPIURL();
@@ -21,9 +21,6 @@ export default function AddStonk() {
       try {
         const fetchedStonkQuote =
           (await get(`${apiUrl}/quote/${ticker}`)) || false;
-        console.log("quote: ", fetchedStonkQuote);
-
-        resetForm();
         return setStonkQuote(fetchedStonkQuote);
       } catch (error) {
         console.log(`failed to fetch ${ticker}: ${error.toString()}`);
@@ -56,10 +53,10 @@ export default function AddStonk() {
 
   async function getStonkCalculation(event) {
     event.preventDefault();
-    if (stonkTicker && previousGrowthRate && futureGrowthRate) {
+    if (stonkTicker.value && previousGrowthRate && futureGrowthRate) {
       try {
         const stonkForCalc = {
-          ticker: stonkTicker,
+          ticker: stonkTicker.value,
           futureGrowthRate,
           previousGrowthRate
         };
@@ -82,66 +79,19 @@ export default function AddStonk() {
   }
 
   function setTickerAndGetQuote(ticker) {
+    resetForm();
     setStonkTicker(ticker);
   }
 
   return (
     <article className="add-stonks">
-      <form
-        data-testid="add-stonk-form"
-        className="add-stonk-form"
-        onSubmit={getStonkCalculation}
-      >
-        <h2 data-testid="form-heading">Placeholder</h2>
-        <div>
-          <label
-            htmlFor="stonk-symbol"
-            data-testid="stonk-symbol-label"
-            className="input-label"
-          >
-            Enter Stonk Symbol:
-          </label>
-          <TypeAhead handleInputChange={setTickerAndGetQuote} />
-        </div>
-        <div>
-          <label
-            htmlFor="previous-growth-rate"
-            data-testid="previous-growth-label"
-            className="input-label"
-          >
-            Previous 5 Year Growth Rate:
-          </label>
-          <input
-            type="text"
-            id="previous-growth-rate"
-            placeholder="Previous growth rate"
-            data-testid="previous-growth-rate"
-            className="textbox"
-            onChange={setInputValue}
-            value={previousGrowthRate || ""}
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="future-growth-rate"
-            data-testid="future-growth-label"
-            className="input-label"
-          >
-            Expected Future Growth Rate:
-          </label>
-          <input
-            type="text"
-            id="future-growth-rate"
-            placeholder="Future growth rate"
-            data-testid="future-growth-rate"
-            className="textbox"
-            onChange={setInputValue}
-            value={futureGrowthRate || ""}
-          />
-        </div>
-        <button type="submit">Get Calculation</button>
-      </form>
-
+      <AddStonkForm
+        getStonkCalculation={getStonkCalculation}
+        setTickerAndGetQuote={setTickerAndGetQuote}
+        setInputValue={setInputValue}
+        previousGrowthRate={previousGrowthRate}
+        futureGrowthRate={futureGrowthRate}
+      />
       <div className="metrics">
         <div>
           Stonk found: {stonkQuote ? stonkQuote.symbol : "Stonk not found."}
@@ -201,7 +151,11 @@ export default function AddStonk() {
             </div>
           </>
         )}
-        <button type="submit" onClick={addStonkToStonks}>
+        <button
+          type="submit"
+          className="form-button"
+          onClick={addStonkToStonks}
+        >
           Add Stonk
         </button>
       </div>
