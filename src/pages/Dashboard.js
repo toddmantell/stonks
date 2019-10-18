@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import getStonks from "../data/getStonks";
 import Stonk from "../components/stonk/Stonk";
-import StonkCardContainer from "../components/stonk/StonkCardContainer";
-
-//TODO:
-//Should there be a refresh button? Or auto-refresh?
+import ContentSkeleton from "../components/ContentSkeleton";
 
 export default function Dashboard() {
   const [stonks, setStonks] = useState([]);
   const [updated, setUpdated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,6 +18,7 @@ export default function Dashboard() {
           window.alert(
             "Failed to retrieve stonks. You are viewing stale data."
           );
+          setIsLoading(false);
           return setStonks(JSON.parse(localStorage.stonks));
         }
 
@@ -45,11 +44,15 @@ export default function Dashboard() {
             setUpdated(true);
           }
 
-          if (!updated) return setStonks(JSON.parse(localStorage.stonks));
+          if (!updated) {
+            setIsLoading(false);
+            return setStonks(JSON.parse(localStorage.stonks));
+          }
         }
       }
 
       setStonks(fetchResult);
+      setIsLoading(false);
       // stringify is necessary because items in local storage are stored as strings
       localStorage.stonks = JSON.stringify(fetchResult);
     }
@@ -59,15 +62,13 @@ export default function Dashboard() {
 
   return (
     <main className="stonks-container">
-      {stonks.length
-        ? stonks.map((stonk, index) => {
-            return (
-              <StonkCardContainer key={`stonk-${index}`}>
-                <Stonk {...stonk} />
-              </StonkCardContainer>
-            );
-          })
-        : null}
+      {isLoading === true
+        ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
+            <ContentSkeleton key={`skeleton-${item}`} />
+          ))
+        : stonks.map((stonk, index) => {
+            return <Stonk {...stonk} />;
+          })}
     </main>
   );
 }

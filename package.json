@@ -5,8 +5,10 @@
   "homepage": ".",
   "dependencies": {
     "react": "^16.9.0",
+    "react-content-loader": "^4.3.2",
     "react-dom": "^16.9.0",
     "react-flippy": "^0.1.5",
+    "react-loading-skeleton": "^1.2.0",
     "react-router-dom": "^5.1.0",
     "react-scripts": "3.1.1",
     "react-select": "^3.0.8",
