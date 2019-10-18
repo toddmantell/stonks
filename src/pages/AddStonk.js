@@ -11,46 +11,6 @@ export default function AddStonk() {
   const [futureGrowthRate, setFutureGrowthRate] = useState(0);
   const [previousGrowthRate, setPreviousGrowthRate] = useState(0);
 
-  //ignore error for now, we'll do an array.find for symbols in a typeahead
-  const [symbols, setSymbols] = useState([]);
-
-  useEffect(() => {
-    // get the symbols (lazily) for a smooth typeahead experience (typeahead not yet implemented)
-    async function getSymbols() {
-      if (localStorage.symbols) {
-        const localSymbols = JSON.parse(localStorage.symbols);
-        console.log("localSymbols", localSymbols);
-
-        setSymbols(localSymbols);
-
-        // (
-        // 	localStorage.symbols &&
-        // 	localStorage.symbols.lastUpdated > Date.now() - 86400000
-        // ) {
-        // 	// IEX updates the symbols every day at 7:45 Eastern
-        // 	// Check to see if the data in localStorage is older than this morning at 7:45 or 7:45 am
-        // 	// if 24 hours have not passed since 7:45 yet
-        // 	// Might also be a good idea to have some mechanism in the back end that retrieves the data and/or stores it in a db
-        // }
-      } else {
-        try {
-          const symbols = await get(`${apiUrl}/symbols`);
-          localStorage.symbols = JSON.stringify([
-            ...symbols,
-            {
-              lastUpdated: Date.now()
-            }
-          ]);
-          setSymbols(symbols);
-        } catch (error) {
-          console.log(`An error occurred while fetching symbols: ${error}`);
-        }
-      }
-    }
-
-    getSymbols();
-  }, [setSymbols]);
-
   useEffect(() => {
     if (stonkTicker.value) getStonkQuote(stonkTicker.value);
 
@@ -141,7 +101,7 @@ export default function AddStonk() {
           >
             Enter Stonk Symbol:
           </label>
-          <TypeAhead />
+          <TypeAhead handleInputChange={setTickerAndGetQuote} />
         </div>
         <div>
           <label
