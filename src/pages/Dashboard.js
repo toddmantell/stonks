@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import getStonks from "../data/getStonks";
 import Stonk from "../components/stonk/Stonk";
-import ContentSkeleton from "../components/ContentSkeleton";
+import StonkSkeleton from "../components/StonkSkeleton";
 
 export default function Dashboard() {
   const [stonks, setStonks] = useState([]);
@@ -64,7 +64,7 @@ export default function Dashboard() {
     <main className="stonks-container">
       {isLoading === true
         ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
-            <ContentSkeleton key={`skeleton-${item}`} />
+            <StonkSkeleton key={`skeleton-${item}`} />
           ))
         : stonks.map((stonk, index) => {
             return <Stonk {...stonk} />;

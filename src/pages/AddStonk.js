@@ -74,8 +74,15 @@ export default function AddStonk() {
     }
   }
 
-  function addStonkToStonks() {
-    // Not implemented
+  async function addStonkToStonks() {
+    // Not implemented yet, this is just some initial implementation stuff that won't work
+    if (stonk) {
+      const result = await post(
+        `${apiUrl}/api/addStonk`,
+        JSON.stringify(stonk)
+      );
+      result.ok && alert("stonk successfully added");
+    }
   }
 
   function setTickerAndGetQuote(ticker) {
