@@ -6,7 +6,7 @@ import { getDevOrProdAPIURL } from "../data/getStonks";
 export default function TypeAhead({ handleInputChange, defaults }) {
   async function getSymbols(inputValue) {
     const apiURL = getDevOrProdAPIURL();
-    return await get(`${apiURL}/symbolsQuery/${inputValue}`);
+    return await get(`${apiURL}/api/symbolsQuery/${inputValue}`);
   }
 
   return (
@@ -15,6 +15,7 @@ export default function TypeAhead({ handleInputChange, defaults }) {
       defaultOptions={defaults}
       loadOptions={getSymbols}
       onChange={handleInputChange}
+      className="typeahead"
     />
   );
 }

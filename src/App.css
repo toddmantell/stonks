@@ -132,17 +132,25 @@
 
 .add-stonks {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 50% 30%;
+  border: grey solid 1px;
+  width: 50%;
+  margin-left: 50px;
 }
 
 .add-stonk-form {
   margin-top: 61px;
   padding: 20px;
-  border: grey solid 1px;
 }
 
 .add-stonk-heading {
   text-decoration: underline;
+  color: #282c34;
+}
+
+.typeahead {
+  margin-bottom: 1rem;
+  width: 400px;
 }
 
 .input-label {
@@ -160,8 +168,32 @@
   border-radius: 4px;
 }
 
-.metrics {
-  margin: 60px 20px;
+.metrics-section {
+  margin-top: 60px;
+  padding: 20px;
+}
+
+.metrics-heading {
+  margin: 0 0 1rem 0;
+}
+
+.metrics-section--metrics {
+  margin-bottom: 1rem;
+  width: 300px;
+}
+
+.metrics-section--metric {
+  margin: .2rem 0;
+  font-size: 20px;
+}
+
+.metrics-heading--symbol {
+  margin-bottom: 0;
+}
+
+.metrics-heading--price {
+  margin: 0 0 1rem 0;
+  font-size: 35px;
 }
 
 .form-button {
@@ -172,4 +204,8 @@
   font-weight: 400;
   border-color: #015e11;
   border-radius: 4px;
+}
+
+.form-button__hidden {
+  display: none;
 }

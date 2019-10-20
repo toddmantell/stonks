@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getDevOrProdAPIURL } from "../data/getStonks";
 import { get, post } from "../fetchWrapper";
 import AddStonkForm from "../components/AddStonkForm";
+import Metrics from "../components/Metrics";
 
 export default function AddStonk() {
   const apiUrl = getDevOrProdAPIURL();
@@ -20,7 +21,7 @@ export default function AddStonk() {
 
       try {
         const fetchedStonkQuote =
-          (await get(`${apiUrl}/quote/${ticker}`)) || false;
+          (await get(`${apiUrl}/api/quote/${ticker}`)) || false;
         return setStonkQuote(fetchedStonkQuote);
       } catch (error) {
         console.log(`failed to fetch ${ticker}: ${error.toString()}`);
@@ -61,7 +62,7 @@ export default function AddStonk() {
           previousGrowthRate
         };
         const stonk =
-          (await post(`${apiUrl}/calculateMetrics`, stonkForCalc)) || false;
+          (await post(`${apiUrl}/api/calculateMetrics`, stonkForCalc)) || false;
 
         setStonk(stonk || false);
 
@@ -75,14 +76,11 @@ export default function AddStonk() {
   }
 
   async function addStonkToStonks() {
-    // Not implemented yet, this is just some initial implementation stuff that won't work
-    if (stonk) {
-      const result = await post(
-        `${apiUrl}/api/addStonk`,
-        JSON.stringify(stonk)
-      );
-      result.ok && alert("stonk successfully added");
-    }
+    const { symbol, latestPrice } = stonkQuote;
+    const stonkToSend = { ...stonk, ticker: symbol, latestPrice };
+
+    const result = await post(`${apiUrl}/api/addStonk`, stonkToSend);
+    result.ok && alert("stonk successfully added");
   }
 
   function setTickerAndGetQuote(ticker) {
@@ -99,73 +97,11 @@ export default function AddStonk() {
         previousGrowthRate={previousGrowthRate}
         futureGrowthRate={futureGrowthRate}
       />
-      <div className="metrics">
-        <div>
-          Stonk found: {stonkQuote ? stonkQuote.symbol : "Stonk not found."}
-        </div>
-        <div>Current Price: {stonkQuote && stonkQuote.latestPrice}</div>
-        {stonk && (
-          <>
-            <div>
-              Past:{" "}
-              <span
-                className={
-                  stonk.pastGrahamFormulaNumber < stonkQuote.latestPrice
-                    ? "bold loss"
-                    : "bold gain"
-                }
-              >
-                {stonk.pastGrahamFormulaNumber}
-              </span>
-            </div>
-            <div>
-              Past (Cons):{" "}
-              <span
-                className={
-                  stonk.pastConservativeGrahamFormulaNumber <
-                  stonkQuote.latestPrice
-                    ? "bold loss"
-                    : "bold gain"
-                }
-              >
-                {stonk.pastConservativeGrahamFormulaNumber}
-              </span>
-            </div>
-            <div>
-              Forward:{" "}
-              <span
-                className={
-                  stonk.forwardGrahamFormulaNumber < stonkQuote.latestPrice
-                    ? "bold loss"
-                    : "bold gain"
-                }
-              >
-                {stonk.forwardGrahamFormulaNumber}
-              </span>
-            </div>
-            <div>
-              Forward (Cons):{" "}
-              <span
-                className={
-                  stonk.forwardConservativeGrahamFormulaNumber <
-                  stonkQuote.latestPrice
-                    ? "bold loss"
-                    : "bold gain"
-                }
-              >
-                {stonk.forwardConservativeGrahamFormulaNumber}
-              </span>
-            </div>
-          </>
-        )}
-        <button
-          type="submit"
-          className="form-button"
-          onClick={addStonkToStonks}
-        >
-          Add Stonk
-        </button>
-      </div>
+      <Metrics
+        stonk={stonk}
+        stonkQuote={stonkQuote}
+        addStonkToStonks={addStonkToStonks}
+      />
     </article>
   );
 }
