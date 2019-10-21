@@ -11,6 +11,7 @@ export default function Stonk({
   pastGrahamFormulaNumber,
   grahamNumber,
   latestPrice,
+  changePercent,
   localTicker
 }) {
   return (
@@ -23,6 +24,7 @@ export default function Stonk({
       <FrontSide
         companyName={companyName}
         latestPrice={latestPrice}
+        changePercent={changePercent}
         localTicker={localTicker}
         grahamNumber={grahamNumber}
       />

@@ -31,6 +31,7 @@ const AddStonkForm = ({
     </div>
     <div>
       <label
+        id="previous-growth-label"
         htmlFor="previous-growth-rate"
         data-testid="previous-growth-label"
         className="input-label"
@@ -40,6 +41,7 @@ const AddStonkForm = ({
       <input
         type="text"
         id="previous-growth-rate"
+        aria-labelledby="previous-growth-label"
         placeholder="Previous growth rate"
         data-testid="previous-growth-rate"
         className="textbox"
@@ -49,6 +51,7 @@ const AddStonkForm = ({
     </div>
     <div>
       <label
+        id="future-growth-label"
         htmlFor="future-growth-rate"
         data-testid="future-growth-label"
         className="input-label"
@@ -58,6 +61,7 @@ const AddStonkForm = ({
       <input
         type="text"
         id="future-growth-rate"
+        aria-labelledby="future-growth-label"
         placeholder="Future growth rate"
         data-testid="future-growth-rate"
         className="textbox"

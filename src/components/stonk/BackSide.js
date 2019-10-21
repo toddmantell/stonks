@@ -21,12 +21,12 @@ export default ({
             : { color: "red" }
         }
       >
-        {forwardGrahamFormulaNumber}
+        ${forwardGrahamFormulaNumber}
       </span>
     </div>
     <hr />
     <div className="stonk-attribute">
-      Forward Number (Conservative):{" "}
+      Forward Number (Cons.):{" "}
       <span
         style={
           forwardConservativeGrahamFormulaNumber > latestPrice
@@ -34,7 +34,7 @@ export default ({
             : { color: "red" }
         }
       >
-        {forwardConservativeGrahamFormulaNumber}
+        ${forwardConservativeGrahamFormulaNumber}
       </span>
     </div>
     <hr />
@@ -47,12 +47,12 @@ export default ({
             : { color: "red" }
         }
       >
-        {pastGrahamFormulaNumber}
+        ${pastGrahamFormulaNumber}
       </span>
     </div>
     <hr />
     <div className="stonk-attribute stonk-attribute__bottom">
-      Past Number (Conservative):{" "}
+      Past Number (Cons.):{" "}
       <span
         style={
           pastConservativeGrahamFormulaNumber > latestPrice
@@ -60,7 +60,7 @@ export default ({
             : { color: "red" }
         }
       >
-        {pastConservativeGrahamFormulaNumber}
+        ${pastConservativeGrahamFormulaNumber}
       </span>
     </div>
   </BackSide>
