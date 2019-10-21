@@ -25,6 +25,7 @@
 .app-header .banner {
   display: flex;
   height: 60px;
+  margin-left: 5rem;
 }
 
 .app-header .logo {
@@ -34,7 +35,7 @@
 .logo-name {
   font-size: 40px;
   font-weight: 650;
-  text-decoration: none;
+  text-decoration: none;  
 }
 
 .app-header .explanation-text {
@@ -52,12 +53,15 @@
   display: flex;
   overflow-x: hidden;
   overflow-y: auto;
+  margin-left: 5rem;
+  padding-top: .45rem;
 }
 
 .nav-item {
   margin: 0 20px;
   font-size: 30px;
   font-weight: 300;
+  text-decoration: none;
 }
 
 .app-link {
@@ -75,7 +79,7 @@
 
 @media (min-width: 701px) {
   .stonks-container {
-    margin-top: 100px;
+    margin: 100px 40px 0 70px;
     display: grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
     grid-column-gap: 10px;
@@ -131,21 +135,22 @@
 }
 
 .add-stonks {
+  margin: 100px 0 0 70px;
   display: grid;
   grid-template-columns: 50% 30%;
-  border: grey solid 1px;
+  border: hsl(0,0%,80%) solid 1px;
+  border-radius: 10px;
   width: 50%;
-  margin-left: 50px;
+
 }
 
 .add-stonk-form {
-  margin-top: 61px;
   padding: 20px;
 }
 
 .add-stonk-heading {
-  text-decoration: underline;
   color: #282c34;
+  font-size: 30px;
 }
 
 .typeahead {
@@ -163,13 +168,25 @@
   width: 200px;
   padding: .375rem .75rem;
   margin-bottom: 1rem;
+  min-height: 22px;
   font-size: 1rem;
-  border: grey solid 1px;
+  border: hsl(0,0%,80%) solid 1px;  
   border-radius: 4px;
 }
 
+.textbox:focus {
+  background-color: white;
+}
+
+/* This is because Chrome autofill makes the inputs an odd color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
 .metrics-section {
-  margin-top: 60px;
   padding: 20px;
 }
 
@@ -198,12 +215,22 @@
 
 .form-button {
   width: 150px;
-  height: 40px;
-  background-color: #015e11;
+  height: 50px;
+  background-color: #85BF31;
   color: white;
-  font-weight: 400;
-  border-color: #015e11;
-  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 0;
+  box-shadow: none;
+  border-radius: 3px;
+}
+
+.form-button:hover {
+  background-color: rgb(106, 155, 37);
+}
+
+.form-button:focus {
+  outline-style: none;
 }
 
 .form-button__hidden {

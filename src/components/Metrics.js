@@ -26,7 +26,7 @@ const Metrics = ({ stonkQuote, stonk, addStonkToStonks }) => (
                   : "bold gain"
               }
             >
-              {stonk.pastGrahamFormulaNumber}
+              ${stonk.pastGrahamFormulaNumber}
             </span>
           </div>
           <hr />
@@ -40,7 +40,7 @@ const Metrics = ({ stonkQuote, stonk, addStonkToStonks }) => (
                   : "bold gain"
               }
             >
-              {stonk.pastConservativeGrahamFormulaNumber}
+              ${stonk.pastConservativeGrahamFormulaNumber}
             </span>
           </div>
           <hr />
@@ -53,7 +53,7 @@ const Metrics = ({ stonkQuote, stonk, addStonkToStonks }) => (
                   : "bold gain"
               }
             >
-              {stonk.forwardGrahamFormulaNumber}
+              ${stonk.forwardGrahamFormulaNumber}
             </span>
           </div>
           <hr />
@@ -67,7 +67,7 @@ const Metrics = ({ stonkQuote, stonk, addStonkToStonks }) => (
                   : "bold gain"
               }
             >
-              {stonk.forwardConservativeGrahamFormulaNumber}
+              ${stonk.forwardConservativeGrahamFormulaNumber}
             </span>
           </div>
         </>

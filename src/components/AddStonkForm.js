@@ -14,7 +14,7 @@ const AddStonkForm = ({
     onSubmit={getStonkCalculation}
   >
     <h2 data-testid="form-heading" className="add-stonk-heading">
-      Find New Stonks:
+      Add A New Stonk:
     </h2>
     <div>
       <label

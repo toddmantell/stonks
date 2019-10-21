@@ -1,5 +1,5 @@
 import settings from "../settings.js";
-import { get } from "../fetchWrapper";
+import { get } from "./fetchWrapper";
 
 export default async function getStonks() {
   const apiUrl = getDevOrProdAPIURL();

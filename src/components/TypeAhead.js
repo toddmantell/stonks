@@ -1,6 +1,6 @@
 import React from "react";
 import AsyncSelect from "react-select/async";
-import { get } from "../fetchWrapper";
+import { get } from "../data/fetchWrapper";
 import { getDevOrProdAPIURL } from "../data/getStonks";
 
 export default function TypeAhead({ handleInputChange, defaults }) {

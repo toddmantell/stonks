@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getDevOrProdAPIURL } from "../data/getStonks";
-import { get, post } from "../fetchWrapper";
+import { get, post } from "../data/fetchWrapper";
 import AddStonkForm from "../components/AddStonkForm";
 import Metrics from "../components/Metrics";
 
@@ -80,7 +80,7 @@ export default function AddStonk() {
     const stonkToSend = { ...stonk, ticker: symbol, latestPrice };
 
     const result = await post(`${apiUrl}/api/addStonk`, stonkToSend);
-    result.ok && alert("stonk successfully added");
+    result && alert("stonk successfully added");
   }
 
   function setTickerAndGetQuote(ticker) {
