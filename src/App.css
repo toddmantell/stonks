@@ -1,7 +1,3 @@
-.app {
-  /* text-align: center; */
-}
-
 .app-header {
   position: fixed;
   z-index: 1;
@@ -33,7 +29,8 @@
 }
 
 .logo-name {
-  font-size: 40px;
+  padding-top: .5rem;
+  font-size: 25px;
   font-weight: 650;
   text-decoration: none;  
 }
@@ -54,12 +51,12 @@
   overflow-x: hidden;
   overflow-y: auto;
   margin-left: 5rem;
-  padding-top: .45rem;
 }
 
 .nav-item {
   margin: 0 20px;
-  font-size: 30px;
+  padding-top: .75rem;
+  font-size: 20px;
   font-weight: 300;
   text-decoration: none;
 }
@@ -68,20 +65,58 @@
   color: #61dafb;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
+  .app-header .nav {
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-left: 2rem;
+}
+
+.nav-item {
+  margin: 0 5px;
+  padding-top: .75rem;
+  font-size: 20px;
+  font-weight: 300;
+  text-decoration: none;
+}
+
+
   .stonks-container {
-    margin-top: 100px;
+    margin-top: 80px;
     display: grid;
     grid-template-areas: 
       'stonk';
+    row-gap: 25px;
+    margin-left: 100px;
   }
 }
 
-@media (min-width: 701px) {
+@media (min-width: 768px) and (max-width: 990px) {
   .stonks-container {
-    margin: 100px 40px 0 70px;
+    margin: 80px 20px 0 35px;
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: 2px;
+    row-gap: 25px;
+  }
+}
+
+@media (min-width: 990px) and (max-width: 1300px) {
+  .stonks-container {
+    margin: 80px 20px 0 35px;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-column-gap: 5px;
+    row-gap: 25px;
+  }
+}
+
+@media (min-width: 1300px) {
+  .stonks-container {
+    margin: 80px 40px 0 70px;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
     grid-column-gap: 10px;
     row-gap: 25px;
   }
@@ -104,7 +139,7 @@
 }
 
 .stonk-card--backside {
-  height: 120%;
+  height: 125%;
   border-radius: 10px;
 }
 
@@ -134,14 +169,26 @@
   color: red;
 }
 
-.add-stonks {
-  margin: 100px 0 0 70px;
-  display: grid;
-  grid-template-columns: 50% 30%;
-  border: hsl(0,0%,80%) solid 1px;
-  border-radius: 10px;
-  width: 50%;
+@media (max-width: 1200px) {
+  .add-stonks {
+    margin: 100px 0 0 70px;
+    display: grid;
+    grid-template-columns: 100%;
+    border: hsl(0,0%,80%) solid 1px;
+    border-radius: 10px;
+    width: 80%;
+  }
+}
 
+@media (min-width: 1200px) {
+  .add-stonks {
+    margin: 100px 0 0 70px;
+    display: grid;
+    grid-template-columns: 45% 30%;
+    border: hsl(0,0%,80%) solid 1px;
+    border-radius: 10px;
+    width: 80%;
+  }
 }
 
 .add-stonk-form {
@@ -150,12 +197,13 @@
 
 .add-stonk-heading {
   color: #282c34;
-  font-size: 30px;
+  font-size: 23px;
 }
 
 .typeahead {
   margin-bottom: 1rem;
   width: 400px;
+  height: 30px;
 }
 
 .input-label {
@@ -194,6 +242,16 @@ input:-webkit-autofill:active  {
   margin: 0 0 1rem 0;
 }
 
+.metrics-heading--symbol {
+  margin-bottom: 0;
+  font-size: 22px;
+}
+
+.metrics-heading--price {
+  margin: 0 0 1rem 0;
+  font-size: 22px;
+}
+
 .metrics-section--metrics {
   margin-bottom: 1rem;
   width: 300px;
@@ -201,16 +259,7 @@ input:-webkit-autofill:active  {
 
 .metrics-section--metric {
   margin: .2rem 0;
-  font-size: 20px;
-}
-
-.metrics-heading--symbol {
-  margin-bottom: 0;
-}
-
-.metrics-heading--price {
-  margin: 0 0 1rem 0;
-  font-size: 35px;
+  font-size: 15px;
 }
 
 .form-button {

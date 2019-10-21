@@ -67,7 +67,7 @@ export default function Dashboard() {
             <StonkSkeleton key={`skeleton-${item}`} />
           ))
         : stonks.map((stonk, index) => {
-            return <Stonk {...stonk} />;
+            return <Stonk key={`stonk-${index}`} {...stonk} />;
           })}
     </main>
   );

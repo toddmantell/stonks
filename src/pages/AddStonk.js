@@ -81,6 +81,8 @@ export default function AddStonk() {
 
     const result = await post(`${apiUrl}/api/addStonk`, stonkToSend);
     result && alert("stonk successfully added");
+    resetForm();
+    setStonkQuote(undefined);
   }
 
   function setTickerAndGetQuote(ticker) {
