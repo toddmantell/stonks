@@ -148,6 +148,10 @@
   margin-left: 1em;
 }
 
+.stonk-attribute--companyName {
+  font-weight: 500;
+}
+
 .stonk-attribute__top {
   margin-top: 10px;
 }

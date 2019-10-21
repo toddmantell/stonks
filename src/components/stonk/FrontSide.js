@@ -11,7 +11,7 @@ export default ({
   <FrontSide className="stonk-card">
     <div className="stonk-attribute stonk-attribute__top">
       Company Name:{" "}
-      <div style={{ textDecoration: "underline" }}>{companyName}</div>
+      <div className="stonk-attribute--companyName">{companyName}</div>
     </div>
     <hr />
     <div className="stonk-attribute">
