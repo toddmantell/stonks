@@ -12,7 +12,7 @@ export default function Stonk({
   grahamNumber,
   latestPrice,
   changePercent,
-  localTicker
+  symbol
 }) {
   return (
     <Flippy
@@ -25,11 +25,11 @@ export default function Stonk({
         companyName={companyName}
         latestPrice={latestPrice}
         changePercent={changePercent}
-        localTicker={localTicker}
+        symbol={symbol}
         grahamNumber={grahamNumber}
       />
       <BackSide
-        localTicker={localTicker}
+        symbol={symbol}
         latestPrice={latestPrice}
         forwardConservativeGrahamFormulaNumber={
           forwardConservativeGrahamFormulaNumber

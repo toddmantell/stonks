@@ -3,7 +3,7 @@ import { FrontSide } from "react-flippy";
 
 export default ({
   companyName,
-  localTicker,
+  symbol,
   latestPrice,
   changePercent,
   grahamNumber
@@ -15,7 +15,7 @@ export default ({
     </div>
     <hr />
     <div className="stonk-attribute">
-      Ticker Symbol: <span>{localTicker}</span>
+      Ticker Symbol: <span>{symbol}</span>
     </div>
     <hr />
     <div className="stonk-attribute">

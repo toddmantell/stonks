@@ -35,7 +35,7 @@ export default function Dashboard() {
             localStorage.stonks && JSON.parse(localStorage.stonks);
 
           const currentStonkInStorage = stonksInLocalStorage.find(
-            stonk => stonk.localTicker === fetchResult[i].localTicker
+            stonk => stonk.symbol === fetchResult[i].symbol
           );
 
           if (

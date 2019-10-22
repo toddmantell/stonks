@@ -2,7 +2,7 @@ import React from "react";
 import { BackSide } from "react-flippy";
 
 export default ({
-  localTicker,
+  symbol,
   latestPrice,
   forwardConservativeGrahamFormulaNumber,
   forwardGrahamFormulaNumber,
@@ -10,7 +10,7 @@ export default ({
   pastGrahamFormulaNumber
 }) => (
   <BackSide style={{ height: "108%", borderRadius: "10px" }}>
-    <div className="stonk-attribute">({localTicker})</div>
+    <div className="stonk-attribute">({symbol})</div>
     <hr />
     <div className="stonk-attribute">
       Forward Number:{" "}

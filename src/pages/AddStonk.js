@@ -17,8 +17,6 @@ export default function AddStonk() {
 
     // since we are going to use a typeahead, this will be used when the actual stock is chosen
     async function getStonkQuote(ticker) {
-      console.log(`getting ${ticker}...`);
-
       try {
         const fetchedStonkQuote =
           (await get(`${apiUrl}/api/quote/${ticker}`)) || false;
