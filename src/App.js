@@ -4,19 +4,25 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import AddStonk from "./pages/AddStonk";
 import Header from "./components/Header";
-import UserContext from "./data/context/UserContext";
+import UserContext, { UserProvider } from "./data/context/UserContext";
 
 function App() {
   return (
-    <UserContext>
+    <UserProvider>
       <Router>
         <div className="App">
           <Header />
-          <Route exact path="/" component={Dashboard} />
-          <Route path="/addstonk" component={AddStonk} />
+          <UserContext.Consumer>
+            {() => (
+              <>
+                <Route exact path="/" component={Dashboard} />
+                <Route path="/addstonk" component={AddStonk} />
+              </>
+            )}
+          </UserContext.Consumer>
         </div>
       </Router>
-    </UserContext>
+    </UserProvider>
   );
 }
 

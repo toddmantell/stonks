@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import getStonks from "../getStonks";
 
+const UserContext = React.createContext();
+export default UserContext;
+
 //the old class way
-class UserContextProvider extends Component {
-  state = { stonks: [], updated: false };
+export class UserProvider extends Component {
+  state = { stonks: [], updated: false, isLoading: true };
 
   async componentDidMount() {
+    if (this.state.stonks.length) return;
     try {
       const result = await getStonks();
 
@@ -42,24 +46,30 @@ class UserContextProvider extends Component {
     if (updated === false && localStorage.stonks)
       return this.setState({ stonks: JSON.parse(localStorage.stonks) });
 
-    this.setState({ stonks: fetchResult });
+    this.setState({ stonks: fetchResult, isLoading: false });
     // stringify is necessary because items in local storage are stored as strings
     localStorage.stonks = JSON.stringify(fetchResult);
   }
 
+  addStonkToStonks(stonk, stonkQuote) {
+    const { symbol, latestPrice } = stonkQuote;
+    const stonkToSend = { ...stonk, ticker: symbol, latestPrice };
+
+    // const result = await post(`${apiUrl}/api/addStonk`, stonkToSend);
+    this.setState({ stonks: [...this.state.stonks, stonkToSend] });
+    return true;
+  }
+
   render() {
-    const { stonks } = this.state;
     return (
       <UserContext.Provider
-        value={{ user: undefined, stonks }}
-      ></UserContext.Provider>
+        value={{ state: this.state, addStonkToStonks: this.addStonkToStonks }}
+      >
+        {this.props.children}
+      </UserContext.Provider>
     );
   }
 }
-
-const UserContext = React.createContext(UserContextProvider);
-
-export default UserContextProvider;
 
 // hooks way (this is failing, possibly at the useEffect level)
 // function UserContextProvider(props) {
