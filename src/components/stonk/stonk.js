@@ -11,23 +11,25 @@ export default function Stonk({
   pastGrahamFormulaNumber,
   grahamNumber,
   latestPrice,
-  localTicker
+  changePercent,
+  symbol
 }) {
   return (
     <Flippy
       flipOnHover={false}
       flipOnClick={true}
       flipDirection="horizontal"
-      style={{ width: "350px", height: "auto" }}
+      style={{ width: "300px", height: "220px" }}
     >
       <FrontSide
         companyName={companyName}
         latestPrice={latestPrice}
-        localTicker={localTicker}
+        changePercent={changePercent}
+        symbol={symbol}
         grahamNumber={grahamNumber}
       />
       <BackSide
-        localTicker={localTicker}
+        symbol={symbol}
         latestPrice={latestPrice}
         forwardConservativeGrahamFormulaNumber={
           forwardConservativeGrahamFormulaNumber

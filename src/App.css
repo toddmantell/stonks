@@ -1,46 +1,136 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
+.app-header {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  top: 0;
+  left: 0;
   background-color: #282c34;
-  min-height: 10vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-link {
+.app-header .container {
+  padding: 0 20px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  align-items: center;
+}
+
+.app-header .banner {
+  display: flex;
+  height: 60px;
+  margin-left: 5rem;
+}
+
+.app-header .logo {
+  width: 60px;
+}
+
+.logo-name {
+  padding-top: .5rem;
+  font-size: 25px;
+  font-weight: 650;
+  text-decoration: none;  
+}
+
+.app-header .explanation-text {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-weight: 200;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.app-header a {
+  color: #ffffff;
+}
+
+.app-header .nav {
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-left: 5rem;
+}
+
+.nav-item {
+  margin: 0 20px;
+  padding-top: .75rem;
+  font-size: 20px;
+  font-weight: 300;
+  text-decoration: none;
+}
+
+.app-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+@media (max-width: 768px) {
+  .app-header .nav {
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-left: 2rem;
+}
+
+.nav-item {
+  margin: 0 5px;
+  padding-top: .75rem;
+  font-size: 20px;
+  font-weight: 300;
+  text-decoration: none;
+}
+
+
+  .stonks-container {
+    margin-top: 80px;
+    display: grid;
+    grid-template-areas: 
+      'stonk';
+    row-gap: 25px;
+    margin-left: 100px;
   }
 }
 
-.stonks-container {
-  display: grid;
-  grid-template-columns: 25% 25% 25% 25%;
+@media (min-width: 768px) and (max-width: 990px) {
+  .stonks-container {
+    margin: 80px 20px 0 35px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: 2px;
+    row-gap: 25px;
+  }
+}
 
+@media (min-width: 990px) and (max-width: 1300px) {
+  .stonks-container {
+    margin: 80px 20px 0 35px;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-column-gap: 5px;
+    row-gap: 25px;
+  }
+}
+
+@media (min-width: 1300px) {
+  .stonks-container {
+    margin: 80px 40px 0 70px;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-column-gap: 10px;
+    row-gap: 25px;
+  }
+}
+
+.stonk-skeleton {
+  margin-left: 45px;
 }
 
 .stonk-card {
   transition: 0.3s;
   border-radius: 10px;
+  grid-area: stonk;
+  background-color: #ffffff;
 }
 
 .stonk-card:hover {
@@ -49,13 +139,17 @@
 }
 
 .stonk-card--backside {
-  height: 120%;
+  height: 125%;
   border-radius: 10px;
 }
 
 .stonk-attribute {
   text-align: left;
   margin-left: 1em;
+}
+
+.stonk-attribute--companyName {
+  font-weight: 500;
 }
 
 .stonk-attribute__top {
@@ -65,4 +159,133 @@
 .stonk-attribute__bottom {
   margin-bottom: 1em;
   text-decoration: none;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.gain {
+  color: green;
+}
+
+.loss {
+  color: red;
+}
+
+@media (max-width: 1200px) {
+  .add-stonks {
+    margin: 100px 0 0 70px;
+    display: grid;
+    grid-template-columns: 100%;
+    border: hsl(0,0%,80%) solid 1px;
+    border-radius: 10px;
+    width: 80%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .add-stonks {
+    margin: 100px 0 0 70px;
+    display: grid;
+    grid-template-columns: 45% 30%;
+    border: hsl(0,0%,80%) solid 1px;
+    border-radius: 10px;
+    width: 80%;
+  }
+}
+
+.add-stonk-form {
+  padding: 20px;
+}
+
+.add-stonk-heading {
+  color: #282c34;
+  font-size: 23px;
+}
+
+.typeahead {
+  margin-bottom: 1rem;
+  width: 400px;
+  height: 30px;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.textbox {
+  display: block;
+  width: 200px;
+  padding: .375rem .75rem;
+  margin-bottom: 1rem;
+  min-height: 22px;
+  font-size: 1rem;
+  border: hsl(0,0%,80%) solid 1px;  
+  border-radius: 4px;
+}
+
+.textbox:focus {
+  background-color: white;
+}
+
+/* This is because Chrome autofill makes the inputs an odd color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.metrics-section {
+  padding: 20px;
+}
+
+.metrics-heading {
+  margin: 0 0 1rem 0;
+}
+
+.metrics-heading--symbol {
+  margin-bottom: 0;
+  font-size: 22px;
+}
+
+.metrics-heading--price {
+  margin: 0 0 1rem 0;
+  font-size: 22px;
+}
+
+.metrics-section--metrics {
+  margin-bottom: 1rem;
+  width: 300px;
+}
+
+.metrics-section--metric {
+  margin: .2rem 0;
+  font-size: 15px;
+}
+
+.form-button {
+  width: 140px;
+  height: 45px;
+  background-color: #85BF31;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: 0;
+  box-shadow: none;
+  border-radius: 3px;
+}
+
+.form-button:hover {
+  background-color: rgb(106, 155, 37);
+}
+
+.form-button:focus {
+  outline-style: none;
+}
+
+.form-button__hidden {
+  display: none;
 }
