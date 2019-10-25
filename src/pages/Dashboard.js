@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import getStonks from "../data/getStonks";
-import Stonk from "../components/stonk/Stonk";
+import Stonk from "../components/Stonk";
 import StonkSkeleton from "../components/StonkSkeleton";
 
 export default function Dashboard() {
