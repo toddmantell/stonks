@@ -1,19 +1,24 @@
 import React, { Component } from "react";
-import getStonks from "../getStonks";
+import getStonks, { getDevOrProdAPIURL } from "../getStonks";
+import { get, post } from "../fetchWrapper";
 
 const UserContext = React.createContext();
 export default UserContext;
 
 //the old class way
 export class UserProvider extends Component {
-  state = { stonks: [], updated: false, isLoading: true };
-
+  state = { user: {}, stonks: [], updated: false, isLoading: true };
+  apiUrl = getDevOrProdAPIURL();
   async componentDidMount() {
     if (this.state.stonks.length) return;
     try {
-      const result = await getStonks();
+      const result = await get(
+        `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
+      );
+      // We can probably get rid of the getStonks method since we're storing them with the user
+      // const result = await getStonks();
 
-      if (!result.length) {
+      if (!result.stonks.length) {
         // we probably would rather have a better UX for this, but for a ProofOfC this suffices
         window.alert("Failed to retrieve stonks. You are viewing stale data.");
         return this.setState({ stonks: JSON.parse(localStorage.stonks) });
@@ -25,19 +30,19 @@ export class UserProvider extends Component {
     }
   }
 
-  checkForUpdatedStonks(fetchResult) {
-    const { stonks, updated } = this.state;
+  checkForUpdatedStonks(user) {
+    const { updated } = this.state;
 
     if (localStorage.stonks) {
-      for (let i = 0; i < fetchResult.length; i += 1) {
+      for (let i = 0; i < user.stonks.length; i += 1) {
         const stonksInLocalStorage =
           localStorage.stonks && JSON.parse(localStorage.stonks);
 
         const currentStonkInStorage = stonksInLocalStorage.find(
-          stonk => stonk.localTicker === fetchResult[i].localTicker
+          stonk => stonk.localTicker === user.stonks[i].localTicker
         );
 
-        if (currentStonkInStorage.latestPrice !== fetchResult[i].latestPrice) {
+        if (currentStonkInStorage.latestPrice !== user.stonks[i].latestPrice) {
           this.setState({ updated: true });
         }
       }
@@ -46,16 +51,17 @@ export class UserProvider extends Component {
     if (updated === false && localStorage.stonks)
       return this.setState({ stonks: JSON.parse(localStorage.stonks) });
 
-    this.setState({ stonks: fetchResult, isLoading: false });
+    this.setState({ user, stonks: user.stonks, isLoading: false });
     // stringify is necessary because items in local storage are stored as strings
-    localStorage.stonks = JSON.stringify(fetchResult);
+    localStorage.stonks = JSON.stringify(user.stonks);
   }
 
-  addStonkToStonks(stonk, stonkQuote) {
+  async addStonkToStonks(stonk, stonkQuote) {
     const { symbol, latestPrice } = stonkQuote;
     const stonkToSend = { ...stonk, ticker: symbol, latestPrice };
 
-    // const result = await post(`${apiUrl}/api/addStonk`, stonkToSend);
+    // change this to add it to the user
+    const result = await post(`${this.apiUrl}/api/stock/add`, stonkToSend);
     this.setState({ stonks: [...this.state.stonks, stonkToSend] });
     return true;
   }

@@ -5,7 +5,7 @@ export default async function getStonks() {
   const apiUrl = getDevOrProdAPIURL();
 
   try {
-    const stonks = await get(`${apiUrl}/api/dashboard`);
+    const stonks = await get(`${apiUrl}/api/stock/dashboard`);
     return stonks.length ? stonks : [];
   } catch (error) {
     console.log(

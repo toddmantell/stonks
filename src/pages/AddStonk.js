@@ -22,7 +22,7 @@ export default function AddStonk() {
     async function getStonkQuote(ticker) {
       try {
         const fetchedStonkQuote =
-          (await get(`${apiUrl}/api/quote/${ticker}`)) || false;
+          (await get(`${apiUrl}/api/stock/quote/${ticker}`)) || false;
         return setStonkQuote(fetchedStonkQuote);
       } catch (error) {
         console.log(`failed to fetch ${ticker}: ${error.toString()}`);
@@ -63,7 +63,8 @@ export default function AddStonk() {
           previousGrowthRate
         };
         const stonk =
-          (await post(`${apiUrl}/api/calculateMetrics`, stonkForCalc)) || false;
+          (await post(`${apiUrl}/api/stock/calculateMetrics`, stonkForCalc)) ||
+          false;
 
         setStonk(stonk || false);
 
