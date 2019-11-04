@@ -66,7 +66,7 @@ export default function AddStonk() {
           (await post(`${apiUrl}/api/stock/calculateMetrics`, stonkForCalc)) ||
           false;
 
-        setStonk(stonk || false);
+        setStonk({ ...stonk, companyName: stonkQuote.companyName } || false);
 
         // also have to send the payload to an addStonk endpoint
       } catch (error) {
@@ -84,8 +84,20 @@ export default function AddStonk() {
     // const result = await post(`${apiUrl}/api/addStonk`, stonkToSend);
     // result && alert("stonk successfully added");
 
-    const result = context.addStonkToStonks(stonk, stonkQuote);
-    result && alert("stonk successfully added");
+    const {
+      user: { id: userId }
+    } = context.state;
+
+    const stonkToAdd = {
+      ticker: stonkTicker.value,
+      companyName: stonk.companyName,
+      bookValuePerShare: 5, // this is hard-coded for now but needs to get updated
+      projectedEPSGrowth: futureGrowthRate,
+      fiveYearGrowthRate: previousGrowthRate
+    };
+
+    const result = await context.addStonkToStonks(userId, stonkToAdd);
+    result.length && alert("stonk successfully added");
     resetForm();
     setStonkQuote(undefined);
   }

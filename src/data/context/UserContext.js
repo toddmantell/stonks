@@ -7,64 +7,79 @@ export default UserContext;
 
 //the old class way
 export class UserProvider extends Component {
-  state = { user: {}, stonks: [], updated: false, isLoading: true };
+  state = {
+    user: {},
+    stonks: [],
+    updated: false,
+    isLoading: true
+  };
   apiUrl = getDevOrProdAPIURL();
+
   async componentDidMount() {
     if (this.state.stonks.length) return;
     try {
-      const result = await get(
+      const userResult = await get(
         `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
       );
       // We can probably get rid of the getStonks method since we're storing them with the user
       // const result = await getStonks();
 
-      if (!result.stonks.length) {
-        // we probably would rather have a better UX for this, but for a ProofOfC this suffices
-        window.alert("Failed to retrieve stonks. You are viewing stale data.");
-        return this.setState({ stonks: JSON.parse(localStorage.stonks) });
-      }
+      // if (!userResult.stonks.length) {
+      //   // we probably would rather have a better UX for this, but for a ProofOfC this suffices
+      //   window.alert("Failed to retrieve stonks. You are viewing stale data.");
+      //   return this.setState({ stonks: JSON.parse(localStorage.stonks) });
+      // }
 
-      return this.checkForUpdatedStonks(result);
+      const stonks = await get(
+        `${this.apiUrl}/api/stock/dashboard/${userResult.id}`
+      );
+
+      return this.checkForUpdatedStonks(userResult, stonks);
     } catch (error) {
       console.log(error);
     }
   }
 
-  checkForUpdatedStonks(user) {
+  checkForUpdatedStonks(user, stonks) {
     const { updated } = this.state;
 
-    if (localStorage.stonks) {
-      for (let i = 0; i < user.stonks.length; i += 1) {
-        const stonksInLocalStorage =
-          localStorage.stonks && JSON.parse(localStorage.stonks);
+    // if (localStorage.stonks) {
+    //   for (let i = 0; i < stonks.length; i += 1) {
+    //     const stonksInLocalStorage =
+    //       localStorage.stonks && JSON.parse(localStorage.stonks);
 
-        const currentStonkInStorage = stonksInLocalStorage.find(
-          stonk => stonk.localTicker === user.stonks[i].localTicker
-        );
+    //     const currentStonkInStorage = stonksInLocalStorage.find(
+    //       stonk => stonk.localTicker === stonks[i].localTicker
+    //     );
 
-        if (currentStonkInStorage.latestPrice !== user.stonks[i].latestPrice) {
-          this.setState({ updated: true });
-        }
-      }
-    }
+    //     if (currentStonkInStorage.latestPrice !== stonks[i].latestPrice) {
+    //       this.setState({ updated: true });
+    //     }
+    //   }
+    // }
 
-    if (updated === false && localStorage.stonks)
-      return this.setState({ stonks: JSON.parse(localStorage.stonks) });
+    // if (updated === false && localStorage.stonks)
+    //   return this.setState({
+    //     user,
+    //     stonks: JSON.parse(localStorage.stonks),
+    //     isLoading: false
+    //   });
 
-    this.setState({ user, stonks: user.stonks, isLoading: false });
+    this.setState({ user, stonks, isLoading: false });
     // stringify is necessary because items in local storage are stored as strings
-    localStorage.stonks = JSON.stringify(user.stonks);
+    localStorage.stonks = JSON.stringify(stonks);
   }
 
-  async addStonkToStonks(stonk, stonkQuote) {
-    const { symbol, latestPrice } = stonkQuote;
-    const stonkToSend = { ...stonk, ticker: symbol, latestPrice };
+  addStonkToStonks = async (userId, stonk) => {
+    console.log("userId", userId);
+
+    const payload = { userId, stonk };
 
     // change this to add it to the user
-    const result = await post(`${this.apiUrl}/api/stock/add`, stonkToSend);
-    this.setState({ stonks: [...this.state.stonks, stonkToSend] });
+    const result = await post(`${this.apiUrl}/api/stock/add`, payload);
+    result && this.setState({ stonks: [...this.state.stonks, result] });
     return true;
-  }
+  };
 
   render() {
     return (

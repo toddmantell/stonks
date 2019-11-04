@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import UserContext from "../data/context/UserContext";
 
 export default function Header() {
+  const context = useContext(UserContext);
   return (
     <header className="app-header">
       <div className="app-header container">
@@ -32,6 +34,9 @@ export default function Header() {
             <Link to="/addStonk" className="nav-item">
               Add Stonks
             </Link>
+            <span style={{ margin: "15px 0 0 500px" }}>
+              {context.state.user.name}
+            </span>
           </nav>
         </div>
       </div>
