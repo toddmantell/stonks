@@ -1,5 +1,5 @@
-import React from "./node_modules/react";
-import { BackSide } from "./node_modules/react-flippy";
+import React from "react";
+import { BackSide } from "react-flippy";
 
 export default ({
   symbol,

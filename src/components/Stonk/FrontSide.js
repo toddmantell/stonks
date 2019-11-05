@@ -1,5 +1,5 @@
-import React from "./node_modules/react";
-import { FrontSide } from "./node_modules/react-flippy";
+import React from "react";
+import { FrontSide } from "react-flippy";
 
 export default ({
   companyName,
