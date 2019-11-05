@@ -1,64 +1,12 @@
-import React, { useState, useEffect } from "react";
-import getStonks from "../data/getStonks";
-import Stonk from "../components/Stonk";
+import React, { useContext } from "react";
+import Stonk from "../components/stonk/";
 import StonkSkeleton from "../components/StonkSkeleton";
+import UserContext from "../data/context/UserContext";
 
-export default function Dashboard() {
-  const [stonks, setStonks] = useState([]);
-  const [updated, setUpdated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+export default function StonksDashboard() {
+  const context = useContext(UserContext);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getStonks();
-
-        if (!result.length) {
-          // we probably would rather have a better UX for this, but for a ProofOfC this suffices
-          window.alert(
-            "Failed to retrieve stonks. You are viewing stale data."
-          );
-          setIsLoading(false);
-          return setStonks(JSON.parse(localStorage.stonks));
-        }
-
-        return checkForUpdatedStonks(result);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    function checkForUpdatedStonks(fetchResult) {
-      if (localStorage.stonks) {
-        for (let i = 0; i < fetchResult.length; i += 1) {
-          const stonksInLocalStorage =
-            localStorage.stonks && JSON.parse(localStorage.stonks);
-
-          const currentStonkInStorage = stonksInLocalStorage.find(
-            stonk => stonk.symbol === fetchResult[i].symbol
-          );
-
-          if (
-            currentStonkInStorage.latestPrice !== fetchResult[i].latestPrice
-          ) {
-            setUpdated(true);
-          }
-
-          if (!updated) {
-            setIsLoading(false);
-            return setStonks(JSON.parse(localStorage.stonks));
-          }
-        }
-      }
-
-      setStonks(fetchResult);
-      setIsLoading(false);
-      // stringify is necessary because items in local storage are stored as strings
-      localStorage.stonks = JSON.stringify(fetchResult);
-    }
-
-    fetchData();
-  }, []);
+  const { stonks, isLoading } = context.state;
 
   return (
     <main className="stonks-container">

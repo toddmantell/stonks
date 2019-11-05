@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getDevOrProdAPIURL } from "../data/getStonks";
 import { get, post } from "../data/fetchWrapper";
 import AddStonkForm from "../components/AddStonkForm";
 import Metrics from "../components/Metrics";
+import UserContext from "../data/context/UserContext";
 
 export default function AddStonk() {
   const apiUrl = getDevOrProdAPIURL();
@@ -11,6 +12,8 @@ export default function AddStonk() {
   const [stonk, setStonk] = useState(undefined);
   const [futureGrowthRate, setFutureGrowthRate] = useState(0);
   const [previousGrowthRate, setPreviousGrowthRate] = useState(0);
+
+  const context = useContext(UserContext);
 
   useEffect(() => {
     if (stonkTicker.value) getStonkQuote(stonkTicker.value);
@@ -63,7 +66,7 @@ export default function AddStonk() {
           (await post(`${apiUrl}/api/stock/calculateMetrics`, stonkForCalc)) ||
           false;
 
-        setStonk(stonk || false);
+        setStonk({ ...stonk, companyName: stonkQuote.companyName } || false);
 
         // also have to send the payload to an addStonk endpoint
       } catch (error) {
@@ -74,12 +77,27 @@ export default function AddStonk() {
     }
   }
 
-  async function addStonkToStonks() {
-    const { symbol, latestPrice } = stonkQuote;
-    const stonkToSend = { ...stonk, ticker: symbol, latestPrice };
+  async function addStonk() {
+    // const { symbol, latestPrice } = stonkQuote;
+    // const stonkToSend = { ...stonk, ticker: symbol, latestPrice };
 
-    const result = await post(`${apiUrl}/api/stock/add`, stonkToSend);
-    result && alert("stonk successfully added");
+    // const result = await post(`${apiUrl}/api/addStonk`, stonkToSend);
+    // result && alert("stonk successfully added");
+
+    const {
+      user: { id: userId }
+    } = context.state;
+
+    const stonkToAdd = {
+      ticker: stonkTicker.value,
+      companyName: stonk.companyName,
+      bookValuePerShare: 5, // this is hard-coded for now but needs to get updated
+      projectedEPSGrowth: futureGrowthRate,
+      fiveYearGrowthRate: previousGrowthRate
+    };
+
+    const result = await context.addStonkToStonks(userId, stonkToAdd);
+    result.length && alert("stonk successfully added");
     resetForm();
     setStonkQuote(undefined);
   }
@@ -101,7 +119,7 @@ export default function AddStonk() {
       <Metrics
         stonk={stonk}
         stonkQuote={stonkQuote}
-        addStonkToStonks={addStonkToStonks}
+        addStonkToStonks={addStonk}
       />
     </article>
   );
