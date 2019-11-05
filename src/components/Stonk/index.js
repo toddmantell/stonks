@@ -1,5 +1,5 @@
-import React from "react";
-import Flippy from "react-flippy";
+import React from "./node_modules/react";
+import Flippy from "./node_modules/react-flippy";
 import FrontSide from "./FrontSide";
 import BackSide from "./BackSide";
 

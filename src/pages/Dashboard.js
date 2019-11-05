@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Stonk from "../components/stonk/";
+import Stonk from "../components/Stonk";
 import StonkSkeleton from "../components/StonkSkeleton";
 import UserContext from "../data/context/UserContext";
 
