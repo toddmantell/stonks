@@ -7,8 +7,10 @@ export default function Stonk({
   companyName,
   forwardConservativeGrahamFormulaNumber,
   forwardGrahamFormulaNumber,
+  futureGrowthRate,
   pastConservativeGrahamFormulaNumber,
   pastGrahamFormulaNumber,
+  previousGrowthRate,
   grahamNumber,
   latestPrice,
   changePercent,
@@ -35,10 +37,12 @@ export default function Stonk({
           forwardConservativeGrahamFormulaNumber
         }
         forwardGrahamFormulaNumber={forwardGrahamFormulaNumber}
+        futureGrowthRate={futureGrowthRate}
         pastConservativeGrahamFormulaNumber={
           pastConservativeGrahamFormulaNumber
         }
         pastGrahamFormulaNumber={pastGrahamFormulaNumber}
+        previousGrowthRate={previousGrowthRate}
       />
     </Flippy>
   );

@@ -6,14 +6,16 @@ export default ({
   latestPrice,
   forwardConservativeGrahamFormulaNumber,
   forwardGrahamFormulaNumber,
+  futureGrowthRate,
   pastConservativeGrahamFormulaNumber,
-  pastGrahamFormulaNumber
+  pastGrahamFormulaNumber,
+  previousGrowthRate
 }) => (
   <BackSide style={{ height: "108%", borderRadius: "10px" }}>
     <div className="stonk-attribute">({symbol})</div>
     <hr />
     <div className="stonk-attribute">
-      Forward Number:{" "}
+      Forward({futureGrowthRate}%):{" "}
       <span
         style={
           forwardGrahamFormulaNumber > latestPrice
@@ -26,7 +28,7 @@ export default ({
     </div>
     <hr />
     <div className="stonk-attribute">
-      Forward Number (Cons.):{" "}
+      Forward Cons.({futureGrowthRate}%):{" "}
       <span
         style={
           forwardConservativeGrahamFormulaNumber > latestPrice
@@ -39,7 +41,7 @@ export default ({
     </div>
     <hr />
     <div className="stonk-attribute">
-      Past Number:{" "}
+      Past({previousGrowthRate}%):{" "}
       <span
         style={
           pastGrahamFormulaNumber > latestPrice
@@ -52,7 +54,7 @@ export default ({
     </div>
     <hr />
     <div className="stonk-attribute stonk-attribute__bottom">
-      Past Number (Cons.):{" "}
+      Past Cons.({previousGrowthRate}%):{" "}
       <span
         style={
           pastConservativeGrahamFormulaNumber > latestPrice

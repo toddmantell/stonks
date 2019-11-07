@@ -65,7 +65,13 @@
   color: #61dafb;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px) {  
+  .app-header .banner {
+    display: flex;
+    height: 60px;
+    margin-left: 1rem;
+  }
+  
   .app-header .nav {
   display: flex;
   overflow-x: hidden;
@@ -88,7 +94,7 @@
     grid-template-areas: 
       'stonk';
     row-gap: 25px;
-    margin-left: 100px;
+    margin-left: 50px;
   }
 }
 

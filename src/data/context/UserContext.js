@@ -21,11 +21,7 @@ export class UserProvider extends Component {
         `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
       );
 
-      const stonks = await get(
-        `${this.apiUrl}/api/stock/dashboard/${userResult.id}`
-      );
-
-      const updated = this.checkForUpdatedStonks(stonks);
+      const updated = this.checkForUpdatedStonks(userResult.stonks);
 
       if (updated === false && localStorage.stonks)
         return this.setState({
@@ -34,9 +30,13 @@ export class UserProvider extends Component {
           isLoading: false
         });
 
-      this.setState({ user: userResult, stonks, isLoading: false });
+      this.setState({
+        user: userResult,
+        stonks: userResult.stonks,
+        isLoading: false
+      });
       // stringify is necessary because items in local storage are stored as strings
-      localStorage.stonks = JSON.stringify(stonks);
+      localStorage.stonks = JSON.stringify(userResult.stonks);
     } catch (error) {
       console.log(error);
     }
