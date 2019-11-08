@@ -1,8 +1,10 @@
 import React from "react";
 import { FrontSide } from "react-flippy";
+import Button from "../Button";
 
 export default ({
   companyName,
+  removeStonk,
   symbol,
   latestPrice,
   changePercent,
@@ -12,6 +14,11 @@ export default ({
     <div className="stonk-attribute stonk-attribute__top">
       Company Name:{" "}
       <div className="stonk-attribute--companyName">{companyName}</div>
+      <Button
+        buttonText="Remove"
+        onClickHandler={removeStonk}
+        styleClass="remove-button"
+      />
     </div>
     <hr />
     <div className="stonk-attribute">

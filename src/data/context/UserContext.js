@@ -60,14 +60,26 @@ export class UserProvider extends Component {
   }
 
   addStonkToStonks = async (userId, stonk) => {
-    console.log("userId", userId);
+    try {
+      const payload = { userId, stonk };
 
-    const payload = { userId, stonk };
+      // change this to add it to the user
+      const result = await post(`${this.apiUrl}/api/stock/add`, payload);
+      result && this.setState({ stonks: [...this.state.stonks, result] });
+      return true;
+    } catch (error) {
+      console.log("An error occurred: ", error);
+    }
+  };
 
-    // change this to add it to the user
-    const result = await post(`${this.apiUrl}/api/stock/add`, payload);
-    result && this.setState({ stonks: [...this.state.stonks, result] });
-    return true;
+  removeStonk = async stonkSymbol => {
+    try {
+      const result = await post(`${this.apiUrl}/api/stock/remove`, stonkSymbol);
+      result && this.setState({ stonks: [...this.state.stonks, result] });
+      return true;
+    } catch (error) {
+      console.log("An error occurred: ", error);
+    }
   };
 
   render() {
