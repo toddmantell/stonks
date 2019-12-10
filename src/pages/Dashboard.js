@@ -6,7 +6,10 @@ import UserContext from "../data/context/UserContext";
 export default function StonksDashboard() {
   const context = useContext(UserContext);
 
-  const { stonks, isLoading } = context.state;
+  const {
+    removeStonk,
+    state: { stonks, isLoading }
+  } = context;
 
   return (
     <main className="stonks-container">
@@ -15,7 +18,9 @@ export default function StonksDashboard() {
             <StonkSkeleton key={`skeleton-${item}`} />
           ))
         : stonks.map((stonk, index) => {
-            return <Stonk key={`stonk-${index}`} {...stonk} />;
+            return (
+              <Stonk key={`stonk-${index}`} {...{ ...stonk, removeStonk }} />
+            );
           })}
     </main>
   );

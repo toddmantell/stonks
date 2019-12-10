@@ -14,12 +14,12 @@ export default ({
     <div className="stonk-attribute stonk-attribute__top">
       Company Name:{" "}
       <div className="stonk-attribute--companyName">{companyName}</div>
-      <Button
-        buttonText="Remove"
-        onClickHandler={removeStonk}
-        styleClass="remove-button"
-      />
     </div>
+    <Button
+      buttonText="Flip Card"
+      onClickHandler={() => alert("not implemented yet")}
+      styleClass="flip-button"
+    />
     <hr />
     <div className="stonk-attribute">
       Ticker Symbol: <span>{symbol}</span>
@@ -42,6 +42,11 @@ export default ({
       >
         ${grahamNumber}
       </span>
-    </div>
+    </div>{" "}
+    <Button
+      buttonText="Remove"
+      onClickHandler={() => removeStonk(symbol)}
+      styleClass="remove-button"
+    />
   </FrontSide>
 );

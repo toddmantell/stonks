@@ -14,12 +14,13 @@ export default function Stonk({
   grahamNumber,
   latestPrice,
   changePercent,
-  symbol
+  symbol,
+  removeStonk
 }) {
   return (
     <Flippy
       flipOnHover={false}
-      flipOnClick={true}
+      flipOnClick={false}
       flipDirection="horizontal"
       style={{ width: "300px", height: "220px" }}
     >
@@ -29,6 +30,7 @@ export default function Stonk({
         changePercent={changePercent}
         symbol={symbol}
         grahamNumber={grahamNumber}
+        removeStonk={removeStonk}
       />
       <BackSide
         symbol={symbol}

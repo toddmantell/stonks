@@ -90,7 +90,11 @@ export class UserProvider extends Component {
   render() {
     return (
       <UserContext.Provider
-        value={{ state: this.state, addStonkToStonks: this.addStonkToStonks }}
+        value={{
+          state: this.state,
+          addStonkToStonks: this.addStonkToStonks,
+          removeStonk: this.removeStonk
+        }}
       >
         {this.props.children}
       </UserContext.Provider>
