@@ -65,6 +65,16 @@
   color: #61dafb;
 }
 
+.market-banner {
+  margin-top: 80px;
+  margin-left: 5rem;
+}
+
+.index-underline {
+  text-decoration: underline;
+  color: blue;
+}
+
 @media (max-width: 768px) {  
   .app-header .banner {
     display: flex;
@@ -86,7 +96,6 @@
   font-weight: 300;
   text-decoration: none;
 }
-
 
   .stonks-container {
     margin-top: 80px;
@@ -120,7 +129,7 @@
 
 @media (min-width: 1300px) {
   .stonks-container {
-    margin: 80px 40px 0 70px;
+    margin: 20px 40px 0 70px;
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     grid-column-gap: 10px;

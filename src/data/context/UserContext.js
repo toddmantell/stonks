@@ -10,7 +10,8 @@ export class UserProvider extends Component {
     user: {},
     stonks: [],
     updated: false,
-    isLoading: true
+    isLoading: true,
+    VOO: {}
   };
   apiUrl = getDevOrProdAPIURL();
 
@@ -21,19 +22,23 @@ export class UserProvider extends Component {
         `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
       );
 
+      const VOOResult = await get(`${this.apiUrl}/api/stock/quote/VOO`);
+
       const updated = this.checkForUpdatedStonks(userResult.stonks);
 
       if (updated === false && localStorage.stonks)
         return this.setState({
           user: userResult,
           stonks: JSON.parse(localStorage.stonks),
-          isLoading: false
+          isLoading: false,
+          VOO: VOOResult
         });
 
       this.setState({
         user: userResult,
         stonks: userResult.stonks,
-        isLoading: false
+        isLoading: false,
+        VOO: VOOResult
       });
       // stringify is necessary because items in local storage are stored as strings
       localStorage.stonks = JSON.stringify(userResult.stonks);
