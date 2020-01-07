@@ -176,6 +176,11 @@
   text-decoration: none;
 }
 
+.stonk-card__button {
+  margin-top: .40em;
+  margin-left: 1em;
+}
+
 .bold {
   font-weight: bold;
 }

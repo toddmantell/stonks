@@ -22,7 +22,7 @@ export default function Stonk({
       flipOnHover={false}
       flipOnClick={false}
       flipDirection="horizontal"
-      style={{ width: "300px", height: "220px" }}
+      style={{ width: "300px", height: "255px" }}
     >
       <FrontSide
         companyName={companyName}

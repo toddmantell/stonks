@@ -18,7 +18,7 @@ export default ({
     <Button
       buttonText="Flip Card"
       onClickHandler={() => alert("not implemented yet")}
-      styleClass="flip-button"
+      styleClass="stonk-card__button"
     />
     <hr />
     <div className="stonk-attribute">
@@ -46,7 +46,7 @@ export default ({
     <Button
       buttonText="Remove"
       onClickHandler={() => removeStonk(symbol)}
-      styleClass="remove-button"
+      styleClass="stonk-card__button"
     />
   </FrontSide>
 );
