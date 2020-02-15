@@ -1,5 +1,6 @@
 import React from "react";
 import { BackSide } from "react-flippy";
+import Button from "../Button";
 
 export default ({
   symbol,
@@ -9,7 +10,8 @@ export default ({
   futureGrowthRate,
   pastConservativeGrahamFormulaNumber,
   pastGrahamFormulaNumber,
-  previousGrowthRate
+  previousGrowthRate,
+  removeStonk
 }) => (
   <BackSide style={{ height: "108%", borderRadius: "10px" }}>
     <div className="stonk-attribute">({symbol})</div>
@@ -65,5 +67,10 @@ export default ({
         ${pastConservativeGrahamFormulaNumber}
       </span>
     </div>
+    <Button
+      buttonText="Remove"
+      onClickHandler={() => removeStonk(symbol)}
+      styleClass="stonk-card__button"
+    />
   </BackSide>
 );

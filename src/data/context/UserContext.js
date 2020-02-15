@@ -80,8 +80,12 @@ export class UserProvider extends Component {
   removeStonk = async stonkSymbol => {
     try {
       const result = await post(`${this.apiUrl}/api/stock/remove`, stonkSymbol);
-      result && this.setState({ stonks: [...this.state.stonks, result] });
-      return true;
+      if (result)
+        return this.setState({
+          stonks: this.state.stonks.filter(
+            stonk => stonk.symbol !== stonkSymbol
+          )
+        });
     } catch (error) {
       console.log("An error occurred: ", error);
     }

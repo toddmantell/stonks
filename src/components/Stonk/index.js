@@ -45,6 +45,7 @@ export default function Stonk({
         }
         pastGrahamFormulaNumber={pastGrahamFormulaNumber}
         previousGrowthRate={previousGrowthRate}
+        removeStonk={removeStonk}
       />
     </Flippy>
   );
