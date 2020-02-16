@@ -8,9 +8,11 @@ export default function Stonk({
   forwardConservativeGrahamFormulaNumber,
   forwardGrahamFormulaNumber,
   futureGrowthRate,
+  ncavWithTwoDecimals,
   pastConservativeGrahamFormulaNumber,
   pastGrahamFormulaNumber,
   previousGrowthRate,
+  priceAsPercentOfNCAV,
   grahamNumber,
   latestPrice,
   changePercent,
@@ -28,7 +30,8 @@ export default function Stonk({
         latestPrice={latestPrice}
         changePercent={changePercent}
         symbol={symbol}
-        grahamNumber={grahamNumber}
+        ncavWithTwoDecimals={ncavWithTwoDecimals}
+        priceAsPercentOfNCAV={priceAsPercentOfNCAV}
       />
       <BackSide
         symbol={symbol}

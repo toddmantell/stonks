@@ -6,7 +6,8 @@ export default ({
   symbol,
   latestPrice,
   changePercent,
-  grahamNumber
+  ncavWithTwoDecimals,
+  priceAsPercentOfNCAV
 }) => (
   <FrontSide className="stonk-card">
     <div className="stonk-attribute stonk-attribute__top">
@@ -27,13 +28,26 @@ export default ({
     </div>
     <hr />
     <div className="stonk-attribute">
-      Graham Number:{" "}
+      NCAV/share:{" "}
       <span
         style={
-          grahamNumber > latestPrice ? { color: "green" } : { color: "red" }
+          ncavWithTwoDecimals < latestPrice
+            ? { color: "green" }
+            : { color: "red" }
         }
       >
-        ${grahamNumber}
+        ${ncavWithTwoDecimals}
+      </span>
+    </div>
+    <hr />
+    <div className="stonk-attribute">
+      Price as pct of NCAV:{" "}
+      <span
+        style={
+          priceAsPercentOfNCAV < 100 ? { color: "green" } : { color: "red" }
+        }
+      >
+        ${priceAsPercentOfNCAV}
       </span>
     </div>
   </FrontSide>

@@ -3,7 +3,7 @@ import UserContext from "../data/context/UserContext";
 
 export default function MarketBanner(props) {
   const context = useContext(UserContext);
-  const { VOO } = context.state;
+  const { isLoading, VOO } = context.state;
 
   return (
     <section className="market-banner">
@@ -13,7 +13,11 @@ export default function MarketBanner(props) {
         <span
           style={VOO.changePercent > 0 ? { color: "green" } : { color: "red" }}
         >
-          ({Number.parseFloat(VOO.changePercent * 100).toFixed(2)}%)
+          (
+          {isLoading
+            ? 0.0
+            : Number.parseFloat(VOO.changePercent * 100).toFixed(2)}
+          %)
         </span>
       </span>
     </section>

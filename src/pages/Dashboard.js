@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import Stonk from "../components/Stonk";
+import NCAVStonk from "../components/NCAVStonk";
 import StonkSkeleton from "../components/StonkSkeleton";
 import UserContext from "../data/context/UserContext";
 
@@ -18,7 +19,13 @@ export default function StonksDashboard() {
             <StonkSkeleton key={`skeleton-${item}`} />
           ))
         : stonks.map((stonk, index) => {
-            return (
+            return stonk.priceAsPercentOfNCAV > 0 &&
+              stonk.priceAsPercentOfNCAV < 1 ? (
+              <NCAVStonk
+                key={`stonk-${index}`}
+                {...{ ...stonk, removeStonk }}
+              />
+            ) : (
               <Stonk key={`stonk-${index}`} {...{ ...stonk, removeStonk }} />
             );
           })}
