@@ -20,7 +20,7 @@ export default function StonksDashboard() {
           ))
         : stonks.map((stonk, index) => {
             return stonk.priceAsPercentOfNCAV > 0 &&
-              stonk.priceAsPercentOfNCAV < 1 ? (
+              stonk.priceAsPercentOfNCAV < 100 ? (
               <NCAVStonk
                 key={`stonk-${index}`}
                 {...{ ...stonk, removeStonk }}

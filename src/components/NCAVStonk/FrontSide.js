@@ -31,23 +31,22 @@ export default ({
       NCAV/share:{" "}
       <span
         style={
-          ncavWithTwoDecimals < latestPrice
+          ncavWithTwoDecimals > latestPrice
             ? { color: "green" }
             : { color: "red" }
         }
       >
         ${ncavWithTwoDecimals}
       </span>
-    </div>
-    <hr />
-    <div className="stonk-attribute">
-      Price as pct of NCAV:{" "}
       <span
         style={
-          priceAsPercentOfNCAV < 100 ? { color: "green" } : { color: "red" }
+          ncavWithTwoDecimals > latestPrice
+            ? { color: "green" }
+            : { color: "red" }
         }
       >
-        ${priceAsPercentOfNCAV}
+        {" "}
+        ({priceAsPercentOfNCAV}%)
       </span>
     </div>
   </FrontSide>
