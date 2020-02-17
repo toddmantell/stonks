@@ -10,7 +10,8 @@ export class UserProvider extends Component {
     user: {},
     stonks: [],
     updated: false,
-    isLoading: true
+    isLoading: true,
+    VOO: {}
   };
   apiUrl = getDevOrProdAPIURL();
 
@@ -21,19 +22,23 @@ export class UserProvider extends Component {
         `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
       );
 
+      const VOOResult = await get(`${this.apiUrl}/api/stock/quote/VOO`);
+
       const updated = this.checkForUpdatedStonks(userResult.stonks);
 
       if (updated === false && localStorage.stonks)
         return this.setState({
           user: userResult,
           stonks: JSON.parse(localStorage.stonks),
-          isLoading: false
+          isLoading: false,
+          VOO: VOOResult
         });
 
       this.setState({
         user: userResult,
         stonks: userResult.stonks,
-        isLoading: false
+        isLoading: false,
+        VOO: VOOResult
       });
       // stringify is necessary because items in local storage are stored as strings
       localStorage.stonks = JSON.stringify(userResult.stonks);
@@ -60,20 +65,40 @@ export class UserProvider extends Component {
   }
 
   addStonkToStonks = async (userId, stonk) => {
-    console.log("userId", userId);
+    try {
+      const payload = { userId, stonk };
 
-    const payload = { userId, stonk };
+      // change this to add it to the user
+      const result = await post(`${this.apiUrl}/api/stock/add`, payload);
+      result && this.setState({ stonks: [...this.state.stonks, result] });
+      return true;
+    } catch (error) {
+      console.log("An error occurred: ", error);
+    }
+  };
 
-    // change this to add it to the user
-    const result = await post(`${this.apiUrl}/api/stock/add`, payload);
-    result && this.setState({ stonks: [...this.state.stonks, result] });
-    return true;
+  removeStonk = async stonkSymbol => {
+    try {
+      const result = await post(`${this.apiUrl}/api/stock/remove`, stonkSymbol);
+      if (result)
+        return this.setState({
+          stonks: this.state.stonks.filter(
+            stonk => stonk.symbol !== stonkSymbol
+          )
+        });
+    } catch (error) {
+      console.log("An error occurred: ", error);
+    }
   };
 
   render() {
     return (
       <UserContext.Provider
-        value={{ state: this.state, addStonkToStonks: this.addStonkToStonks }}
+        value={{
+          state: this.state,
+          addStonkToStonks: this.addStonkToStonks,
+          removeStonk: this.removeStonk
+        }}
       >
         {this.props.children}
       </UserContext.Provider>
