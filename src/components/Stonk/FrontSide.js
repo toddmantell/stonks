@@ -6,7 +6,7 @@ export default ({
   symbol,
   latestPrice,
   changePercent,
-  grahamNumber
+  peRatio
 }) => (
   <FrontSide className="stonk-card">
     <div className="stonk-attribute stonk-attribute__top">
@@ -27,14 +27,7 @@ export default ({
     </div>
     <hr />
     <div className="stonk-attribute">
-      Graham Number:{" "}
-      <span
-        style={
-          grahamNumber > latestPrice ? { color: "green" } : { color: "red" }
-        }
-      >
-        ${grahamNumber}
-      </span>
+      PE Ratio (TTM): <span>{peRatio}</span>
     </div>
   </FrontSide>
 );

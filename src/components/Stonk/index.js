@@ -14,7 +14,8 @@ export default function Stonk({
   grahamNumber,
   latestPrice,
   changePercent,
-  symbol
+  symbol,
+  peRatio
 }) {
   return (
     <Flippy
@@ -29,6 +30,7 @@ export default function Stonk({
         changePercent={changePercent}
         symbol={symbol}
         grahamNumber={grahamNumber}
+        peRatio={peRatio}
       />
       <BackSide
         symbol={symbol}
