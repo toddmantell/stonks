@@ -11,6 +11,7 @@ export class UserProvider extends Component {
     stonks: [],
     updated: false,
     isLoading: true,
+    stonksAreLocal: false,
     VOO: {}
   };
   apiUrl = getDevOrProdAPIURL();
@@ -18,32 +19,57 @@ export class UserProvider extends Component {
   async componentDidMount() {
     if (this.state.stonks.length) return;
     try {
-      const userResult = await get(
-        `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
-      );
+      await this.setStateFromServerOrLocalStorage();
+    } catch (error) {
+      console.log("Error in componentDidMount: ", error);
+    }
+  }
 
-      const VOOResult = await get(`${this.apiUrl}/api/stock/quote/VOO`);
+  async setStateFromServerOrLocalStorage() {
+    const userResult = await get(
+      `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
+    );
 
-      const updated = this.checkForUpdatedStonks(userResult.stonks);
+    const VOOResult = await get(`${this.apiUrl}/api/stock/quote/VOO`);
 
-      if (updated === false && localStorage.stonks)
-        return this.setState({
-          user: userResult,
-          stonks: JSON.parse(localStorage.stonks),
-          isLoading: false,
-          VOO: VOOResult
-        });
+    console.log("userResult", userResult);
+    console.log("VOOResult", VOOResult);
 
-      this.setState({
-        user: userResult,
-        stonks: userResult.stonks,
+    // if either of the fetches fail, DON't check for updated stonks
+    if (!typeof userResult === TypeError && !typeof VOOResult === TypeError) {
+      this.checkForUpdatesAndUpdateLocalStorage(userResult, VOOResult);
+    }
+
+    console.log("both fetches failed, attempting to update from local");
+
+    // if no updates were made, just get the values from localStorage
+    // but if they're not in localStorage, we just show nothing
+    if (localStorage.stonks.length && localStorage.VOO) {
+      return this.setState({
         isLoading: false,
+        stonks: JSON.parse(localStorage.stonks),
+        stonksAreLocal: true,
+        user: {},
+        VOO: JSON.parse(localStorage.VOO)
+      });
+    }
+  }
+
+  // if we get valid results from fetch, check to see if any values are new
+  async checkForUpdatesAndUpdateLocalStorage(userResult, VOOResult) {
+    const updated = this.checkForUpdatedStonks(userResult.stonks);
+
+    if (updated) {
+      this.setState({
+        isLoading: false,
+        stonks: userResult.stonks,
+        stonksAreLocal: false,
+        user: userResult,
         VOO: VOOResult
       });
       // stringify is necessary because items in local storage are stored as strings
       localStorage.stonks = JSON.stringify(userResult.stonks);
-    } catch (error) {
-      console.log(error);
+      localStorage.VOO = JSON.stringify(VOOResult);
     }
   }
 
