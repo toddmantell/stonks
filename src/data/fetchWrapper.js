@@ -1,8 +1,8 @@
 const baseFetchOptions = {
   mode: "cors",
   headers: {
-    "Content-Type": "application/json"
-  }
+    "Content-Type": "application/json",
+  },
 };
 
 export const get = async (url, customOptions) => {
@@ -13,7 +13,7 @@ export const get = async (url, customOptions) => {
   try {
     return await fetchWrapper(url, fetchOptions);
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
@@ -29,14 +29,14 @@ export const post = async (url, payload, customOptions) => {
         ...baseFetchOptions,
         method: "POST",
         body: JSON.stringify(payload),
-        ...customOptions
+        ...customOptions,
       }
     : { ...baseFetchOptions, method: "POST", body: JSON.stringify(payload) };
 
   try {
     return await fetchWrapper(url, fetchOptions);
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
@@ -57,6 +57,6 @@ async function fetchWrapper(url, options) {
     return await response.json();
   } catch (error) {
     console.log(`Error thrown in fetchWrapper: ${error.toString()}`);
-    return error;
+    throw error;
   }
 }
