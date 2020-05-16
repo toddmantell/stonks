@@ -9,36 +9,10 @@ export default ({
   futureGrowthRate,
   pastConservativeGrahamFormulaNumber,
   pastGrahamFormulaNumber,
-  previousGrowthRate
+  previousGrowthRate,
 }) => (
   <BackSide style={{ height: "108%", borderRadius: "10px" }}>
     <div className="stonk-attribute">({symbol})</div>
-    <hr />
-    <div className="stonk-attribute">
-      Forward({futureGrowthRate}%):{" "}
-      <span
-        style={
-          forwardGrahamFormulaNumber > latestPrice
-            ? { color: "green" }
-            : { color: "red" }
-        }
-      >
-        ${forwardGrahamFormulaNumber}
-      </span>
-    </div>
-    <hr />
-    <div className="stonk-attribute">
-      Forward Cons.({futureGrowthRate}%):{" "}
-      <span
-        style={
-          forwardConservativeGrahamFormulaNumber > latestPrice
-            ? { color: "green" }
-            : { color: "red" }
-        }
-      >
-        ${forwardConservativeGrahamFormulaNumber}
-      </span>
-    </div>
     <hr />
     <div className="stonk-attribute">
       Past({previousGrowthRate}%):{" "}
@@ -53,7 +27,7 @@ export default ({
       </span>
     </div>
     <hr />
-    <div className="stonk-attribute stonk-attribute__bottom">
+    <div className="stonk-attribute">
       Past Cons.({previousGrowthRate}%):{" "}
       <span
         style={
@@ -63,6 +37,33 @@ export default ({
         }
       >
         ${pastConservativeGrahamFormulaNumber}
+      </span>
+    </div>
+    <hr />
+
+    <div className="stonk-attribute">
+      Forward({futureGrowthRate}%):{" "}
+      <span
+        style={
+          forwardGrahamFormulaNumber > latestPrice
+            ? { color: "green" }
+            : { color: "red" }
+        }
+      >
+        ${forwardGrahamFormulaNumber}
+      </span>
+    </div>
+    <hr />
+    <div className="stonk-attribute stonk-attribute__bottom">
+      Forward Cons.({futureGrowthRate}%):{" "}
+      <span
+        style={
+          forwardConservativeGrahamFormulaNumber > latestPrice
+            ? { color: "green" }
+            : { color: "red" }
+        }
+      >
+        ${forwardConservativeGrahamFormulaNumber}
       </span>
     </div>
   </BackSide>

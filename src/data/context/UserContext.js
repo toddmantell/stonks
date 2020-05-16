@@ -49,9 +49,10 @@ export class UserProvider extends Component {
         );
       }
 
-      return this.updateFromLocalIfNoUpdates();
+      this.updateFromLocalIfNoUpdates();
     } catch (error) {
       console.log("An error occurred: ", error);
+      this.updateFromLocalIfNoUpdates();
     }
   }
 
@@ -75,13 +76,15 @@ export class UserProvider extends Component {
   }
 
   checkForUpdatedStonks(stonks) {
-    if (localStorage.stonks && localStorage.stonks.length) {
+    if (localStorage.stonks) {
       for (let i = 0; i < stonks.length; i += 1) {
         const stonksInLocalStorage = JSON.parse(localStorage.stonks);
 
-        const currentStonkInStorage = stonksInLocalStorage.find(
-          (stonk) => stonk.symbol === stonks[i].symbol
-        );
+        const currentStonkInStorage =
+          stonksInLocalStorage.length &&
+          stonksInLocalStorage.find(
+            (stonk) => stonk.symbol === stonks[i].symbol
+          );
 
         if (currentStonkInStorage.latestPrice !== stonks[i].latestPrice) {
           return true;
@@ -96,9 +99,7 @@ export class UserProvider extends Component {
     if (
       this.state.updated === false &&
       localStorage.stonks &&
-      localStorage.stonks.length &&
-      localStorage.VOO &&
-      localStorage.VOO.latestPrice
+      localStorage.VOO
     ) {
       this.setState({
         isLoading: false,
