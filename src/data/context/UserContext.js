@@ -11,39 +11,63 @@ export class UserProvider extends Component {
     stonks: [],
     updated: false,
     isLoading: true,
-    VOO: {}
+    stonksAreLocal: false,
+    VOO: {},
   };
   apiUrl = getDevOrProdAPIURL();
 
   async componentDidMount() {
     if (this.state.stonks.length) return;
     try {
-      const userResult = await get(
-        `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
-      );
+      await this.setStateFromServerOrLocalStorage();
+    } catch (error) {
+      console.log("Error in componentDidMount: ", error);
+    }
+  }
 
-      const VOOResult = await get(`${this.apiUrl}/api/stock/quote/VOO`);
+  async setStateFromServerOrLocalStorage() {
+    const VOOResult = await get(`${this.apiUrl}/api/stock/quote/VOO`);
 
-      const updated = this.checkForUpdatedStonks(userResult.stonks);
+    const userResult = await get(
+      `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
+    );
 
-      if (updated === false && localStorage.stonks)
-        return this.setState({
-          user: userResult,
-          stonks: JSON.parse(localStorage.stonks),
-          isLoading: false,
-          VOO: VOOResult
-        });
+    // if either of the fetches fail, DON't check for updated stonks
+    if (!typeof userResult === TypeError && !typeof VOOResult === TypeError) {
+      this.checkForUpdatesAndUpdateLocalStorage(userResult, VOOResult);
+    }
 
-      this.setState({
-        user: userResult,
-        stonks: userResult.stonks,
+    console.log("both fetches failed, attempting to update from local");
+
+    // if no updates were made, just get the values from localStorage
+    // but if they're not in localStorage, we just show nothing
+    if (localStorage.stonks.length && localStorage.VOO.latestPrice) {
+      return this.setState({
         isLoading: false,
-        VOO: VOOResult
+        stonks: JSON.parse(localStorage.stonks),
+        stonksAreLocal: true,
+        user: {},
+        VOO: JSON.parse(localStorage.VOO),
       });
+    }
+  }
+
+  // if we get valid results from fetch, check to see if any values are new
+  async checkForUpdatesAndUpdateLocalStorage(userResult, VOOResult) {
+    const updated = this.checkForUpdatedStonks(userResult.stonks);
+
+    if (updated && userResult.stonks.length && VOOResult) {
       // stringify is necessary because items in local storage are stored as strings
       localStorage.stonks = JSON.stringify(userResult.stonks);
-    } catch (error) {
-      console.log(error);
+      localStorage.VOO = JSON.stringify(VOOResult);
+
+      this.setState({
+        isLoading: false,
+        stonks: userResult.stonks,
+        stonksAreLocal: false,
+        user: userResult,
+        VOO: VOOResult,
+      });
     }
   }
 
@@ -51,10 +75,10 @@ export class UserProvider extends Component {
     if (localStorage.stonks) {
       for (let i = 0; i < stonks.length; i += 1) {
         const stonksInLocalStorage =
-          localStorage.stonks && JSON.parse(localStorage.stonks);
+          localStorage.stonks.length && JSON.parse(localStorage.stonks);
 
         const currentStonkInStorage = stonksInLocalStorage.find(
-          stonk => stonk.symbol === stonks[i].symbol
+          (stonk) => stonk.symbol === stonks[i].symbol
         );
 
         if (currentStonkInStorage.latestPrice !== stonks[i].latestPrice) {
@@ -77,14 +101,14 @@ export class UserProvider extends Component {
     }
   };
 
-  removeStonk = async stonkSymbol => {
+  removeStonk = async (stonkSymbol) => {
     try {
       const result = await post(`${this.apiUrl}/api/stock/remove`, stonkSymbol);
       if (result)
         return this.setState({
           stonks: this.state.stonks.filter(
-            stonk => stonk.symbol !== stonkSymbol
-          )
+            (stonk) => stonk.symbol !== stonkSymbol
+          ),
         });
     } catch (error) {
       console.log("An error occurred: ", error);
@@ -97,7 +121,7 @@ export class UserProvider extends Component {
         value={{
           state: this.state,
           addStonkToStonks: this.addStonkToStonks,
-          removeStonk: this.removeStonk
+          removeStonk: this.removeStonk,
         }}
       >
         {this.props.children}
