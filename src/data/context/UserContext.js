@@ -12,7 +12,7 @@ export class UserProvider extends Component {
     updated: false,
     isLoading: true,
     stonksAreLocal: false,
-    VOO: {}
+    VOO: {},
   };
   apiUrl = getDevOrProdAPIURL();
 
@@ -26,14 +26,11 @@ export class UserProvider extends Component {
   }
 
   async setStateFromServerOrLocalStorage() {
+    const VOOResult = await get(`${this.apiUrl}/api/stock/quote/VOO`);
+
     const userResult = await get(
       `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
     );
-
-    const VOOResult = await get(`${this.apiUrl}/api/stock/quote/VOO`);
-
-    console.log("userResult", userResult);
-    console.log("VOOResult", VOOResult);
 
     // if either of the fetches fail, DON't check for updated stonks
     if (!typeof userResult === TypeError && !typeof VOOResult === TypeError) {
@@ -44,13 +41,13 @@ export class UserProvider extends Component {
 
     // if no updates were made, just get the values from localStorage
     // but if they're not in localStorage, we just show nothing
-    if (localStorage.stonks.length && localStorage.VOO) {
+    if (localStorage.stonks.length && localStorage.VOO.latestPrice) {
       return this.setState({
         isLoading: false,
         stonks: JSON.parse(localStorage.stonks),
         stonksAreLocal: true,
         user: {},
-        VOO: JSON.parse(localStorage.VOO)
+        VOO: JSON.parse(localStorage.VOO),
       });
     }
   }
@@ -59,17 +56,18 @@ export class UserProvider extends Component {
   async checkForUpdatesAndUpdateLocalStorage(userResult, VOOResult) {
     const updated = this.checkForUpdatedStonks(userResult.stonks);
 
-    if (updated) {
+    if (updated && userResult.stonks.length && VOOResult) {
+      // stringify is necessary because items in local storage are stored as strings
+      localStorage.stonks = JSON.stringify(userResult.stonks);
+      localStorage.VOO = JSON.stringify(VOOResult);
+
       this.setState({
         isLoading: false,
         stonks: userResult.stonks,
         stonksAreLocal: false,
         user: userResult,
-        VOO: VOOResult
+        VOO: VOOResult,
       });
-      // stringify is necessary because items in local storage are stored as strings
-      localStorage.stonks = JSON.stringify(userResult.stonks);
-      localStorage.VOO = JSON.stringify(VOOResult);
     }
   }
 
@@ -77,10 +75,10 @@ export class UserProvider extends Component {
     if (localStorage.stonks) {
       for (let i = 0; i < stonks.length; i += 1) {
         const stonksInLocalStorage =
-          localStorage.stonks && JSON.parse(localStorage.stonks);
+          localStorage.stonks.length && JSON.parse(localStorage.stonks);
 
         const currentStonkInStorage = stonksInLocalStorage.find(
-          stonk => stonk.symbol === stonks[i].symbol
+          (stonk) => stonk.symbol === stonks[i].symbol
         );
 
         if (currentStonkInStorage.latestPrice !== stonks[i].latestPrice) {
@@ -103,14 +101,14 @@ export class UserProvider extends Component {
     }
   };
 
-  removeStonk = async stonkSymbol => {
+  removeStonk = async (stonkSymbol) => {
     try {
       const result = await post(`${this.apiUrl}/api/stock/remove`, stonkSymbol);
       if (result)
         return this.setState({
           stonks: this.state.stonks.filter(
-            stonk => stonk.symbol !== stonkSymbol
-          )
+            (stonk) => stonk.symbol !== stonkSymbol
+          ),
         });
     } catch (error) {
       console.log("An error occurred: ", error);
@@ -123,7 +121,7 @@ export class UserProvider extends Component {
         value={{
           state: this.state,
           addStonkToStonks: this.addStonkToStonks,
-          removeStonk: this.removeStonk
+          removeStonk: this.removeStonk,
         }}
       >
         {this.props.children}
