@@ -5,6 +5,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import Dashboard from "./pages/Dashboard";
 import AddStonk from "./pages/AddStonk";
 import Header from "./components/Header";
+import MarketBanner from "./components/MarketBanner";
 import UserContext, { UserProvider } from "./data/context/UserContext";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <ErrorBoundary>
           <div className="App">
             <Header />
+            <MarketBanner />
             <UserContext.Consumer>
               {() => (
                 <>

@@ -6,7 +6,8 @@ export default ({
   symbol,
   latestPrice,
   changePercent,
-  peRatio
+  ncavWithTwoDecimals,
+  priceAsPercentOfNCAV
 }) => (
   <FrontSide className="stonk-card">
     <div className="stonk-attribute stonk-attribute__top">
@@ -27,7 +28,26 @@ export default ({
     </div>
     <hr />
     <div className="stonk-attribute">
-      PE Ratio (TTM): <span>{peRatio}</span>
+      NCAV/share:{" "}
+      <span
+        style={
+          ncavWithTwoDecimals > latestPrice
+            ? { color: "green" }
+            : { color: "red" }
+        }
+      >
+        ${ncavWithTwoDecimals}
+      </span>
+      <span
+        style={
+          ncavWithTwoDecimals > latestPrice
+            ? { color: "green" }
+            : { color: "red" }
+        }
+      >
+        {" "}
+        ({priceAsPercentOfNCAV}%)
+      </span>
     </div>
   </FrontSide>
 );

@@ -8,14 +8,15 @@ export default function Stonk({
   forwardConservativeGrahamFormulaNumber,
   forwardGrahamFormulaNumber,
   futureGrowthRate,
+  ncavWithTwoDecimals,
   pastConservativeGrahamFormulaNumber,
   pastGrahamFormulaNumber,
   previousGrowthRate,
+  priceAsPercentOfNCAV,
   grahamNumber,
   latestPrice,
   changePercent,
-  symbol,
-  peRatio
+  symbol
 }) {
   return (
     <Flippy
@@ -29,8 +30,8 @@ export default function Stonk({
         latestPrice={latestPrice}
         changePercent={changePercent}
         symbol={symbol}
-        grahamNumber={grahamNumber}
-        peRatio={peRatio}
+        ncavWithTwoDecimals={ncavWithTwoDecimals}
+        priceAsPercentOfNCAV={priceAsPercentOfNCAV}
       />
       <BackSide
         symbol={symbol}
