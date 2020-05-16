@@ -37,11 +37,14 @@ export class UserProvider extends Component {
       this.checkForUpdatesAndUpdateLocalStorage(userResult, VOOResult);
     }
 
-    console.log("both fetches failed, attempting to update from local");
-
     // if no updates were made, just get the values from localStorage
     // but if they're not in localStorage, we just show nothing
-    if (localStorage.stonks.length && localStorage.VOO.latestPrice) {
+    if (
+      localStorage.stonks &&
+      localStorage.stonks.length &&
+      localStorage.VOO &&
+      localStorage.VOO.latestPrice
+    ) {
       return this.setState({
         isLoading: false,
         stonks: JSON.parse(localStorage.stonks),
