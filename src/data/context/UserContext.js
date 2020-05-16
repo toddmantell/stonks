@@ -27,6 +27,9 @@ export class UserProvider extends Component {
 
   async setStateFromServerOrLocalStorage() {
     try {
+      if (localStorage.stonks && localStorage.stonks === "undefined")
+        localStorage.removeItem("stonks");
+
       const VOOResult = await get(`${this.apiUrl}/api/stock/quote/VOO`);
 
       const userResult = await get(
@@ -46,9 +49,10 @@ export class UserProvider extends Component {
         );
       }
 
-      return this.updateFromLocalIfNoUpdates();
+      this.updateFromLocalIfNoUpdates();
     } catch (error) {
       console.log("An error occurred: ", error);
+      this.updateFromLocalIfNoUpdates();
     }
   }
 
@@ -74,27 +78,28 @@ export class UserProvider extends Component {
   checkForUpdatedStonks(stonks) {
     if (localStorage.stonks) {
       for (let i = 0; i < stonks.length; i += 1) {
-        const stonksInLocalStorage =
-          localStorage.stonks.length && JSON.parse(localStorage.stonks);
+        const stonksInLocalStorage = JSON.parse(localStorage.stonks);
 
-        const currentStonkInStorage = stonksInLocalStorage.find(
-          (stonk) => stonk.symbol === stonks[i].symbol
-        );
+        const currentStonkInStorage =
+          stonksInLocalStorage.length &&
+          stonksInLocalStorage.find(
+            (stonk) => stonk.symbol === stonks[i].symbol
+          );
 
         if (currentStonkInStorage.latestPrice !== stonks[i].latestPrice) {
           return true;
         }
       }
     }
+
+    return false;
   }
 
   updateFromLocalIfNoUpdates() {
     if (
       this.state.updated === false &&
       localStorage.stonks &&
-      localStorage.stonks.length &&
-      localStorage.VOO &&
-      localStorage.VOO.latestPrice
+      localStorage.VOO
     ) {
       this.setState({
         isLoading: false,
