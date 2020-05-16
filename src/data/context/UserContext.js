@@ -11,7 +11,7 @@ export class UserProvider extends Component {
     stonks: [],
     updated: false,
     isLoading: true,
-    stonksAreLocal: false,
+    stonksAreFromLocalStorage: false,
     VOO: {},
   };
   apiUrl = getDevOrProdAPIURL();
@@ -26,32 +26,29 @@ export class UserProvider extends Component {
   }
 
   async setStateFromServerOrLocalStorage() {
-    const VOOResult = await get(`${this.apiUrl}/api/stock/quote/VOO`);
+    try {
+      const VOOResult = await get(`${this.apiUrl}/api/stock/quote/VOO`);
 
-    const userResult = await get(
-      `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
-    );
+      const userResult = await get(
+        `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
+      );
 
-    // if either of the fetches fail, DON't check for updated stonks
-    if (!typeof userResult === TypeError && !typeof VOOResult === TypeError) {
-      this.checkForUpdatesAndUpdateLocalStorage(userResult, VOOResult);
-    }
+      // if either of the fetches fail, DON't check for updated stonks
+      if (
+        userResult.stonks &&
+        userResult.stonks.length &&
+        VOOResult &&
+        VOOResult.symbol
+      ) {
+        return await this.checkForUpdatesAndUpdateLocalStorage(
+          userResult,
+          VOOResult
+        );
+      }
 
-    // if no updates were made, just get the values from localStorage
-    // but if they're not in localStorage, we just show nothing
-    if (
-      localStorage.stonks &&
-      localStorage.stonks.length &&
-      localStorage.VOO &&
-      localStorage.VOO.latestPrice
-    ) {
-      return this.setState({
-        isLoading: false,
-        stonks: JSON.parse(localStorage.stonks),
-        stonksAreLocal: true,
-        user: {},
-        VOO: JSON.parse(localStorage.VOO),
-      });
+      return this.updateFromLocalIfNoUpdates();
+    } catch (error) {
+      console.log("An error occurred: ", error);
     }
   }
 
@@ -59,19 +56,19 @@ export class UserProvider extends Component {
   async checkForUpdatesAndUpdateLocalStorage(userResult, VOOResult) {
     const updated = this.checkForUpdatedStonks(userResult.stonks);
 
-    if (updated && userResult.stonks.length && VOOResult) {
+    if (updated) {
       // stringify is necessary because items in local storage are stored as strings
       localStorage.stonks = JSON.stringify(userResult.stonks);
       localStorage.VOO = JSON.stringify(VOOResult);
-
-      this.setState({
-        isLoading: false,
-        stonks: userResult.stonks,
-        stonksAreLocal: false,
-        user: userResult,
-        VOO: VOOResult,
-      });
     }
+
+    this.setState({
+      isLoading: false,
+      stonks: userResult.stonks,
+      stonksAreFromLocalStorage: false,
+      user: userResult,
+      VOO: VOOResult,
+    });
   }
 
   checkForUpdatedStonks(stonks) {
@@ -88,6 +85,24 @@ export class UserProvider extends Component {
           return true;
         }
       }
+    }
+  }
+
+  updateFromLocalIfNoUpdates() {
+    if (
+      this.state.updated === false &&
+      localStorage.stonks &&
+      localStorage.stonks.length &&
+      localStorage.VOO &&
+      localStorage.VOO.latestPrice
+    ) {
+      this.setState({
+        isLoading: false,
+        stonks: JSON.parse(localStorage.stonks),
+        stonksAreFromLocalStorage: true,
+        user: {},
+        VOO: JSON.parse(localStorage.VOO),
+      });
     }
   }
 
