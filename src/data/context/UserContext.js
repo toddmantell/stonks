@@ -86,7 +86,10 @@ export class UserProvider extends Component {
             (stonk) => stonk.symbol === stonks[i].symbol
           );
 
-        if (currentStonkInStorage.latestPrice !== stonks[i].latestPrice) {
+        if (
+          currentStonkInStorage &&
+          currentStonkInStorage.latestPrice !== stonks[i].latestPrice
+        ) {
           return true;
         }
       }
