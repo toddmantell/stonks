@@ -6,12 +6,25 @@ export default ({
   symbol,
   latestPrice,
   changePercent,
-  peRatio
+  peRatio,
+  forwardConservativeGrahamFormulaNumber,
 }) => (
   <FrontSide className="stonk-card">
     <div className="stonk-attribute stonk-attribute__top">
       Company Name:{" "}
-      <div className="stonk-attribute--companyName">{companyName}</div>
+      <div className="stonk-attribute--companyName">
+        <span
+          style={
+            forwardConservativeGrahamFormulaNumber > latestPrice
+              ? {
+                  color: "green",
+                }
+              : {}
+          }
+        >
+          {companyName}
+        </span>
+      </div>
     </div>
     <hr />
     <div className="stonk-attribute">
