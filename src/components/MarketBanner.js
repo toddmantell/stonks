@@ -9,7 +9,7 @@ export default function MarketBanner(props) {
     <section className="market-banner">
       <span>
         <span className="index-underline">Vanguard S&P 500 Index:</span>{" "}
-        {Number.parseFloat(VOO.latestPrice).toFixed(2)}{" "}
+        {isLoading ? 0 : Number.parseFloat(VOO.latestPrice).toFixed(2)}{" "}
         <span
           style={VOO.changePercent > 0 ? { color: "green" } : { color: "red" }}
         >
