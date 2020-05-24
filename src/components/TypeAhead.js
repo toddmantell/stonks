@@ -6,12 +6,12 @@ import { getDevOrProdAPIURL } from "../data/getStonks";
 export default function TypeAhead({ handleInputChange, defaults }) {
   async function getSymbols(inputValue) {
     const apiURL = getDevOrProdAPIURL();
-    return await get(`${apiURL}/api/stock/symbol/${inputValue}`);
+    return (await get(`${apiURL}/api/stock/symbol/${inputValue}`)) || [];
   }
 
   return (
     <AsyncSelect
-      cacheOptions
+      cacheOptions={true}
       defaultOptions={defaults}
       loadOptions={getSymbols}
       onChange={handleInputChange}

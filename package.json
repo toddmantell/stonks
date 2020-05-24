@@ -16,6 +16,7 @@
     "use-debounce": "^3.0.1"
   },
   "scripts": {
+    "cypress": "cypress open",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
