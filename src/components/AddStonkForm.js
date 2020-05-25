@@ -1,12 +1,13 @@
 import React from "react";
 import TypeAhead from "./TypeAhead";
+import CustomTypeAhead from "../components/CustomTypeAhead";
 
 const AddStonkForm = ({
   getStonkCalculation,
   setTickerAndGetQuote,
   setInputValue,
   previousGrowthRate,
-  futureGrowthRate
+  futureGrowthRate,
 }) => (
   <form
     data-testid="add-stonk-form"
@@ -24,10 +25,7 @@ const AddStonkForm = ({
       >
         Enter Stonk Symbol:
       </label>
-      <TypeAhead
-        handleInputChange={setTickerAndGetQuote}
-        defaults={[{ value: "default", label: "Enter Ticker" }]}
-      />
+      <CustomTypeAhead setTickerAndGetQuote={setTickerAndGetQuote} />
     </div>
     <div>
       <label
