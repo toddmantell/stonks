@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Dashboard from "./pages/Dashboard";
-import AddStonk from "./pages/AddStonk";
+import AddStonk from "./pages/AddStonk.jsx";
 import Header from "./components/Header";
 import MarketBanner from "./components/MarketBanner";
 import UserContext, { UserProvider } from "./data/context/UserContext";

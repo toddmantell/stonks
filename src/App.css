@@ -195,7 +195,7 @@
 
 @media (max-width: 1200px) {
   .add-stonks {
-    margin: 100px 0 0 70px;
+    margin: 2rem 0 0 4.5rem;
     display: grid;
     grid-template-columns: 100%;
     border: hsl(0,0%,80%) solid 1px;
@@ -206,7 +206,7 @@
 
 @media (min-width: 1200px) {
   .add-stonks {
-    margin: 100px 0 0 70px;
+    margin: 2rem 0 0 4.5rem;
     display: grid;
     grid-template-columns: 45% 30%;
     border: hsl(0,0%,80%) solid 1px;
@@ -222,12 +222,6 @@
 .add-stonk-heading {
   color: #282c34;
   font-size: 23px;
-}
-
-.typeahead {
-  margin-bottom: 1rem;
-  width: 225px;
-  height: 30px;
 }
 
 .input-label {

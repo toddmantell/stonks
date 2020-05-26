@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { getDevOrProdAPIURL } from "../data/getStonks";
 import { get, post } from "../data/fetchWrapper";
-import AddStonkForm from "../components/AddStonkForm";
+import AddStonkForm from "../components/AddStonkForm.jsx";
 import Metrics from "../components/Metrics";
 import UserContext from "../data/context/UserContext";
 
@@ -60,7 +60,7 @@ export default function AddStonk() {
         const stonkForCalc = {
           ticker: stonkTicker.value,
           futureGrowthRate,
-          previousGrowthRate
+          previousGrowthRate,
         };
         const stonk =
           (await post(`${apiUrl}/api/stock/calculateMetrics`, stonkForCalc)) ||
@@ -85,7 +85,7 @@ export default function AddStonk() {
     // result && alert("stonk successfully added");
 
     const {
-      user: { id: userId }
+      user: { id: userId },
     } = context.state;
 
     const stonkToAdd = {
@@ -93,7 +93,7 @@ export default function AddStonk() {
       companyName: stonk.companyName,
       bookValuePerShare: 5, // this is hard-coded for now but needs to get updated
       projectedEPSGrowth: futureGrowthRate,
-      fiveYearGrowthRate: previousGrowthRate
+      fiveYearGrowthRate: previousGrowthRate,
     };
 
     const result = await context.addStonkToStonks(userId, stonkToAdd);
