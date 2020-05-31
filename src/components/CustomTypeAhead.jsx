@@ -17,7 +17,6 @@ export default function CustomTypeAhead({ setTickerAndGetQuote, css = {textbox: 
     if (debouncedSymbol) {
       setIsSearching(true);
       getSymbols();
-      setIsSearching(false);
     } else {
       setSymbols([]);
     }
@@ -31,12 +30,17 @@ export default function CustomTypeAhead({ setTickerAndGetQuote, css = {textbox: 
         // });
         if (!localSymbols[0]) {
           setSymbols([]);
-          alert(`Could not find symbols for ${symbolFragment}`);
+          setIsSearching(false);
+          return alert(`Could not find symbols for ${symbolFragment}`);
         }
 
-        if (localSymbols && localSymbols.length > 20) return setSymbols(localSymbols.slice(0,20));
+        if (localSymbols && localSymbols.length > 20) {
+          setIsSearching(false);
+          return setSymbols(localSymbols.slice(0,20));
+        }
 
         setSymbols(localSymbols);
+        setIsSearching(false);
       } catch (error) {
         console.log(`An error occurred while fetching symbols: ${error}`);
       }
@@ -72,7 +76,7 @@ export default function CustomTypeAhead({ setTickerAndGetQuote, css = {textbox: 
             </option>
           ))}
       </datalist>
-      {isSearching && <div>Searching...</div>}
+      <span>{isSearching && <span>searching</span>}</span>
     </>
   );
 }
