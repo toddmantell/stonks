@@ -29,9 +29,9 @@ export default function CustomTypeAhead({ setTickerAndGetQuote, css = {textbox: 
         //   ...symbols,
         //   lastUpdated: Date.now()
         // });
-        if (!localSymbols.length) {
+        if (!localSymbols[0]) {
           setSymbols([]);
-          throw new Error(`Could not fetch symbols for ${symbolFragment}`);
+          alert(`Could not find symbols for ${symbolFragment}`);
         }
 
         if (localSymbols && localSymbols.length > 20) return setSymbols(localSymbols.slice(0,20));
@@ -46,7 +46,7 @@ export default function CustomTypeAhead({ setTickerAndGetQuote, css = {textbox: 
   // Because you can't directly select the datalist, we have to set the ticker for the quote
   // if it matches a symbol, since the symbols will get retrieved only after symbol lookup
   const handleChange = ({ target }) => {
-    symbols.length && symbols.forEach(symbol => {
+    target.value && symbols[0] && symbols.forEach(symbol => {
       if (symbol.value === target.value) setTickerAndGetQuote(symbol)
     });
 
@@ -65,7 +65,7 @@ export default function CustomTypeAhead({ setTickerAndGetQuote, css = {textbox: 
       onChange={handleChange}
       maxLength="5" />
       <datalist id="symbols">
-        {symbols.length &&
+        {symbols.length && symbols[0] &&
           symbols.map((symbol, index) => (
             <option key={`option-${index}`} value={symbol.value}>
               {symbol.label}
