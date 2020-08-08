@@ -1,7 +1,7 @@
 import React from "react";
 import Flippy from "react-flippy";
-import FrontSide from "./FrontSide";
-import BackSide from "./BackSide";
+import FrontSide from "./FrontSide.jsx";
+import BackSide from "./BackSide.jsx";
 
 export default function Stonk({
   companyName,
