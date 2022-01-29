@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDebounce } from "use-debounce";
+import { toast } from 'react-toastify';
+
 import { get } from "../data/fetchWrapper";
 import { getDevOrProdAPIURL } from "../data/getStonks";
 
 export default function CustomTypeAhead({ setTickerAndGetQuote, css = {textbox: "textbox"} }) {
   const APIURL = getDevOrProdAPIURL();
-  const DEBOUNCETIME = 1000;
+  const DEBOUNCETIME = 500;
 
   const [symbolFragment, setSymbolFragment] = useState("");
   const [symbols, setSymbols] = useState([]);
@@ -31,7 +33,14 @@ export default function CustomTypeAhead({ setTickerAndGetQuote, css = {textbox: 
         if (!localSymbols[0]) {
           setSymbols([]);
           setIsSearching(false);
-          return alert(`Could not find symbols for ${symbolFragment}`);
+          return toast.error(`Could not find symbols for ${symbolFragment}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined});
         }
 
         if (localSymbols && localSymbols.length > 20) {
