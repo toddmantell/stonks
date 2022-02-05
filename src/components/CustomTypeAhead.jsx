@@ -5,8 +5,9 @@ import { toast } from 'react-toastify';
 import { get } from "../data/fetchWrapper";
 import { getDevOrProdAPIURL } from "../data/getStonks";
 
-export default function CustomTypeAhead({ setTickerAndGetQuote, css = {textbox: "textbox"} }) {
-  const APIURL = getDevOrProdAPIURL();
+export default function CustomTypeAhead({ setTickerAndGetQuote = () => console.log('no handler provided to typeahead'), css = {textbox: "textbox"} }) {
+  // APIURL set to a state variable because useEffect can't find it if it's just a regular const
+  const [APIURL, ] = useState(getDevOrProdAPIURL());
   const DEBOUNCETIME = 500;
 
   const [symbolFragment, setSymbolFragment] = useState("");
@@ -17,8 +18,14 @@ export default function CustomTypeAhead({ setTickerAndGetQuote, css = {textbox: 
 
   useEffect(() => {
     if (debouncedSymbol) {
+      console.log('searching: ', debouncedSymbol);
       setIsSearching(true);
+      setSymbols([]);
       getSymbols();
+      
+      symbols[0] && symbols.forEach(symbol => {
+        if (symbol.value === debouncedSymbol) setTickerAndGetQuote(symbol)
+      });
     } else {
       setSymbols([]);
     }
@@ -59,12 +66,10 @@ export default function CustomTypeAhead({ setTickerAndGetQuote, css = {textbox: 
   // Because you can't directly select the datalist, we have to set the ticker for the quote
   // if it matches a symbol, since the symbols will get retrieved only after symbol lookup
   const handleChange = ({ target }) => {
-    target.value && symbols[0] && symbols.forEach(symbol => {
-      if (symbol.value === target.value) setTickerAndGetQuote(symbol)
-    });
+    setSymbolFragment(target.value);
 
     // It still sets the fragment again, so we would like to avoid this double call if possible
-    setSymbolFragment(target.value);
+    // setSymbolFragment(target.value);
   }
 
   return (

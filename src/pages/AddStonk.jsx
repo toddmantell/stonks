@@ -6,7 +6,7 @@ import Metrics from "../components/Metrics";
 import UserContext from "../data/context/UserContext";
 
 export default function AddStonk() {
-  const apiUrl = getDevOrProdAPIURL();
+  const [apiUrl, setApiUrl] = useState(getDevOrProdAPIURL());
   const [stonkTicker, setStonkTicker] = useState({});
   const [stonkQuote, setStonkQuote] = useState(undefined);
   const [stonk, setStonk] = useState(undefined);
@@ -55,6 +55,8 @@ export default function AddStonk() {
 
   async function getStonkCalculation(event) {
     event.preventDefault();
+    console.log('getting stonk info...');
+    console.log(`${stonkTicker.value} && ${previousGrowthRate} && ${futureGrowthRate}`)
     if (stonkTicker.value && previousGrowthRate && futureGrowthRate) {
       try {
         const stonkForCalc = {
