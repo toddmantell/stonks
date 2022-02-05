@@ -3,7 +3,7 @@ import UserContext from "../data/context/UserContext";
 
 export default function MarketBanner(props) {
   const context = useContext(UserContext);
-  const { isLoading, stonksAreFromLocalStorage, VOO } = context.state;
+  const { isLoading, VOO } = context.state;
 
   return (
     <section className="market-banner">
@@ -20,7 +20,7 @@ export default function MarketBanner(props) {
           %)
         </span>
       </span>
-      {stonksAreFromLocalStorage === true && (
+      {!VOO && (
         <span>
           {"    "}There was a problem retrieving data, you are viewing old data
         </span>
