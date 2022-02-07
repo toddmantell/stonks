@@ -31,7 +31,7 @@ export class UserProvider extends Component {
 
       const userResult = await get(
         `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
-      ) || {name: 'Todd'};
+      );
 
 			VOOResult && userResult && this.setState({VOO: VOOResult, user: userResult, isLoading: false, stonks: userResult.stonks});
     } catch (error) {
@@ -44,7 +44,7 @@ export class UserProvider extends Component {
 		this.setState({
 			isLoading: false,
 			stonks: defaultStonks,
-			user: {},
+			user:  {name: 'Ben'},
 			VOO: {changePercent: .01, latestPrice: 1},
 		});
 }
