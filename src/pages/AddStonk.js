@@ -6,7 +6,7 @@ import Metrics from "../components/Metrics";
 import UserContext from "../data/context/UserContext";
 
 export default function AddStonk() {
-  const [apiUrl] = useState(getDevOrProdAPIURL());
+  const apiUrl = getDevOrProdAPIURL();
   const [stonkTicker, setStonkTicker] = useState({});
   const [stonkQuote, setStonkQuote] = useState(undefined);
   const [stonk, setStonk] = useState(undefined);
@@ -30,7 +30,7 @@ export default function AddStonk() {
         return setStonkQuote(false);
       }
     }
-  }, [stonkTicker.value]);
+  }, [stonkTicker.value, apiUrl]);
 
   function resetForm() {
     setStonk(false);
