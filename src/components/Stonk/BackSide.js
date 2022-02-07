@@ -15,7 +15,7 @@ export default ({
     <div className="stonk-attribute">({symbol})</div>
     <hr />
     <div className="stonk-attribute">
-      Past({previousGrowthRate}%):{" "}
+      High({previousGrowthRate}%):{" "}
       <span
         style={
           pastGrahamFormulaNumber > latestPrice
@@ -28,7 +28,7 @@ export default ({
     </div>
     <hr />
     <div className="stonk-attribute">
-      Past Cons.({previousGrowthRate}%):{" "}
+      High Cons.({previousGrowthRate}%):{" "}
       <span
         style={
           pastConservativeGrahamFormulaNumber > latestPrice
@@ -42,7 +42,7 @@ export default ({
     <hr />
 
     <div className="stonk-attribute">
-      Forward({futureGrowthRate}%):{" "}
+      Low({futureGrowthRate}%):{" "}
       <span
         style={
           forwardGrahamFormulaNumber > latestPrice
@@ -55,7 +55,7 @@ export default ({
     </div>
     <hr />
     <div className="stonk-attribute stonk-attribute__bottom">
-      Forward Cons.({futureGrowthRate}%):{" "}
+      Low Cons.({futureGrowthRate}%):{" "}
       <span
         style={
           forwardConservativeGrahamFormulaNumber > latestPrice
