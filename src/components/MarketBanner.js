@@ -20,9 +20,9 @@ export default function MarketBanner(props) {
           %)
         </span>
       </span>
-      {!VOO && (
+      {VOO.latestPrice === 1 && (
         <span>
-          {"    "}There was a problem retrieving data, you are viewing old data
+          {"    "}There was a problem retrieving data, you are viewing placeholder data.
         </span>
       )}
     </section>

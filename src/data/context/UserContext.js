@@ -45,7 +45,7 @@ export class UserProvider extends Component {
 			isLoading: false,
 			stonks: defaultStonks,
 			user: {},
-			VOO: {changePercent: .01, latestPrice: 100},
+			VOO: {changePercent: .01, latestPrice: 1},
 		});
 }
 
