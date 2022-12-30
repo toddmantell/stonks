@@ -5,6 +5,8 @@ export default function MarketBanner(props) {
   const context = useContext(UserContext);
   const { isLoading, VOO } = context.state;
 
+	const getCurrentTime = () => new Intl.DateTimeFormat('en-US', { dateStyle: 'long', timeStyle: 'long'}).format(new Date(Date.now()));
+
   return (
     <section className="market-banner">
       <span>
@@ -19,6 +21,7 @@ export default function MarketBanner(props) {
             : Number.parseFloat(VOO.changePercent * 100).toFixed(2)}
           %)
         </span>
+				<span className="timestamp">{isLoading ? '' : getCurrentTime()}</span>
       </span>
       {VOO.latestPrice === 1 && (
         <span>

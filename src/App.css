@@ -75,6 +75,10 @@
   color: blue;
 }
 
+.timestamp {
+  display: block;
+}
+
 @media (max-width: 768px) {  
   .app-header .banner {
     display: flex;
