@@ -79,6 +79,10 @@
   display: block;
 }
 
+.sort {
+  display: block;
+}
+
 @media (max-width: 768px) {  
   .app-header .banner {
     display: flex;
