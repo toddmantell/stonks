@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {useState, useEffect} from 'react';
 import Stonk from "./Stonk";
 import NCAVStonk from "./NCAVStonk";
