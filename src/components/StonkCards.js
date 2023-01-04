@@ -9,7 +9,11 @@ export default function StonkCards({stonks = [], options = [], removeStonk = () 
 	const [sortedStonks, setSortedStonks] = useState(stonks);
 
 	function sortByUndervalued (stonka, stonkb) {
-		return (stonka.latestPrice / stonka.forwardConservativeGrahamFormulaNumber) - (stonkb.latestPrice / stonkb.forwardConservativeGrahamFormulaNumber);
+		return checkForNonNegativeValue(+stonka.forwardConservativeGrahamFormulaNumber, +stonkb.forwardConservativeGrahamFormulaNumber) && (stonka.latestPrice / stonka.forwardConservativeGrahamFormulaNumber) - (stonkb.latestPrice / stonkb.forwardConservativeGrahamFormulaNumber);
+	}
+
+	function checkForNonNegativeValue(stonkValue1, stonkValue2) {
+		if (stonkValue1 > 0 && stonkValue2 > 0) return true; 
 	}
 
 	function sortByCompanyName (a, b) {
