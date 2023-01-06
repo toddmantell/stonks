@@ -15,11 +15,11 @@ export default function StonkCards({stonks = [], options = [], removeStonk = () 
 	function sortByCompanyName (stonka, stonkb) {
 		if (stonka.companyName > stonkb.companyName) {
 			return 1;
-	}
-	if (stonkb.companyName > stonka.companyName) {
+	  }
+	  if (stonkb.companyName > stonka.companyName) {
 			return -1;
-	}
-	return 0;
+	  }
+	  return 0;
 	}
 
 	function sortByPercentageLost(stonka, stonkb) {
