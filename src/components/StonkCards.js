@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import Stonk from "./Stonk";
 import NCAVStonk from "./NCAVStonk";
 
-export default function StonkCards({stonks = [], options = [], removeStonk = () => ''}) {
+export default function StonkCards({stonks = [], removeStonk = () => ''}) {
 
 	const [sortValue, setSortValue] = useState(-1);
 	const [sortedStonks, setSortedStonks] = useState(stonks);
@@ -35,6 +35,8 @@ export default function StonkCards({stonks = [], options = [], removeStonk = () 
 		else if (sortValue === 1) setSortedStonks(stonksToSort.sort(sortByCompanyName))
 		else if (sortValue === 3) setSortedStonks(stonksToSort.sort(sortByPercentageLost))
 	}, [sortValue])
+
+	const options = ["By Ticker", "By Co. Name", "By Undervalued", "By % Change"];
 
 	return (
 		<>
