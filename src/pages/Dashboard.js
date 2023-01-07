@@ -17,7 +17,7 @@ export default function StonksDashboard() {
         ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(item => (
             <StonkSkeleton key={`skeleton-${item}`} />
           ))
-        : <StonkCards stonks={stonks} options={["By Ticker", "By Co. Name", "By Undervalued", "By % Change"]} removeStonk={removeStonk} />}
+        : <StonkCards stonks={stonks} removeStonk={removeStonk} />}
     </main>
   );
 }

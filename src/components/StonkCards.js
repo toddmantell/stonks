@@ -4,7 +4,7 @@ import Stonk from "./Stonk";
 import NCAVStonk from "./NCAVStonk";
 import reducer from "./StonkCardsReducer";
 
-export default function StonkCards({stonks = [], options = [], removeStonk = () => ''}) {
+export default function StonkCards({stonks = [], removeStonk = () => ''}) {
 
 	const [sortValue, setSortValue] = useState(-1);
 	const [state, dispatch] = useReducer(reducer, { localStonks: stonks })
@@ -13,6 +13,8 @@ export default function StonkCards({stonks = [], options = [], removeStonk = () 
 	
 
 	const handleSelectSort = e => dispatch({sortValue: +e.target.value});
+
+	const options = ["By Ticker", "By Co. Name", "By Undervalued", "By % Change"];
 
 	return (
 		<>
