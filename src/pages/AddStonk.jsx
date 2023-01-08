@@ -30,7 +30,7 @@ export default function AddStonk() {
         return setStonkQuote(false);
       }
     }
-  }, [stonkTicker.value]);
+  }, [stonkTicker.value, apiUrl]);
 
   function resetForm() {
     setStonk(false);
@@ -50,6 +50,8 @@ export default function AddStonk() {
       case "future-growth-rate":
         setFutureGrowthRate(value);
         break;
+			default:
+				return undefined;
     }
   }
 

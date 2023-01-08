@@ -3,7 +3,9 @@ import UserContext from "../data/context/UserContext";
 
 export default function MarketBanner(props) {
   const context = useContext(UserContext);
-  const { isLoading, stonksAreFromLocalStorage, VOO } = context.state;
+  const { isLoading, VOO } = context.state;
+
+	const getCurrentTime = () => new Intl.DateTimeFormat('en-US', { dateStyle: 'long', timeStyle: 'long'}).format(new Date(Date.now()));
 
   return (
     <section className="market-banner">
@@ -19,10 +21,11 @@ export default function MarketBanner(props) {
             : Number.parseFloat(VOO.changePercent * 100).toFixed(2)}
           %)
         </span>
+				<span className="timestamp">{isLoading ? '' : getCurrentTime()}</span>
       </span>
-      {stonksAreFromLocalStorage === true && (
+      {VOO.latestPrice === 1 && (
         <span>
-          {"    "}There was a problem retrieving data, you are viewing old data
+          {"    "}There was a problem retrieving data, you are viewing placeholder data.
         </span>
       )}
     </section>
