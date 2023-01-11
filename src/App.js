@@ -3,11 +3,10 @@ import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Dashboard from "./pages/Dashboard";
-import AddStonk from "./pages/AddStonk.js";
+import AddStonk from "./pages/AddStonk";
 import Header from "./components/Header";
 import MarketBanner from "./components/MarketBanner";
 import UserContext, { UserProvider } from "./data/context/UserContext";
-import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -26,7 +25,6 @@ function App() {
               )}
             </UserContext.Consumer>
           </div>
-          <ToastContainer />
         </ErrorBoundary>
       </Router>
     </UserProvider>

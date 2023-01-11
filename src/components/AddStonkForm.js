@@ -1,5 +1,5 @@
 import React from "react";
-import Typeahead from "./CustomTypeahead";
+import Typeahead from "./Typeahead";
 
 const AddStonkForm = ({
   getStonkCalculation,
