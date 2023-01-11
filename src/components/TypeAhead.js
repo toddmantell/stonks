@@ -5,7 +5,7 @@ import { getDevOrProdAPIURL } from "../data/getStonks";
 
 const APIURL = getDevOrProdAPIURL();
 
-export default function AlternativeTypeahead({
+export default function Typeahead({
   setTickerAndGetQuote = () => console.log("no handler provided to typeahead"),
 }) {
   const [suggestions, setSuggestions] = useState([]);

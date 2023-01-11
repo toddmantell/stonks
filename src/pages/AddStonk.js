@@ -18,7 +18,7 @@ export default function AddStonk() {
   useEffect(() => {
     if (stonkTicker.value) getStonkQuote(stonkTicker.value);
 
-    // since we are going to use a typeahead, this will be used when the actual stock is chosen
+    // Since we are going to use a typeahead, this will be used when the actual stock is chosen.
     async function getStonkQuote(ticker) {
       try {
         const fetchedStonkQuote =
