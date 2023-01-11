@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { getDevOrProdAPIURL } from "../data/getStonks";
 import { get, post } from "../data/fetchWrapper";
-import AddStonkForm from "../components/AddStonkForm.jsx";
+import AddStonkForm from "../components/AddStonkForm.js";
 import Metrics from "../components/Metrics";
 import UserContext from "../data/context/UserContext";
 
 export default function AddStonk() {
-  const [apiUrl, setApiUrl] = useState(getDevOrProdAPIURL());
+  const [apiUrl] = useState(getDevOrProdAPIURL());
   const [stonkTicker, setStonkTicker] = useState({});
   const [stonkQuote, setStonkQuote] = useState(undefined);
   const [stonk, setStonk] = useState(undefined);
@@ -33,6 +33,7 @@ export default function AddStonk() {
   }, [stonkTicker.value, apiUrl]);
 
   function resetForm() {
+    console.log("resetting the form");
     setStonk(false);
     setFutureGrowthRate(0);
     setPreviousGrowthRate(0);
@@ -50,15 +51,17 @@ export default function AddStonk() {
       case "future-growth-rate":
         setFutureGrowthRate(value);
         break;
-			default:
-				return undefined;
+      default:
+        return undefined;
     }
   }
 
   async function getStonkCalculation(event) {
     event.preventDefault();
-    console.log('getting stonk info...');
-    console.log(`${stonkTicker.value} && ${previousGrowthRate} && ${futureGrowthRate}`)
+    console.log("getting stonk info...");
+    console.log(
+      `${stonkTicker.value} && ${previousGrowthRate} && ${futureGrowthRate}`
+    );
     if (stonkTicker.value && previousGrowthRate && futureGrowthRate) {
       try {
         const stonkForCalc = {
@@ -101,7 +104,7 @@ export default function AddStonk() {
     };
 
     const result = await context.addStonkToStonks(userId, stonkToAdd);
-    result.length && alert("stonk successfully added");
+    result && result.length && alert("stonk successfully added");
     resetForm();
     setStonkQuote(undefined);
   }

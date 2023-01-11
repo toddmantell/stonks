@@ -1,7 +1,7 @@
 import React from "react";
 import Flippy from "react-flippy";
-import FrontSide from "./FrontSide.jsx";
-import BackSide from "./BackSide.jsx";
+import FrontSide from "./FrontSide";
+import BackSide from "./BackSide";
 
 export default function Stonk({
   companyName,
@@ -26,15 +26,17 @@ export default function Stonk({
     >
       <FrontSide
         companyName={companyName}
-				changePercent={changePercent}
+        changePercent={changePercent}
         forwardConservativeGrahamFormulaNumber={
           forwardConservativeGrahamFormulaNumber
         }
-				grahamNumber={grahamNumber}
+        grahamNumber={grahamNumber}
         latestPrice={latestPrice}
-				pastConservativeGrahamFormulaNumber={pastConservativeGrahamFormulaNumber}
+        pastConservativeGrahamFormulaNumber={
+          pastConservativeGrahamFormulaNumber
+        }
         peRatio={peRatio}
-				symbol={symbol}
+        symbol={symbol}
       />
       <BackSide
         symbol={symbol}

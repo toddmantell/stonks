@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useDebounce } from "use-debounce";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 import { get } from "../data/fetchWrapper";
 import { getDevOrProdAPIURL } from "../data/getStonks";
 
-export default function CustomTypeAhead({ setTickerAndGetQuote = () => console.log('no handler provided to typeahead'), css = {textbox: "textbox"} }) {
+export default function CustomTypeAhead({
+  setTickerAndGetQuote = () => console.log("no handler provided to typeahead"),
+  css = { textbox: "textbox" },
+}) {
   // APIURL set to a state variable because useEffect can't find it if it's just a regular const
-  const [APIURL, ] = useState(getDevOrProdAPIURL());
+  const [APIURL] = useState(getDevOrProdAPIURL());
   const DEBOUNCETIME = 500;
 
   const [symbolFragment, setSymbolFragment] = useState("");
@@ -18,21 +21,25 @@ export default function CustomTypeAhead({ setTickerAndGetQuote = () => console.l
 
   useEffect(() => {
     if (debouncedSymbol) {
-      console.log('searching: ', debouncedSymbol);
+      console.log("searching: ", debouncedSymbol);
       setIsSearching(true);
       setSymbols([]);
       getSymbols();
-      
-      symbols[0] && symbols.forEach(symbol => {
-        if (symbol.value === debouncedSymbol) setTickerAndGetQuote(symbol)
-      });
+
+      symbols[0] &&
+        symbols.forEach((symbol) => {
+          console.log("iterating over symbols...", symbol);
+          if (symbol.value === debouncedSymbol) setTickerAndGetQuote(symbol);
+        });
     } else {
       setSymbols([]);
     }
 
     async function getSymbols() {
       try {
-        const localSymbols = await get(`${APIURL}/api/stock/symbol/${symbolFragment}`);
+        const localSymbols = await get(
+          `${APIURL}/api/stock/symbol/${symbolFragment}`
+        );
         // localStorage.symbols = JSON.stringify({
         //   ...symbols,
         //   lastUpdated: Date.now()
@@ -41,18 +48,19 @@ export default function CustomTypeAhead({ setTickerAndGetQuote = () => console.l
           setSymbols([]);
           setIsSearching(false);
           return toast.error(`Could not find symbols for ${symbolFragment}`, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined});
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         }
 
         if (localSymbols && localSymbols.length > 20) {
           setIsSearching(false);
-          return setSymbols(localSymbols.slice(0,20));
+          return setSymbols(localSymbols.slice(0, 20));
         }
 
         setSymbols(localSymbols);
@@ -70,20 +78,22 @@ export default function CustomTypeAhead({ setTickerAndGetQuote = () => console.l
 
     // It still sets the fragment again, so we would like to avoid this double call if possible
     // setSymbolFragment(target.value);
-  }
+  };
 
   return (
     <>
       <input
-      className={css.textbox}
-      type="text"
-      list="symbols"
-      placeholder="Ticker Symbol"
-      autoComplete="on"
-      onChange={handleChange}
-      maxLength="5" />
+        className={css.textbox}
+        type="text"
+        list="symbols"
+        placeholder="Ticker Symbol"
+        autoComplete="on"
+        onChange={handleChange}
+        maxLength="5"
+      />
       <datalist id="symbols">
-        {symbols.length && symbols[0] &&
+        {symbols.length &&
+          symbols[0] &&
           symbols.map((symbol, index) => (
             <option key={`option-${index}`} value={symbol.value}>
               {symbol.label}

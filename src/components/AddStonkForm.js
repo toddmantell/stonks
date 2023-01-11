@@ -1,6 +1,5 @@
 import React from "react";
-import TypeAhead from "./TypeAhead";
-import CustomTypeAhead from "./CustomTypeAhead";
+import Typeahead from "./AlternativeTypeahead";
 
 const AddStonkForm = ({
   getStonkCalculation,
@@ -25,10 +24,7 @@ const AddStonkForm = ({
       >
         Enter Stonk Symbol:
       </label>
-      <CustomTypeAhead
-        setTickerAndGetQuote={setTickerAndGetQuote}
-        css={{ textbox: "textbox" }}
-      />
+      <Typeahead setTickerAndGetQuote={setTickerAndGetQuote} />
     </div>
     <div>
       <label
