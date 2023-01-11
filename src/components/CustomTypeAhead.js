@@ -1,106 +1,76 @@
 import React, { useState, useEffect } from "react";
-import { useDebounce } from "use-debounce";
-import { toast } from "react-toastify";
-
+import "./alternativetypeahead.css";
 import { get } from "../data/fetchWrapper";
 import { getDevOrProdAPIURL } from "../data/getStonks";
 
-export default function CustomTypeAhead({
+const APIURL = getDevOrProdAPIURL();
+
+export default function AlternativeTypeahead({
   setTickerAndGetQuote = () => console.log("no handler provided to typeahead"),
-  css = { textbox: "textbox" },
 }) {
-  // APIURL set to a state variable because useEffect can't find it if it's just a regular const
-  const [APIURL] = useState(getDevOrProdAPIURL());
-  const DEBOUNCETIME = 500;
+  const [suggestions, setSuggestions] = useState([]);
+  const [text, setText] = useState("");
 
-  const [symbolFragment, setSymbolFragment] = useState("");
-  const [symbols, setSymbols] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
-
-  const [debouncedSymbol] = useDebounce(symbolFragment, DEBOUNCETIME);
+  const onTextChange = (e) => {
+    const { value } = e.target;
+    setText(value);
+  };
 
   useEffect(() => {
-    if (debouncedSymbol) {
-      console.log("searching: ", debouncedSymbol);
-      setIsSearching(true);
-      setSymbols([]);
-      getSymbols();
+    const debounceAndFetchData =
+      text &&
+      setTimeout(async () => {
+        console.log("timeout started: ", text);
+        try {
+          const tickers = await get(`${APIURL}/api/stock/symbol/${text}`);
 
-      symbols[0] &&
-        symbols.forEach((symbol) => {
-          console.log("iterating over symbols...", symbol);
-          if (symbol.value === debouncedSymbol) setTickerAndGetQuote(symbol);
-        });
-    } else {
-      setSymbols([]);
-    }
+          let localSuggestions;
+          if (tickers && tickers.length > 0) {
+            const regex = new RegExp(`^${text}`, `i`);
+            localSuggestions = tickers
+              .sort()
+              .filter((ticker) => regex.test(ticker.value));
+          }
 
-    async function getSymbols() {
-      try {
-        const localSymbols = await get(
-          `${APIURL}/api/stock/symbol/${symbolFragment}`
-        );
-        // localStorage.symbols = JSON.stringify({
-        //   ...symbols,
-        //   lastUpdated: Date.now()
-        // });
-        if (!localSymbols[0]) {
-          setSymbols([]);
-          setIsSearching(false);
-          return toast.error(`Could not find symbols for ${symbolFragment}`, {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          });
+          setSuggestions(localSuggestions);
+        } catch (e) {
+          console.log(e);
         }
+      }, 750);
 
-        if (localSymbols && localSymbols.length > 20) {
-          setIsSearching(false);
-          return setSymbols(localSymbols.slice(0, 20));
-        }
+    return () => clearTimeout(debounceAndFetchData);
+  }, [text]);
 
-        setSymbols(localSymbols);
-        setIsSearching(false);
-      } catch (error) {
-        console.log(`An error occurred while fetching symbols: ${error}`);
-      }
+  const suggestionSelected = (stonk) => {
+    setTickerAndGetQuote(stonk);
+    setSuggestions([]);
+  };
+
+  const renderSuggestions = () => {
+    console.log("suggestions :", suggestions);
+    if (!suggestions || suggestions.length === 0) {
+      return null;
     }
-  }, [debouncedSymbol]);
-
-  // Because you can't directly select the datalist, we have to set the ticker for the quote
-  // if it matches a symbol, since the symbols will get retrieved only after symbol lookup
-  const handleChange = ({ target }) => {
-    setSymbolFragment(target.value);
-
-    // It still sets the fragment again, so we would like to avoid this double call if possible
-    // setSymbolFragment(target.value);
+    return (
+      <ul>
+        {suggestions.map((stonk, index) => (
+          <li key={index} onClick={(e) => suggestionSelected(stonk)}>
+            {stonk.value} {stonk.label}
+          </li>
+        ))}
+      </ul>
+    );
   };
 
   return (
-    <>
+    <div className="TypeAheadDropDown">
       <input
-        className={css.textbox}
+        onChange={onTextChange}
+        placeholder="Search city name"
+        value={text}
         type="text"
-        list="symbols"
-        placeholder="Ticker Symbol"
-        autoComplete="on"
-        onChange={handleChange}
-        maxLength="5"
       />
-      <datalist id="symbols">
-        {symbols.length &&
-          symbols[0] &&
-          symbols.map((symbol, index) => (
-            <option key={`option-${index}`} value={symbol.value}>
-              {symbol.label}
-            </option>
-          ))}
-      </datalist>
-      <span>{isSearching && <span>searching</span>}</span>
-    </>
+      {renderSuggestions()}
+    </div>
   );
 }

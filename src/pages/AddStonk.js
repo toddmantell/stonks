@@ -85,12 +85,6 @@ export default function AddStonk() {
   }
 
   async function addStonk() {
-    // const { symbol, latestPrice } = stonkQuote;
-    // const stonkToSend = { ...stonk, ticker: symbol, latestPrice };
-
-    // const result = await post(`${apiUrl}/api/addStonk`, stonkToSend);
-    // result && alert("stonk successfully added");
-
     const {
       user: { id: userId },
     } = context.state;
