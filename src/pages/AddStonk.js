@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { getDevOrProdAPIURL } from "../data/getStonks";
 import { get, post } from "../data/fetchWrapper";
-import AddStonkForm from "../components/AddStonkForm";
+import AddStonkForm from "../components/AddStonkForm.js";
 import Metrics from "../components/Metrics";
 import UserContext from "../data/context/UserContext";
 
 export default function AddStonk() {
-  const apiUrl = getDevOrProdAPIURL();
+  const [apiUrl] = useState(getDevOrProdAPIURL());
   const [stonkTicker, setStonkTicker] = useState({});
   const [stonkQuote, setStonkQuote] = useState(undefined);
   const [stonk, setStonk] = useState(undefined);
@@ -18,7 +18,7 @@ export default function AddStonk() {
   useEffect(() => {
     if (stonkTicker.value) getStonkQuote(stonkTicker.value);
 
-    // since we are going to use a typeahead, this will be used when the actual stock is chosen
+    // Since we are going to use a typeahead, this will be used when the actual stock is chosen.
     async function getStonkQuote(ticker) {
       try {
         const fetchedStonkQuote =
@@ -33,6 +33,7 @@ export default function AddStonk() {
   }, [stonkTicker.value, apiUrl]);
 
   function resetForm() {
+    console.log("resetting the form");
     setStonk(false);
     setFutureGrowthRate(0);
     setPreviousGrowthRate(0);
@@ -50,19 +51,23 @@ export default function AddStonk() {
       case "future-growth-rate":
         setFutureGrowthRate(value);
         break;
-			default:
-				return undefined;
+      default:
+        return undefined;
     }
   }
 
   async function getStonkCalculation(event) {
     event.preventDefault();
+    console.log("getting stonk info...");
+    console.log(
+      `${stonkTicker.value} && ${previousGrowthRate} && ${futureGrowthRate}`
+    );
     if (stonkTicker.value && previousGrowthRate && futureGrowthRate) {
       try {
         const stonkForCalc = {
           ticker: stonkTicker.value,
           futureGrowthRate,
-          previousGrowthRate
+          previousGrowthRate,
         };
         const stonk =
           (await post(`${apiUrl}/api/stock/calculateMetrics`, stonkForCalc)) ||
@@ -80,14 +85,8 @@ export default function AddStonk() {
   }
 
   async function addStonk() {
-    // const { symbol, latestPrice } = stonkQuote;
-    // const stonkToSend = { ...stonk, ticker: symbol, latestPrice };
-
-    // const result = await post(`${apiUrl}/api/addStonk`, stonkToSend);
-    // result && alert("stonk successfully added");
-
     const {
-      user: { id: userId }
+      user: { id: userId },
     } = context.state;
 
     const stonkToAdd = {
@@ -95,11 +94,11 @@ export default function AddStonk() {
       companyName: stonk.companyName,
       bookValuePerShare: 5, // this is hard-coded for now but needs to get updated
       projectedEPSGrowth: futureGrowthRate,
-      fiveYearGrowthRate: previousGrowthRate
+      fiveYearGrowthRate: previousGrowthRate,
     };
 
     const result = await context.addStonkToStonks(userId, stonkToAdd);
-    result.length && alert("stonk successfully added");
+    result && result.length && alert("stonk successfully added");
     resetForm();
     setStonkQuote(undefined);
   }

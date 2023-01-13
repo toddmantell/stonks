@@ -6,7 +6,7 @@ describe("AddStonk", () => {
   it("adds form data for calculating stonk", () => {
     const { getByTestId, getByText } = render(<AddStonk />);
 
-    expect(getByText("Find New Stonks")).toBeTruthy();
+    expect(getByText("Enter Stonk Symbol:")).toBeTruthy();
     // expect(getByTestId("check-stonk-form")).toContain("Placeholder");
   });
 });
