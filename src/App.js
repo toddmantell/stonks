@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Dashboard from "./pages/Dashboard";
 import AddStonk from "./pages/AddStonk";
+import StonkDetails from "./pages/StonkDetails";
 import Header from "./components/Header";
 import MarketBanner from "./components/MarketBanner";
 import UserContext, { UserProvider } from "./data/context/UserContext";
@@ -21,6 +22,7 @@ function App() {
                 <>
                   <Route exact path="/" component={Dashboard} />
                   <Route path="/addstonk" component={AddStonk} />
+                  <Route path="/stonkdetail" component={StonkDetails} />
                 </>
               )}
             </UserContext.Consumer>
