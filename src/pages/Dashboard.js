@@ -8,16 +8,18 @@ export default function StonksDashboard() {
 
   const {
     removeStonk,
-    state: { stonks, isLoading }
+    state: { stonks, isLoading },
   } = context;
 
   return (
-    <main className="stonks-container">
-      {isLoading === true
-        ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(item => (
-            <StonkSkeleton key={`skeleton-${item}`} />
-          ))
-        : <StonkCards stonks={stonks} removeStonk={removeStonk} />}
+    <main className="stonks-container" data-testid="stonks-container">
+      {isLoading === true ? (
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
+          <StonkSkeleton key={`skeleton-${item}`} />
+        ))
+      ) : (
+        <StonkCards stonks={stonks} removeStonk={removeStonk} />
+      )}
     </main>
   );
 }
