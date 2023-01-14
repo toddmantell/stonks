@@ -26,14 +26,17 @@ export default function Stonk({
     >
       <FrontSide
         companyName={companyName}
+        changePercent={changePercent}
         forwardConservativeGrahamFormulaNumber={
           forwardConservativeGrahamFormulaNumber
         }
-        latestPrice={latestPrice}
-        changePercent={changePercent}
-        symbol={symbol}
         grahamNumber={grahamNumber}
+        latestPrice={latestPrice}
+        pastConservativeGrahamFormulaNumber={
+          pastConservativeGrahamFormulaNumber
+        }
         peRatio={peRatio}
+        symbol={symbol}
       />
       <BackSide
         symbol={symbol}

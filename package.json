@@ -5,16 +5,13 @@
   "homepage": ".",
   "dependencies": {
     "prop-types": "^15.7.2",
-    "react": "^16.9.0",
+    "react": "^18.2.0",
     "react-content-loader": "^4.3.2",
-    "react-dom": "^16.9.0",
+    "react-dom": "^18.2.0",
     "react-flippy": "^0.1.5",
     "react-loading-skeleton": "^1.2.0",
     "react-router-dom": "^5.1.0",
     "react-scripts": "3.1.1",
-    "react-select": "^3.0.8",
-    "recharts": "^2.2.0",
-    "use-debounce": "^3.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,7 +35,8 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/react": "^9.1.4",
-    "cypress": "^3.4.1"
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3"
   }
 }

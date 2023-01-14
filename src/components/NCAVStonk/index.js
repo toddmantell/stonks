@@ -16,7 +16,7 @@ export default function Stonk({
   grahamNumber,
   latestPrice,
   changePercent,
-  symbol
+  symbol,
 }) {
   return (
     <Flippy
