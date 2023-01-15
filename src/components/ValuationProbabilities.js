@@ -9,7 +9,7 @@ import {
   Legend,
 } from "recharts";
 
-const data = [
+const defaultData = [
   {
     name: `Low P/E (${7})`,
     "10% growth": 8.34,
@@ -27,7 +27,7 @@ const data = [
   },
 ];
 
-const ValuationProbabilities = () => (
+const ValuationProbabilities = ({ data = defaultData }) => (
   <article>
     <div>DOW Inc</div>
     <LineChart
