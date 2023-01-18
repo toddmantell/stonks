@@ -22,7 +22,7 @@ function App() {
                 <>
                   <Route exact path="/" component={Dashboard} />
                   <Route path="/addstonk" component={AddStonk} />
-                  <Route path="/stonkdetail" component={StonkDetails} />
+                  <Route path="/stonkdetail/:ticker" component={StonkDetails} />
                 </>
               )}
             </UserContext.Consumer>

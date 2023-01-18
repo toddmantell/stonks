@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ValuationProbabilities from "../components/ValuationProbabilities";
 import UserContext from "../data/context/UserContext";
 
@@ -7,9 +8,20 @@ import IRRWidget from "../components/CalculateIRR";
 
 export default function StonkDetails(props) {
   const { stonks } = useContext(UserContext).state;
+  const { ticker = "" } = useParams();
+
+  console.log("search params", ticker);
 
   // const [localTicker, setLocalTicker] = useState("");
   const [chosenStonk, setChosenStonk] = useState({});
+  const [chartData, setChartData] = useState([]);
+
+  useEffect(() => {
+    if (ticker && stonks.length) {
+      const currentStonk = stonks.find((s) => s.symbol === currentStonk);
+      setChosenStonk(currentStonk);
+    }
+  }, []);
 
   const setTickerAndPassStonk = (stonk) => {
     stonk && setChosenStonk(stonk);
@@ -27,8 +39,8 @@ export default function StonkDetails(props) {
         <div>EPS: {chosenStonk.ttmEPS}</div>
         <div>latestPrice: {chosenStonk.latestPrice}</div>
       </div>
-      <IRRWidget stonk={chosenStonk} />
-      <ValuationProbabilities />
+      <IRRWidget stonk={chosenStonk} setChartData={setChartData} />
+      <ValuationProbabilities data={chartData} />
       <div>
         <div>Name: {chosenStonk.companyName}</div>
         <div>Ticker: {chosenStonk.symbol}</div>
@@ -52,7 +64,6 @@ function LocalTypeahead({
   };
 
   useEffect(() => {
-    //const getData = setTimeout(() => {
     let localSuggestions = stonks.slice();
     if (stonks && stonks.length > 0) {
       const regex = new RegExp(`^${text}`, `i`);
@@ -60,14 +71,7 @@ function LocalTypeahead({
     }
 
     setSuggestions(localSuggestions);
-    //}, 200);
-    //return () => clearTimeout(getData);
   }, [text]);
-
-  const suggestionSelected = (stonk) => {
-    setTickerAndPassStonk(stonk);
-    setSuggestions([]);
-  };
 
   const renderSuggestions = () => {
     console.log("suggestions :", suggestions);
@@ -77,6 +81,12 @@ function LocalTypeahead({
 
     const filteredSuggestions =
       stonks.filter((stonk) => stonk.symbol.includes(text)) || [];
+
+    const suggestionSelected = (stonk) => {
+      setTickerAndPassStonk(stonk);
+      setText(stonk.symbol + " - " + stonk.companyName);
+      setSuggestions([]);
+    };
 
     return (
       <ul>
@@ -95,6 +105,7 @@ function LocalTypeahead({
       <div className="TypeAheadDropDown">
         <input
           onChange={onTextChange}
+          onClick={(e) => setText("")}
           placeholder="Search Stonk"
           value={text}
           type="text"

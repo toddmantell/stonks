@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function IRRWidget({ stonk }) {
+export default function IRRWidget({ stonk, setChartData }) {
   const [irrInputs, setIRRInputs] = useState({
     lowPE: 0,
     highPE: 0,
@@ -21,7 +21,7 @@ export default function IRRWidget({ stonk }) {
     const tenYearWithHalvedGrowth =
       ttmEPS * (1 + growthRateHalved) ** holdingPeriod;
 
-    setIRRMetrics([
+    setChartData([
       {
         name: `Low P/E (${lowPE})`,
         "base% growth": tenYearEPS * lowPE,
@@ -65,15 +65,30 @@ export default function IRRWidget({ stonk }) {
       <form onSubmit={calculateIRR}>
         <div>
           Low P/E:
-          <input type="text" id="low-pe" onChange={handleTextInput} />
+          <input
+            type="text"
+            id="low-pe"
+            className="textbox"
+            onChange={handleTextInput}
+          />
         </div>
         <div>
           High P/E:
-          <input type="text" id="high-pe" onChange={handleTextInput} />
+          <input
+            type="text"
+            id="high-pe"
+            className="textbox"
+            onChange={handleTextInput}
+          />
         </div>
         <div>
           Avg P/E:
-          <input type="text" id="avg-pe" onChange={handleTextInput} />
+          <input
+            type="text"
+            id="avg-pe"
+            className="textbox"
+            onChange={handleTextInput}
+          />
         </div>
         <div>
           Growth Rate:

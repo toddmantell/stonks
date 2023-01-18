@@ -66,7 +66,7 @@ export default function Typeahead({
     <div className="TypeAheadDropDown">
       <input
         onChange={onTextChange}
-        placeholder="Search city name"
+        placeholder="Search Stonks"
         value={text}
         type="text"
       />
