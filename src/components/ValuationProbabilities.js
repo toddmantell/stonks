@@ -35,8 +35,7 @@ const ValuationProbabilities = ({ data }) => {
   }, [data]);
 
   return (
-    <article>
-      <div>DOW Inc</div>
+    <article style={{ marginLeft: "-3.5rem", marginTop: "2rem" }}>
       <LineChart
         width={500}
         height={300}

@@ -24,18 +24,18 @@ export default function IRRWidget({ stonk, setChartData }) {
     setChartData([
       {
         name: `Low P/E (${lowPE})`,
-        "base% growth": tenYearEPS * lowPE,
-        "halved% growth": tenYearWithHalvedGrowth * lowPE,
+        "base% growth": +(tenYearEPS * lowPE).toFixed(2),
+        "halved% growth": +(tenYearWithHalvedGrowth * lowPE).toFixed(2),
       },
       {
         name: `High P/E (${highPE})`,
-        "base% growth": tenYearEPS * highPE,
-        "halved% growth": tenYearWithHalvedGrowth * highPE,
+        "base% growth": +(tenYearEPS * highPE).toFixed(2),
+        "halved% growth": +(tenYearWithHalvedGrowth * highPE).toFixed(2),
       },
       {
         name: `Avg P/E (${avgPE})`,
-        "base% growth": tenYearEPS * avgPE,
-        "halved% growth": tenYearWithHalvedGrowth * avgPE,
+        "base% growth": +(tenYearEPS * avgPE).toFixed(2),
+        "halved% growth": +(tenYearWithHalvedGrowth * avgPE).toFixed(2),
       },
     ]);
   }
@@ -68,7 +68,7 @@ export default function IRRWidget({ stonk, setChartData }) {
           <input
             type="text"
             id="low-pe"
-            className="textbox"
+            className="textbox numerical-input"
             onChange={handleTextInput}
           />
         </div>
@@ -77,7 +77,7 @@ export default function IRRWidget({ stonk, setChartData }) {
           <input
             type="text"
             id="high-pe"
-            className="textbox"
+            className="textbox numerical-input"
             onChange={handleTextInput}
           />
         </div>
@@ -86,24 +86,25 @@ export default function IRRWidget({ stonk, setChartData }) {
           <input
             type="text"
             id="avg-pe"
-            className="textbox"
+            className="textbox numerical-input"
             onChange={handleTextInput}
           />
         </div>
         <div>
           Growth Rate:
-          <input type="text" id="growth-rate" onChange={handleTextInput} />
+          <input
+            type="text"
+            id="growth-rate"
+            className="textbox numerical-input"
+            onChange={handleTextInput}
+          />
         </div>
       </form>
       <button id="calculate-metrics" onClick={calculateIRR}>
         Calculate IRR
       </button>
-      <div>
-        {irrMetrics &&
-          irrMetrics.length &&
-          irrMetrics.map((metric, index) => (
-            <div key={index}>{JSON.stringify(metric)}</div>
-          ))}
+      <div id="stonk-name" style={{ marginTop: "1rem" }}>
+        {stonk.companyName}
       </div>
     </section>
   );
