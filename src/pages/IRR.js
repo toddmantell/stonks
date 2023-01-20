@@ -5,7 +5,7 @@ import UserContext from "../data/context/UserContext";
 import "../components/typeahead.css";
 import IRRWidget from "../components/CalculateIRR";
 
-export default function IRR({}) {
+export default function IRR(props) {
   const { stonks } = useContext(UserContext).state;
 
   const [chosenStonk, setChosenStonk] = useState({});
