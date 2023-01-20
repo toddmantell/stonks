@@ -1,3 +1,4 @@
+/* eslint-desable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from "react";
 import ValuationProbabilities from "../components/ValuationProbabilities";
 import UserContext from "../data/context/UserContext";
