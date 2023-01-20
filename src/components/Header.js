@@ -34,6 +34,9 @@ export default function Header() {
             <Link to="/addStonk" className="nav-item">
               Add Stonks
             </Link>
+            <Link to="/irr" className="nav-item">
+              IRR
+            </Link>
             <span style={{ margin: "15px 0 0 500px" }}>
               {context.state.user.name}
             </span>
