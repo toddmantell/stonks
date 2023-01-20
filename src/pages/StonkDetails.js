@@ -14,7 +14,8 @@ export default function StonkDetails(props) {
 
   // const [localTicker, setLocalTicker] = useState("");
   const [chosenStonk, setChosenStonk] = useState({});
-  const [chartData, setChartData] = useState([]);
+  const [priceChartData, setPriceChartData] = useState([]);
+  const [percentageChartData, setPercentageChartData] = useState([]);
 
   useEffect(() => {
     if (ticker && stonks.length) {
@@ -39,8 +40,13 @@ export default function StonkDetails(props) {
         <div>EPS: {chosenStonk.ttmEPS}</div>
         <div>latestPrice: {chosenStonk.latestPrice}</div>
       </div>
-      <IRRWidget stonk={chosenStonk} setChartData={setChartData} />
-      <ValuationProbabilities data={chartData} />
+      <IRRWidget
+        stonk={chosenStonk}
+        setPriceChartData={setPriceChartData}
+        setPercentageChartData={setPercentageChartData}
+      />
+      <ValuationProbabilities data={priceChartData} />
+      <ValuationProbabilities data={percentageChartData} />
       <div>
         <div>Name: {chosenStonk.companyName}</div>
         <div>Ticker: {chosenStonk.symbol}</div>

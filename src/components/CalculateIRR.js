@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 
-export default function IRRWidget({ stonk, setChartData }) {
+export default function IRRWidget({
+  stonk,
+  setPriceChartData,
+  setPercentageChartData,
+}) {
   const [irrInputs, setIRRInputs] = useState({
     lowPE: 0,
     highPE: 0,
     avgPE: 0,
     growthRate: 0,
   });
-  const [irrMetrics, setIRRMetrics] = useState([]);
+
+  const convertToPercent = (value) => ((value - 1) * 100).toFixed(2);
 
   function calculateIRR() {
     const { lowPE, highPE, avgPE, growthRate } = irrInputs;
-    const { ttmEPS = 0 } = stonk;
+    const { ttmEPS = 0, latestPrice = 0 } = stonk;
 
     // calculate the things
     const holdingPeriod = 10;
@@ -21,7 +26,7 @@ export default function IRRWidget({ stonk, setChartData }) {
     const tenYearWithHalvedGrowth =
       ttmEPS * (1 + growthRateHalved) ** holdingPeriod;
 
-    setChartData([
+    setPriceChartData([
       {
         name: `Low P/E (${lowPE})`,
         "base% growth": +(tenYearEPS * lowPE).toFixed(2),
@@ -36,6 +41,42 @@ export default function IRRWidget({ stonk, setChartData }) {
         name: `Avg P/E (${avgPE})`,
         "base% growth": +(tenYearEPS * avgPE).toFixed(2),
         "halved% growth": +(tenYearWithHalvedGrowth * avgPE).toFixed(2),
+      },
+    ]);
+
+    setPercentageChartData([
+      {
+        name: `Low P/E (${lowPE})`,
+        "base% growth": convertToPercent(
+          (+(tenYearEPS * lowPE).toFixed(2) / latestPrice) **
+            (1 / holdingPeriod)
+        ),
+        "halved% growth": convertToPercent(
+          (+(tenYearWithHalvedGrowth * lowPE).toFixed(2) / latestPrice) **
+            (1 / holdingPeriod)
+        ),
+      },
+      {
+        name: `High P/E (${highPE})`,
+        "base% growth": convertToPercent(
+          (+(tenYearEPS * highPE).toFixed(2) / latestPrice) **
+            (1 / holdingPeriod)
+        ),
+        "halved% growth": convertToPercent(
+          (+(tenYearWithHalvedGrowth * highPE).toFixed(2) / latestPrice) **
+            (1 / holdingPeriod)
+        ),
+      },
+      {
+        name: `Avg P/E (${avgPE})`,
+        "base% growth": convertToPercent(
+          (+(tenYearEPS * avgPE).toFixed(2) / latestPrice) **
+            (1 / holdingPeriod)
+        ),
+        "halved% growth": convertToPercent(
+          (+(tenYearWithHalvedGrowth * avgPE).toFixed(2) / latestPrice) **
+            (1 / holdingPeriod)
+        ),
       },
     ]);
   }
