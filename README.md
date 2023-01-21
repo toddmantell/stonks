@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e702f4f8-e1ad-4acf-bcc4-437789b1a2ae/deploy-status)](https://app.netlify.com/sites/inspiring-ramanujan-de5dcc/deploys)
+
 # STONKS!
 
 ## What This Is:
