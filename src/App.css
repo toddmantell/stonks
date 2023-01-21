@@ -50,12 +50,11 @@
   display: flex;
   overflow-x: hidden;
   overflow-y: auto;
-  margin-left: 5rem;
+  margin: 0.75rem 0 0 5rem;
 }
 
 .nav-item {
   margin: 0 20px;
-  padding-top: 0.75rem;
   font-size: 20px;
   font-weight: 300;
   text-decoration: none;
@@ -81,6 +80,10 @@
 
 .sort {
   display: block;
+}
+
+.home {
+  margin: 5rem 0 0 5rem;
 }
 
 @media (max-width: 768px) {

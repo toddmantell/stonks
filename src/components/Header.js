@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { Activity, Home, Plus, Sliders } from "react-feather";
 import UserContext from "../data/context/UserContext";
+import "./Header.css";
 
 export default function Header() {
   const context = useContext(UserContext);
@@ -29,12 +31,27 @@ export default function Header() {
           <nav className="header nav">
             {" "}
             <Link to="/" className="nav-item">
-              Home/Dashboard
+              <span className="icon">
+                <Home size={22} />
+              </span>{" "}
+              Home
+            </Link>
+            <Link to="/dashboard" className="nav-item">
+              <span className="icon">
+                <Activity />
+              </span>{" "}
+              Dashboard
             </Link>
             <Link to="/addStonk" className="nav-item">
+              <span className="icon">
+                <Plus />
+              </span>{" "}
               Add Stonks
             </Link>
             <Link to="/irr" className="nav-item">
+              <span className="icon">
+                <Sliders />
+              </span>{" "}
               IRR
             </Link>
             <span style={{ margin: "15px 0 0 500px" }}>
