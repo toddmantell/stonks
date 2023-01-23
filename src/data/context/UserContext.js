@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { getDevOrProdAPIURL } from "../getStonks";
 import { get, post } from "../fetchWrapper";
 import defaultStonks from "../defaultStonks";
-import reducer, { OPTIONS } from "../../components/SortCardsReducer";
+import reducer from "../../components/SortCardsReducer";
 
 const UserContext = React.createContext();
 export default UserContext;
