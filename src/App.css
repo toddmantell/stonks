@@ -139,7 +139,7 @@
 
 @media (min-width: 1300px) {
   .stonks-container {
-    margin: 20px 40px 0 70px;
+    margin: 2rem 3rem 0 4.5rem;
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     grid-column-gap: 10px;
@@ -155,7 +155,7 @@
   transition: 0.3s;
   border-radius: 10px;
   grid-area: stonk;
-  background-color: #ffffff;
+  background-color: #16161b;
 }
 
 .stonk-card:hover {
@@ -163,8 +163,8 @@
   cursor: pointer;
 }
 
-.stonk-card--backside {
-  height: 125%;
+.stonk-card .backside {
+  height: 108%;
   border-radius: 10px;
 }
 

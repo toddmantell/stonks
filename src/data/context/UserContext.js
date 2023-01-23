@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { getDevOrProdAPIURL } from "../getStonks";
 import { get, post } from "../fetchWrapper";
 import defaultStonks from "../defaultStonks";
+import reducer, { OPTIONS } from "../../components/SortCardsReducer";
 
 const UserContext = React.createContext();
 export default UserContext;
@@ -33,21 +34,28 @@ export class UserProvider extends Component {
         `${this.apiUrl}/api/user/3a2d78d0-fccb-11e9-89d5-ed165fddd755`
       );
 
-			VOOResult && userResult && this.setState({VOO: VOOResult, user: userResult, isLoading: false, stonks: userResult.stonks});
+      VOOResult &&
+        userResult &&
+        this.setState({
+          VOO: VOOResult,
+          user: userResult,
+          isLoading: false,
+          stonks: userResult.stonks,
+        });
     } catch (error) {
       console.log("An error occurred: ", error);
       this.useDefaults();
     }
-  } 
+  }
 
   useDefaults() {
-		this.setState({
-			isLoading: false,
-			stonks: defaultStonks,
-			user:  {name: 'Ben'},
-			VOO: {changePercent: .01, latestPrice: 1},
-		});
-}
+    this.setState({
+      isLoading: false,
+      stonks: defaultStonks,
+      user: { name: "Ben" },
+      VOO: { changePercent: 0.01, latestPrice: 1 },
+    });
+  }
 
   addStonkToStonks = async (userId, stonk) => {
     try {
@@ -60,6 +68,11 @@ export class UserProvider extends Component {
     } catch (error) {
       console.log("An error occurred: ", error);
     }
+  };
+
+  sortStonks = (sortValue) => {
+    const sortedStonks = reducer(this.state.stonks, sortValue);
+    this.setState({ stonks: sortedStonks });
   };
 
   removeStonk = async (stonkSymbol) => {
@@ -83,6 +96,7 @@ export class UserProvider extends Component {
           state: this.state,
           addStonkToStonks: this.addStonkToStonks,
           removeStonk: this.removeStonk,
+          sortStonks: this.sortStonks,
         }}
       >
         {this.props.children}

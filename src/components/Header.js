@@ -54,8 +54,8 @@ export default function Header() {
               </span>{" "}
               IRR
             </Link>
-            <span style={{ margin: "15px 0 0 500px" }}>
-              {context.state.user.name}
+            <span className="nav-item user-name">
+              USER: {context.state.user.name}
             </span>
           </nav>
         </div>

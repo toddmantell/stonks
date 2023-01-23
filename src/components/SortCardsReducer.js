@@ -5,18 +5,18 @@ export const OPTIONS = {
   "By Percentage": 3,
 };
 
-export default function reducer(state, action) {
-  const stonksToSort = state.localStonks.slice();
+export default function reducer(stonks, action) {
+  const stonksToSort = stonks.slice();
 
   switch (action.sortValue) {
     case OPTIONS["By Undervalued"]:
-      return { localStonks: stonksToSort.sort(sortByUndervalued) };
+      return stonksToSort.sort(sortByUndervalued);
     case OPTIONS["By Ticker"]:
-      return { localStonks: stonksToSort.sort(sortByTicker) };
+      return stonksToSort.sort(sortByTicker);
     case OPTIONS["By Company Name"]:
-      return { localStonks: stonksToSort.sort(sortByCompanyName) };
+      return stonksToSort.sort(sortByCompanyName);
     case OPTIONS["By Percentage"]:
-      return { localStonks: stonksToSort.sort(sortByPercentageLost) };
+      return stonksToSort.sort(sortByPercentageLost);
     default:
       break;
   }
