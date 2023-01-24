@@ -11,7 +11,7 @@ export default ({
   pastGrahamFormulaNumber,
   previousGrowthRate,
 }) => (
-  <BackSide style={{ height: "108%", borderRadius: "10px" }}>
+  <BackSide className="stonk-card backside">
     <div className="stonk-attribute">({symbol})</div>
     <hr />
     <div className="stonk-attribute">
