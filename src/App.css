@@ -1,10 +1,17 @@
+/*variables*/
+:root {
+  --main-secondary-color: #282c34;
+  --main-primary-color: #16161b;
+}
+
+/*app css*/
 .app-header {
   position: fixed;
   z-index: 1;
   width: 100%;
   top: 0;
   left: 0;
-  background-color: #282c34;
+  background-color: var(--main-secondary-color);
   color: white;
 }
 
@@ -82,6 +89,23 @@
   display: block;
 }
 
+.sort-label {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.sort select {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  color: #ffffff;
+  width: 11rem;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+  font-size: 16px;
+  background-color: var(--main-secondary-color);
+}
+
 .home {
   margin: 5rem 0 0 5rem;
 }
@@ -139,7 +163,7 @@
 
 @media (min-width: 1300px) {
   .stonks-container {
-    margin: 2rem 3rem 0 4.5rem;
+    margin: 1.5rem 3rem 0 4.5rem;
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
     grid-column-gap: 10px;
@@ -155,7 +179,7 @@
   transition: 0.3s;
   border-radius: 10px;
   grid-area: stonk;
-  background-color: #16161b;
+  background-color: var(--main-primary-color);
 }
 
 .stonk-card:hover {
