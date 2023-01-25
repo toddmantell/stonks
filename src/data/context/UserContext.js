@@ -11,6 +11,7 @@ export class UserProvider extends Component {
   state = {
     user: {},
     stonks: [],
+    sortedStonks: [],
     updated: false,
     isLoading: true,
     VOO: {},
@@ -71,8 +72,10 @@ export class UserProvider extends Component {
   };
 
   sortStonks = (sortValue) => {
+    // Where do we want to handle negative values when sorting undervalued
+    //
     const sortedStonks = reducer(this.state.stonks, sortValue);
-    this.setState({ stonks: sortedStonks });
+    this.setState({ sortedStonks });
   };
 
   removeStonk = async (stonkSymbol) => {

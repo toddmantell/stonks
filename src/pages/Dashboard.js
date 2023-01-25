@@ -12,7 +12,7 @@ export default function StonksDashboard() {
   const {
     removeStonk,
     sortStonks,
-    state: { stonks, isLoading },
+    state: { stonks, sortedStonks, isLoading },
   } = context;
 
   return (
@@ -25,7 +25,10 @@ export default function StonksDashboard() {
             <StonkSkeleton key={`skeleton-${item}`} />
           ))
         ) : (
-          <StonkCards stonks={stonks} removeStonk={removeStonk} />
+          <StonkCards
+            stonks={sortedStonks.length ? sortedStonks : stonks}
+            removeStonk={removeStonk}
+          />
         )}
       </main>
     </>
