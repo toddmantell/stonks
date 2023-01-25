@@ -23,10 +23,14 @@ export default function reducer(stonks, action) {
 }
 
 function sortByUndervalued(stonka, stonkb) {
-  return (
-    +stonka.latestPrice / stonka.forwardConservativeGrahamFormulaNumber -
-    +stonkb.latestPrice / stonkb.forwardConservativeGrahamFormulaNumber
-  );
+  if (
+    stonka.forwardConservativeGrahamFormulaNumber >= 0 &&
+    stonkb.forwardConservativeGrahamFormulaNumber >= 0
+  )
+    return (
+      +stonka.latestPrice / stonka.forwardConservativeGrahamFormulaNumber -
+      +stonkb.latestPrice / stonkb.forwardConservativeGrahamFormulaNumber
+    );
 }
 
 function sortByTicker(stonka, stonkb) {
