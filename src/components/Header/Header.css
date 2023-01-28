@@ -1,0 +1,25 @@
+.icon {
+  position: relative;
+  top: 0.25rem;
+}
+
+.user-name {
+  margin-top: 0.15rem;
+}
+
+.mobile-header {
+  background-color: var(--main-secondary-color);
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
+  padding: 0.25rem;
+
+  justify-content: center;
+}
+
+.mobile-icon {
+  flex: 1;
+  padding: 0 2rem;
+  justify-content: space-around;
+  cursor: pointer;
+}
