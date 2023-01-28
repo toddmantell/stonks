@@ -1,0 +1,23 @@
+.irr-container {
+  display: grid;
+  grid-template-columns: 25rem auto;
+  grid-template-areas:
+    "irrform charta"
+    "irrform chartb";
+  margin: 5rem 0 0 5rem;
+}
+
+.irrform {
+  grid-area: irrform;
+  min-width: 12rem;
+}
+
+.charta {
+  grid-area: charta;
+  margin: 2rem 0 0 -3.5rem;
+}
+
+.chartb {
+  grid-area: chartb;
+  margin: 2rem 0 0 -3.5rem;
+}

@@ -27,7 +27,7 @@ const defaultData = [
   },
 ];
 
-const ValuationProbabilities = ({ data }) => {
+const ValuationProbabilities = ({ data, chartClass = "" }) => {
   const [metrics, setMetrics] = useState(data);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const ValuationProbabilities = ({ data }) => {
   }, [data]);
 
   return (
-    <article style={{ marginLeft: "-3.5rem", marginTop: "2rem" }}>
+    <article className={chartClass}>
       <LineChart
         width={500}
         height={300}

@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import ValuationProbabilities from "../components/ValuationProbabilities";
 import UserContext from "../data/context/UserContext";
 
+import "./irr.css";
 import "../components/typeahead.css";
 import IRRWidget from "../components/CalculateIRR";
 
@@ -18,24 +19,26 @@ export default function IRR(props) {
   };
 
   return (
-    <main style={{ maxWidth: "20rem", marginLeft: "5rem" }}>
-      <LocalTypeahead
-        stonks={stonks}
-        setTickerAndPassStonk={setTickerAndPassStonk}
-      />
-      <div>
-        <div>Name: {chosenStonk.companyName}</div>
-        <div>Ticker: {chosenStonk.symbol}</div>
-        <div>EPS: {chosenStonk.ttmEPS}</div>
-        <div>latestPrice: {chosenStonk.latestPrice}</div>
-      </div>
-      <IRRWidget
-        stonk={chosenStonk}
-        setPriceChartData={setPriceChartData}
-        setPercentageChartData={setPercentageChartData}
-      />
-      <ValuationProbabilities data={priceChartData} />
-      <ValuationProbabilities data={percentageChartData} />
+    <main className="irr-container">
+      <section className="irrform">
+        <LocalTypeahead
+          stonks={stonks}
+          setTickerAndPassStonk={setTickerAndPassStonk}
+        />
+        <div>
+          <div>Name: {chosenStonk.companyName}</div>
+          <div>Ticker: {chosenStonk.symbol}</div>
+          <div>EPS: {chosenStonk.ttmEPS}</div>
+          <div>latestPrice: {chosenStonk.latestPrice}</div>
+        </div>
+        <IRRWidget
+          stonk={chosenStonk}
+          setPriceChartData={setPriceChartData}
+          setPercentageChartData={setPercentageChartData}
+        />
+      </section>
+      <ValuationProbabilities data={priceChartData} chartClass="charta" />
+      <ValuationProbabilities data={percentageChartData} chartClass="chartb" />
     </main>
   );
 }
