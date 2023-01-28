@@ -4,21 +4,7 @@
   --main-primary-color: #16161b;
 }
 
-/*app css*/
-.market-banner {
-  margin-top: 80px;
-  margin-left: 5rem;
-}
-
-.index-underline {
-  text-decoration: underline;
-  color: blue;
-}
-
-.timestamp {
-  display: block;
-}
-
+/*app-wide css*/
 .sort {
   display: block;
 }
@@ -44,123 +30,6 @@
   margin: 5rem 0 0 5rem;
 }
 
-@media (max-width: 768px) {
-  .app-header .banner {
-    display: flex;
-    height: 60px;
-    margin-left: 1rem;
-  }
-
-  .app-header .nav {
-    display: flex;
-    overflow-x: hidden;
-    overflow-y: auto;
-    margin-left: 2rem;
-  }
-
-  .nav-item {
-    margin: 0 5px;
-    padding-top: 0.75rem;
-    font-size: 20px;
-    font-weight: 300;
-    text-decoration: none;
-  }
-
-  .stonks-container {
-    margin-top: 80px;
-    display: grid;
-    grid-template-areas: "stonk";
-    row-gap: 25px;
-    margin-left: 50px;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 990px) {
-  .stonks-container {
-    margin: 80px 20px 0 35px;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-column-gap: 2px;
-    row-gap: 25px;
-  }
-}
-
-@media (min-width: 990px) and (max-width: 1300px) {
-  .stonks-container {
-    margin: 80px 20px 0 35px;
-    display: grid;
-    grid-template-columns: 33% 33% 33%;
-    grid-column-gap: 5px;
-    row-gap: 25px;
-  }
-}
-
-@media (min-width: 1300px) {
-  .stonks-container {
-    margin: 1.5rem 3rem 0 4.5rem;
-    display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-column-gap: 10px;
-    row-gap: 25px;
-  }
-}
-
-.stonk-skeleton {
-  margin-left: 45px;
-}
-
-.stonk-card {
-  transition: 0.3s;
-  border-radius: 10px;
-  grid-area: stonk;
-  background-color: var(--main-primary-color);
-}
-
-.stonk-card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-}
-
-.stonk-card .backside {
-  height: 108%;
-  border-radius: 10px;
-}
-
-.stonk-attribute {
-  text-align: left;
-  margin-left: 1em;
-}
-
-.stonk-attribute--companyName {
-  font-weight: 500;
-}
-
-.stonk-attribute__top {
-  margin-top: 10px;
-}
-
-.stonk-attribute__bottom {
-  margin-bottom: 1em;
-  text-decoration: none;
-}
-
-.stonk-card__button {
-  margin-top: 0.4em;
-  margin-left: 1em;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.gain {
-  color: green;
-}
-
-.loss {
-  color: red;
-}
-
 @media (max-width: 1200px) {
   .add-stonks {
     margin: 2rem 0 0 4.5rem;
@@ -174,7 +43,7 @@
 
 @media (min-width: 1200px) {
   .add-stonks {
-    margin: 2rem 0 0 4.5rem;
+    margin: 5rem 0 0 4.5rem;
     display: grid;
     grid-template-columns: 45% 30%;
     border: hsl(0, 0%, 80%) solid 1px;
