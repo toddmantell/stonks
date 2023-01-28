@@ -15,7 +15,11 @@ export default function MarketBanner(props) {
     <section className="market-banner">
       <span>
         <span className="index-underline">
-          <a href="https://www.etf.com/VOO#overview" target="_blank">
+          <a
+            href="https://www.etf.com/VOO#overview"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Vanguard S&P 500 Index:
           </a>
         </span>{" "}
