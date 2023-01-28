@@ -1,3 +1,70 @@
+/* Desktop Header */
+.app-header {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #282c34;
+  color: white;
+}
+
+.app-header .container {
+  padding: 0 20px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  align-items: center;
+}
+
+.app-header .banner {
+  display: flex;
+  height: 60px;
+  margin-left: 5rem;
+}
+
+.app-header .logo {
+  width: 60px;
+}
+
+.logo-name {
+  padding-top: 0.5rem;
+  font-size: 25px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.app-header .explanation-text {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-weight: 200;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.app-header a {
+  color: #ffffff;
+}
+
+.app-header .nav {
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0.75rem 0 0 5rem;
+}
+
+.nav-item {
+  margin: 0 20px;
+  font-size: 20px;
+  font-weight: 300;
+  text-decoration: none;
+}
+
+.app-link {
+  color: #61dafb;
+}
+
 .icon {
   position: relative;
   top: 0.25rem;
@@ -7,12 +74,15 @@
   margin-top: 0.15rem;
 }
 
+/* Mobile Header */
 .mobile-header {
+  display: flex;
+  z-index: 1000;
   background-color: var(--main-secondary-color);
   position: fixed;
   width: 100vw;
   bottom: 0;
-  padding: 0.25rem;
+  padding-top: 0.25rem;
 
   justify-content: center;
 }
