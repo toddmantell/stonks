@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import UserContext from "../../data/context/UserContext";
 import { Activity, Home, Plus, Sliders } from "react-feather";
-import UserContext from "../data/context/UserContext";
-import "./Header.css";
+import { Link } from "react-router-dom";
 
-export default function Header() {
+export default function DesktopHeader(props) {
   const context = useContext(UserContext);
   return (
     <header className="app-header">
@@ -18,16 +17,7 @@ export default function Header() {
           >
             STONKS!
           </a>
-          {/* This might need to become a tooltip  <div className="explanation-text">
-            (The name of this app is a reference to{" "}
-            <a
-              href="https://knowyourmeme.com/memes/stonks"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              the "Stonks" meme.)
-            </a>
-					</div> */}
+
           <nav className="header nav">
             {" "}
             <Link to="/" className="nav-item">
