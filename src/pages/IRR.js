@@ -6,9 +6,10 @@ import UserContext from "../data/context/UserContext";
 import "./irr.css";
 import "../components/typeahead.css";
 import IRRWidget from "../components/CalculateIRR";
+import MobileHeader from "../components/Header/MobileHeader";
 
 export default function IRR(props) {
-  const { stonks } = useContext(UserContext).state;
+  const { stonks, isMobile } = useContext(UserContext).state;
 
   const [chosenStonk, setChosenStonk] = useState({});
   const [priceChartData, setPriceChartData] = useState([]);
@@ -19,27 +20,34 @@ export default function IRR(props) {
   };
 
   return (
-    <main className="irr-container">
-      <section className="irrform">
-        <LocalTypeahead
-          stonks={stonks}
-          setTickerAndPassStonk={setTickerAndPassStonk}
+    <>
+      {isMobile && <MobileHeader pageName="IRR CALCULATOR" />}
+      <main className="irr-container">
+        <section className="irrform">
+          <div>Calculate Stonk IRR</div>
+          <LocalTypeahead
+            stonks={stonks}
+            setTickerAndPassStonk={setTickerAndPassStonk}
+          />
+          <div>
+            <div>Name: {chosenStonk.companyName}</div>
+            <div>Ticker: {chosenStonk.symbol}</div>
+            <div>EPS: {chosenStonk.ttmEPS}</div>
+            <div>latestPrice: {chosenStonk.latestPrice}</div>
+          </div>
+          <IRRWidget
+            stonk={chosenStonk}
+            setPriceChartData={setPriceChartData}
+            setPercentageChartData={setPercentageChartData}
+          />
+        </section>
+        <ValuationProbabilities data={priceChartData} chartClass="charta" />
+        <ValuationProbabilities
+          data={percentageChartData}
+          chartClass="chartb"
         />
-        <div>
-          <div>Name: {chosenStonk.companyName}</div>
-          <div>Ticker: {chosenStonk.symbol}</div>
-          <div>EPS: {chosenStonk.ttmEPS}</div>
-          <div>latestPrice: {chosenStonk.latestPrice}</div>
-        </div>
-        <IRRWidget
-          stonk={chosenStonk}
-          setPriceChartData={setPriceChartData}
-          setPercentageChartData={setPercentageChartData}
-        />
-      </section>
-      <ValuationProbabilities data={priceChartData} chartClass="charta" />
-      <ValuationProbabilities data={percentageChartData} chartClass="chartb" />
-    </main>
+      </main>
+    </>
   );
 }
 

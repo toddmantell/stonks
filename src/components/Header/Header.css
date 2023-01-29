@@ -37,7 +37,7 @@
 }
 
 .app-header .explanation-text {
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  /* font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif; */
   font-weight: 200;
   font-size: 16px;
   color: #ffffff;
@@ -74,8 +74,20 @@
   margin-top: 0.15rem;
 }
 
-/* Mobile Header */
+/* Mobile Nav and Header */
 .mobile-header {
+  display: flex;
+  width: 100vw;
+  background-color: var(--main-secondary-color);
+  padding: 0.7rem 0;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+
+  letter-spacing: 0.25px;
+}
+
+.mobile-navbar {
   display: flex;
   z-index: 1000;
   background-color: var(--main-secondary-color);

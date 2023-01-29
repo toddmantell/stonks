@@ -1,0 +1,39 @@
+@media (max-width: 768px) {
+  .add-stonks {
+    margin: 2rem 0 0;
+    display: grid;
+    grid-template-columns: 100%;
+    /* width: 50vw; */
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .add-stonks {
+    margin: 2rem 0 0 4.5rem;
+    display: grid;
+    grid-template-columns: 100%;
+    border: hsl(0, 0%, 80%) solid 1px;
+    border-radius: 10px;
+    /* width: 80%; */
+  }
+}
+
+@media (min-width: 1200px) {
+  .add-stonks {
+    margin: 5rem 0 0 4.5rem;
+    display: grid;
+    grid-template-columns: 45% 30%;
+    border: hsl(0, 0%, 80%) solid 1px;
+    border-radius: 10px;
+    width: 80%;
+  }
+}
+
+.add-stonk-form {
+  padding: 1rem;
+}
+
+.add-stonk-heading {
+  color: #282c34;
+  font-size: 23px;
+}

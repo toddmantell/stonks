@@ -5,6 +5,7 @@ import UserContext from "../data/context/UserContext";
 import StonkCards from "../components/StonkCards";
 import SortCardsDropdown from "../components/SortCardsDropdown";
 import "./dashboard.css";
+import MobileHeader from "../components/Header/MobileHeader";
 
 export default function StonksDashboard() {
   const context = useContext(UserContext);
@@ -17,6 +18,7 @@ export default function StonksDashboard() {
 
   return isMobile ? (
     <main className="stonks-container" data-testid="stonks-container">
+      <MobileHeader pageName="DASHBOARD" />
       <MarketBanner />
       <SortCardsDropdown dispatch={sortStonks} />
       {isLoading === true ? (

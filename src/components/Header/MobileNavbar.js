@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function MobileNavbar(props) {
   return (
-    <div className="mobile-header">
+    <div className="mobile-navbar">
       <Link to="/">
         <span className="mobile-icon">
           <Home size={22} />

@@ -106,7 +106,7 @@
   }
 
   .stonks-container {
-    margin-top: 2rem;
+    margin-top: 4rem;
     display: grid;
     grid-template-areas: "stonk";
     row-gap: 25px;
