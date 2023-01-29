@@ -5,16 +5,14 @@ import UserContext from "../data/context/UserContext";
 import StonkCards from "../components/StonkCards";
 import SortCardsDropdown from "../components/SortCardsDropdown";
 import "./dashboard.css";
-import useMobileCheck from "../hooks/useMobileCheck";
 
 export default function StonksDashboard() {
   const context = useContext(UserContext);
-  const isMobile = useMobileCheck();
 
   const {
     removeStonk,
     sortStonks,
-    state: { stonks, sortedStonks, isLoading },
+    state: { stonks, sortedStonks, isLoading, isMobile },
   } = context;
 
   return isMobile ? (

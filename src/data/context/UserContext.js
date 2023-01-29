@@ -14,12 +14,14 @@ export class UserProvider extends Component {
     sortedStonks: [],
     updated: false,
     isLoading: true,
+    isMobile: false,
     VOO: {},
   };
   apiUrl = getDevOrProdAPIURL();
 
   async componentDidMount() {
     if (this.state.stonks.length) return;
+    this.setIsMobile(window.innerWidth <= 640);
     try {
       await this.setUserAndStonks();
     } catch (error) {
@@ -73,10 +75,13 @@ export class UserProvider extends Component {
 
   sortStonks = (sortValue) => {
     // Where do we want to handle negative values when sorting undervalued
-    //
     const sortedStonks = reducer(this.state.stonks, sortValue);
     this.setState({ sortedStonks });
   };
+
+  setIsMobile(isMobile) {
+    this.setState({ isMobile });
+  }
 
   removeStonk = async (stonkSymbol) => {
     try {

@@ -1,12 +1,13 @@
-import React from "react";
-
+import React, { useContext } from "react";
 import "./Header.css";
 import DesktopHeader from "./DesktopHeader";
 import MobileNavbar from "./MobileNavbar";
-import useMobileCheck from "../../hooks/useMobileCheck";
+import UserContext from "../../data/context/UserContext";
 
 export default function Header() {
-  const isMobile = useMobileCheck();
+  const {
+    state: { isMobile },
+  } = useContext(UserContext);
 
   return isMobile ? <MobileNavbar /> : <DesktopHeader />;
 }
