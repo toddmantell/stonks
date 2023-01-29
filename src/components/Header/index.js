@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import "./Header.css";
 import DesktopHeader from "./DesktopHeader";
 import MobileNavbar from "./MobileNavbar";
+import useMobileCheck from "../../hooks/useMobileCheck";
 
 export default function Header() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth <= 640);
-  }, []);
+  const isMobile = useMobileCheck();
 
   return isMobile ? <MobileNavbar /> : <DesktopHeader />;
 }
