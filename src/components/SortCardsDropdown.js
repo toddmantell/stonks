@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
+import UserContext from "../data/context/UserContext";
 import { OPTIONS } from "./SortCardsReducer";
 
 export default function SortCards({ dispatch = () => "" }) {
+  const {
+    state: { isLoading },
+  } = useContext(UserContext);
   const handleSelectSort = (e) => dispatch({ sortValue: +e.target.value });
 
-  const dropdownOtions = Object.keys(OPTIONS);
-  return (
+  const dropdownOptions = Object.keys(OPTIONS);
+
+  return isLoading ? (
+    <div>...</div>
+  ) : (
     <div className="sort-dropdown">
-      <label>Sort</label>
+      <label className="sort-label">Sort</label>
       <span className="sort">
         <select onChange={handleSelectSort}>
-          {dropdownOtions.map((option, index) => (
+          {dropdownOptions.map((option, index) => (
             <option key={`option-${index}`} value={index}>
               {option}
             </option>

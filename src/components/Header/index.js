@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useContext } from "react";
 import "./Header.css";
 import DesktopHeader from "./DesktopHeader";
 import MobileNavbar from "./MobileNavbar";
+import UserContext from "../../data/context/UserContext";
 
 export default function Header() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth <= 640);
-  }, []);
+  const {
+    state: { isMobile },
+  } = useContext(UserContext);
 
   return isMobile ? <MobileNavbar /> : <DesktopHeader />;
 }

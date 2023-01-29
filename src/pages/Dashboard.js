@@ -12,10 +12,25 @@ export default function StonksDashboard() {
   const {
     removeStonk,
     sortStonks,
-    state: { stonks, sortedStonks, isLoading },
+    state: { stonks, sortedStonks, isLoading, isMobile },
   } = context;
 
-  return (
+  return isMobile ? (
+    <main className="stonks-container" data-testid="stonks-container">
+      <MarketBanner />
+      <SortCardsDropdown dispatch={sortStonks} />
+      {isLoading === true ? (
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
+          <StonkSkeleton key={`skeleton-${item}`} />
+        ))
+      ) : (
+        <StonkCards
+          stonks={sortedStonks.length ? sortedStonks : stonks}
+          removeStonk={removeStonk}
+        />
+      )}
+    </main>
+  ) : (
     <>
       <MarketBanner />
       <SortCardsDropdown dispatch={sortStonks} />
