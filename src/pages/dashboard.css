@@ -96,13 +96,13 @@
     text-decoration: none;
   }
 
-  .market-banner {
-    margin-top: 1rem;
-    margin-left: 5.5rem;
+  .sort-dropdown {
+    margin: 0;
   }
 
-  .sort-dropdown {
-    margin: 2rem 0 0 5.5rem;
+  .market-banner {
+    margin: 0;
+    width: 75vw;
   }
 
   .stonks-container {
