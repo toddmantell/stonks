@@ -4,6 +4,8 @@ import { get, post } from "../data/fetchWrapper";
 import AddStonkForm from "../components/AddStonkForm.js";
 import Metrics from "../components/Metrics";
 import UserContext from "../data/context/UserContext";
+import MobileHeader from "../components/Header/MobileHeader";
+import "./addstonk.css";
 
 export default function AddStonk() {
   const [apiUrl] = useState(getDevOrProdAPIURL());
@@ -14,6 +16,7 @@ export default function AddStonk() {
   const [previousGrowthRate, setPreviousGrowthRate] = useState(0);
 
   const context = useContext(UserContext);
+  const { isMobile } = context.state;
 
   useEffect(() => {
     if (stonkTicker.value) getStonkQuote(stonkTicker.value);
@@ -109,19 +112,22 @@ export default function AddStonk() {
   }
 
   return (
-    <article className="add-stonks">
-      <AddStonkForm
-        getStonkCalculation={getStonkCalculation}
-        setTickerAndGetQuote={setTickerAndGetQuote}
-        setInputValue={setInputValue}
-        previousGrowthRate={previousGrowthRate}
-        futureGrowthRate={futureGrowthRate}
-      />
-      <Metrics
-        stonk={stonk}
-        stonkQuote={stonkQuote}
-        addStonkToStonks={addStonk}
-      />
-    </article>
+    <>
+      {isMobile && <MobileHeader pageName="ADD STONK" />}
+      <article className="add-stonks">
+        <AddStonkForm
+          getStonkCalculation={getStonkCalculation}
+          setTickerAndGetQuote={setTickerAndGetQuote}
+          setInputValue={setInputValue}
+          previousGrowthRate={previousGrowthRate}
+          futureGrowthRate={futureGrowthRate}
+        />
+        <Metrics
+          stonk={stonk}
+          stonkQuote={stonkQuote}
+          addStonkToStonks={addStonk}
+        />
+      </article>
+    </>
   );
 }
