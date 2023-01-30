@@ -16,6 +16,7 @@ export default function AddStonk() {
   const [previousGrowthRate, setPreviousGrowthRate] = useState(0);
 
   const context = useContext(UserContext);
+  const { isMobile } = context.state;
 
   useEffect(() => {
     if (stonkTicker.value) getStonkQuote(stonkTicker.value);
@@ -112,7 +113,7 @@ export default function AddStonk() {
 
   return (
     <>
-      {context.state.isMobile && <MobileHeader pageName="ADD STONK" />}
+      {isMobile && <MobileHeader pageName="ADD STONK" />}
       <article className="add-stonks">
         <AddStonkForm
           getStonkCalculation={getStonkCalculation}
