@@ -18,6 +18,7 @@ export default ({
           <img
             src={`https://storage.googleapis.com/iex/api/logos/${symbol}.png`}
             className="stonk-attribute__logo"
+            alt="stonk-logo"
           />
         </span>
         <span
