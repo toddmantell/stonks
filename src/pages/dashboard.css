@@ -43,12 +43,24 @@
   margin-left: 1em;
 }
 
-.stonk-attribute--companyName {
+.stonk-attribute__name_and_logo {
+  display: flex;
+  margin: 0.25rem 0 -0.25rem;
+}
+
+.stonk-attribute__company_name {
+  margin-top: 0.55rem;
+  margin-left: 0.5rem;
   font-weight: 500;
 }
 
 .stonk-attribute__top {
-  margin-top: 10px;
+}
+
+.stonk-attribute__logo {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
 }
 
 .stonk-attribute__bottom {
