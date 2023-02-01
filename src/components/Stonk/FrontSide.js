@@ -4,19 +4,28 @@ import { FrontSide } from "react-flippy";
 export default ({
   companyName,
   changePercent,
-	forwardConservativeGrahamFormulaNumber,
+  forwardConservativeGrahamFormulaNumber,
   latestPrice,
   peRatio,
-	pastConservativeGrahamFormulaNumber,
-	symbol
+  pastConservativeGrahamFormulaNumber,
+  symbol,
 }) => (
   <FrontSide className="stonk-card">
     <div className="stonk-attribute stonk-attribute__top">
-      Company Name:{" "}
-      <div className="stonk-attribute--companyName">
+      <div>Company Name:</div>
+      <div className="stonk-attribute__name_and_logo">
+        <span style={{ marginRight: ".25rem" }}>
+          <img
+            src={`https://storage.googleapis.com/iex/api/logos/${symbol}.png`}
+            className="stonk-attribute__logo"
+            alt="stonk-logo"
+          />
+        </span>
         <span
+          className="stonk-attribute__company_name"
           style={
-            forwardConservativeGrahamFormulaNumber > latestPrice && pastConservativeGrahamFormulaNumber > latestPrice
+            forwardConservativeGrahamFormulaNumber > latestPrice &&
+            pastConservativeGrahamFormulaNumber > latestPrice
               ? {
                   color: "green",
                 }
