@@ -16,6 +16,5 @@ export default async function getStonks() {
 }
 
 export function getDevOrProdAPIURL() {
-  if (process.env.NODE_ENV === "production") return settings.PROD_API_URL;
-  return settings.DEV_API_URL;
+  return settings.PROD_API_URL;
 }
