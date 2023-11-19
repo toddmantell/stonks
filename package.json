@@ -4,6 +4,7 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
+    "@vitejs/plugin-react": "^4.2.0",
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
     "react-content-loader": "^4.3.2",
@@ -13,12 +14,14 @@
     "react-loading-skeleton": "^1.2.0",
     "react-router-dom": "^5.1.0",
     "react-scripts": "3.1.1",
-    "recharts": "^2.3.2"
+    "recharts": "^2.3.2",
+    "vite": "^5.0.0",
+    "vite-tsconfig-paths": "^4.2.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
